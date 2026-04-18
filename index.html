@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="A visual glossary of Zero Trust Architecture concepts and components for financial institutions — NIST 800-207 mapped." />
+<title>Zero Trust Architecture — Visual Glossary</title>
+<style>
+  :root {
+    --bg: #F7F7F5;
+    --surface: #FFFFFF;
+    --surface-alt: #FAFAF8;
+    --text: #0A0A0A;
+    --text-2: #4B5563;
+    --text-3: #8B8F98;
+    --border: #E5E7EB;
+    --border-strong: #111111;
+    --accent: #0F3460;
+    --accent-soft: #ECEFF5;
+    --accent-ink: #071B37;
+    --warn: #B45309;
+    --warn-soft: #FDF6EC;
+    --svg-bg: #FFFFFF;
+    --svg-surface: #FAFAF8;
+    --svg-primary: #0F3460;
+    --svg-primary-soft: #ECEFF5;
+    --svg-warn: #B45309;
+    --svg-warn-soft: #FDF6EC;
+    --svg-text: #0A0A0A;
+    --svg-text-2: #4B5563;
+    --svg-border: #D6D9DE;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Inter", "Geist", "Segoe UI", Roboto, sans-serif;
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px;
+    --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+    --max: 1280px;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0A0A0A;
+    --surface: #141414;
+    --surface-alt: #1A1A1A;
+    --text: #F5F5F5;
+    --text-2: #B4B8C0;
+    --text-3: #8B8F98;
+    --border: #262626;
+    --border-strong: #F5F5F5;
+    --accent: #6FA8FF;
+    --accent-soft: #16233A;
+    --accent-ink: #B8CEF0;
+    --warn: #F59E0B;
+    --warn-soft: #2A1F08;
+    --svg-bg: #141414;
+    --svg-surface: #1A1A1A;
+    --svg-primary: #6FA8FF;
+    --svg-primary-soft: #16233A;
+    --svg-warn: #F59E0B;
+    --svg-warn-soft: #2A1F08;
+    --svg-text: #F5F5F5;
+    --svg-text-2: #B4B8C0;
+    --svg-border: #2E2E2E;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--sans); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    body, .card, header, aside, main, button, input, .term-link, .letter-chip, .chip {
+      transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease, opacity 180ms ease;
+    }
+  }
+  ::selection { background: var(--accent); color: #fff; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover { border-bottom-color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Header */
+  .masthead {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .masthead-inner {
+    max-width: var(--max); margin: 0 auto;
+    padding: var(--s4) var(--s6);
+    display: grid; grid-template-columns: auto 1fr auto; gap: var(--s5);
+    align-items: center;
+  }
+  .mark {
+    display: flex; align-items: center; gap: var(--s3);
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-2);
+  }
+  .mark-square { width: 10px; height: 10px; background: var(--accent); display: inline-block; }
+  .mark b { color: var(--text); font-weight: 600; letter-spacing: 0.08em; }
+
+  .search-wrap {
+    position: relative; max-width: 520px; width: 100%;
+    margin-left: var(--s5);
+  }
+  .search-wrap svg {
+    position: absolute; left: var(--s3); top: 50%;
+    transform: translateY(-50%); width: 16px; height: 16px;
+    color: var(--text-3); pointer-events: none;
+  }
+  .search {
+    width: 100%; padding: var(--s3) var(--s3) var(--s3) 38px;
+    background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 2px;
+    font: inherit; font-size: 14px;
+  }
+  .search:focus { outline: none; border-color: var(--accent); }
+  .search::placeholder { color: var(--text-3); }
+  .search-hint {
+    position: absolute; right: var(--s3); top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text-3); letter-spacing: 0.08em;
+    padding: 2px 6px; border: 1px solid var(--border); border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .header-actions { display: flex; align-items: center; gap: var(--s2); }
+  .theme-toggle {
+    width: 36px; height: 36px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: 2px;
+    cursor: pointer; padding: 0;
+  }
+  .theme-toggle:hover { background: var(--surface-alt); border-color: var(--border-strong); }
+  .theme-toggle svg { width: 16px; height: 16px; display: block; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+  /* Title band */
+  .hero {
+    max-width: var(--max); margin: 0 auto;
+    padding: var(--s7) var(--s6) var(--s6);
+    display: grid; grid-template-columns: 1fr auto; gap: var(--s6);
+    align-items: end;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero .eyebrow {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: var(--s3);
+    display: inline-flex; align-items: center; gap: var(--s3);
+  }
+  .hero .eyebrow::before {
+    content: ""; width: 32px; height: 1px; background: var(--accent);
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-weight: 700; line-height: 1.05;
+    margin: 0; letter-spacing: -0.025em;
+  }
+  .hero h1 span { color: var(--text-3); font-weight: 500; display: block; font-size: 0.55em; margin-top: var(--s2); letter-spacing: 0; }
+  .hero .lede {
+    color: var(--text-2); font-size: 1rem; max-width: 62ch;
+    margin: var(--s4) 0 0; line-height: 1.6;
+  }
+  .hero-meta {
+    text-align: right; font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-2);
+    line-height: 1.9;
+  }
+  .hero-meta b { color: var(--text); font-weight: 600; }
+
+  /* Layout */
+  .layout {
+    max-width: var(--max); margin: 0 auto;
+    padding: var(--s7) var(--s6) var(--s9);
+    display: grid; grid-template-columns: 260px 1fr; gap: var(--s8);
+    align-items: start;
+  }
+
+  /* Sidebar */
+  aside.sidebar {
+    position: sticky; top: 84px; align-self: start;
+    max-height: calc(100vh - 104px); overflow-y: auto;
+    padding-right: var(--s4);
+    border-right: 1px solid var(--border);
+    scrollbar-width: thin;
+  }
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .side-heading {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-3); margin: 0 0 var(--s3) 0;
+  }
+
+  /* A-Z chips */
+  .letter-bar {
+    display: flex; flex-wrap: wrap; gap: 2px;
+    margin-bottom: var(--s5);
+    padding-bottom: var(--s4);
+    border-bottom: 1px solid var(--border);
+  }
+  .letter-chip {
+    font-family: var(--mono); font-size: 10px;
+    width: 22px; height: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-3);
+    border: 1px solid transparent; border-radius: 2px;
+    cursor: pointer; padding: 0;
+  }
+  .letter-chip[data-has="true"] { color: var(--text); border-color: var(--border); }
+  .letter-chip[data-has="true"]:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .letter-chip[data-has="false"] { opacity: 0.35; cursor: not-allowed; }
+
+  .term-list { list-style: none; padding: 0; margin: 0; }
+  .term-list li { border-bottom: 1px solid var(--border); }
+  .term-list li:last-child { border-bottom: none; }
+  .term-link {
+    display: flex; gap: var(--s3); align-items: baseline;
+    padding: var(--s2) 0; color: var(--text-2);
+    border-bottom: none; font-size: 13px;
+    line-height: 1.4;
+  }
+  .term-link::before {
+    content: attr(data-idx);
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text-3); flex-shrink: 0; min-width: 22px;
+  }
+  .term-link:hover { color: var(--accent); }
+  .term-link.active { color: var(--accent); font-weight: 600; }
+  .term-list li.hidden { display: none; }
+
+  .side-section + .side-section { margin-top: var(--s5); }
+
+  /* Main */
+  main { min-width: 0; }
+  .toolbar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: var(--s5); padding-bottom: var(--s4);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .toolbar h2 {
+    margin: 0; font-size: 1rem; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .toolbar-meta {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--text-2); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .toolbar-meta b { color: var(--text); }
+
+  .filter-row {
+    display: flex; flex-wrap: wrap; gap: var(--s2);
+    margin-bottom: var(--s5);
+  }
+  .filter-chip {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: var(--s2) var(--s3);
+    background: var(--surface); color: var(--text-2);
+    border: 1px solid var(--border); border-radius: 2px;
+    cursor: pointer;
+  }
+  .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-chip[aria-pressed="true"] {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+
+  .cards { display: grid; grid-template-columns: 1fr; gap: var(--s6); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    scroll-margin-top: 96px;
+  }
+  .card.hidden { display: none; }
+  .card-head {
+    padding: var(--s5) var(--s6);
+    border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr auto; gap: var(--s4);
+    align-items: baseline;
+  }
+  .card-title {
+    margin: 0; font-size: 1.4rem; font-weight: 700;
+    letter-spacing: -0.015em; line-height: 1.2;
+  }
+  .card-title .idx {
+    font-family: var(--mono); font-size: 0.7rem;
+    color: var(--text-3); margin-right: var(--s3);
+    font-weight: 500; letter-spacing: 0;
+  }
+  .card-tags { display: flex; gap: var(--s2); flex-wrap: wrap; }
+  .chip {
+    display: inline-flex; align-items: center;
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 2px;
+    border: 1px solid var(--border);
+    color: var(--text-2); background: var(--surface-alt);
+    font-weight: 500;
+  }
+  .chip.chip-category {
+    color: var(--accent); background: var(--accent-soft);
+    border-color: var(--accent-soft);
+  }
+  .chip.chip-clar {
+    color: var(--warn); background: var(--warn-soft);
+    border-color: var(--warn-soft);
+  }
+
+  .card-body {
+    display: grid; grid-template-columns: 420px 1fr;
+    gap: 0;
+  }
+  .card-diagram {
+    padding: var(--s5); border-right: 1px solid var(--border);
+    background: var(--surface-alt);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-diagram svg {
+    display: block; max-width: 100%; height: auto;
+    font-family: var(--sans);
+  }
+  .card-content { padding: var(--s5) var(--s6); }
+  .card-content p { margin: 0 0 var(--s4) 0; color: var(--text-2); line-height: 1.65; }
+  .card-content p:last-child { margin-bottom: 0; }
+  .card-content p strong { color: var(--text); font-weight: 600; }
+
+  .in-practice {
+    border-left: 2px solid var(--accent);
+    background: var(--surface-alt);
+    padding: var(--s3) var(--s4);
+    margin: var(--s4) 0 0;
+    font-size: 0.9rem;
+  }
+  .in-practice .label {
+    display: block; font-family: var(--mono);
+    font-size: 10px; color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: var(--s1); font-weight: 600;
+  }
+  .in-practice p { margin: 0; color: var(--text); font-size: 0.9rem; line-height: 1.55; }
+
+  .no-results {
+    padding: var(--s7) var(--s5);
+    text-align: center; color: var(--text-3);
+    border: 1px dashed var(--border);
+    display: none;
+  }
+  .no-results.active { display: block; }
+  .no-results code {
+    font-family: var(--mono); color: var(--text);
+    background: var(--accent-soft); padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  /* Footer */
+  footer.page-foot {
+    border-top: 1px solid var(--border-strong);
+    background: var(--surface);
+  }
+  .foot-inner {
+    max-width: var(--max); margin: 0 auto;
+    padding: var(--s6); display: grid;
+    grid-template-columns: 1fr auto; gap: var(--s5);
+    align-items: center;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--text-2); letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .foot-inner b { color: var(--text); font-weight: 600; }
+
+  /* Back to top */
+  .to-top {
+    position: fixed; right: var(--s5); bottom: var(--s5);
+    width: 44px; height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--accent); color: #fff;
+    border: 1px solid var(--accent); border-radius: 2px;
+    cursor: pointer; padding: 0; z-index: 40;
+    opacity: 0; transform: translateY(8px);
+    pointer-events: none;
+  }
+  .to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .to-top:hover { background: var(--accent-ink); }
+  .to-top svg { width: 18px; height: 18px; }
+
+  /* SVG shared classes */
+  svg .d-bg { fill: var(--svg-surface); stroke: var(--svg-border); stroke-width: 1; }
+  svg .d-box { fill: var(--svg-bg); stroke: var(--svg-text); stroke-width: 1; }
+  svg .d-pri { fill: var(--svg-primary-soft); stroke: var(--svg-primary); stroke-width: 1.3; }
+  svg .d-warn { fill: var(--svg-warn-soft); stroke: var(--svg-warn); stroke-width: 1.3; }
+  svg .d-ghost { fill: var(--svg-bg); stroke: var(--svg-border); stroke-width: 1; stroke-dasharray: 3 3; }
+  svg .d-line { stroke: var(--svg-primary); stroke-width: 1.2; fill: none; }
+  svg .d-line-warn { stroke: var(--svg-warn); stroke-width: 1.2; fill: none; }
+  svg .d-line-mute { stroke: var(--svg-border); stroke-width: 1; fill: none; }
+  svg .d-label { fill: var(--svg-text); font-size: 11px; font-weight: 600; font-family: var(--sans); }
+  svg .d-sub { fill: var(--svg-text-2); font-size: 9.5px; font-family: var(--mono); letter-spacing: 0.04em; }
+  svg .d-micro { fill: var(--svg-text-2); font-size: 8px; font-family: var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+  svg .d-accent { fill: var(--svg-primary); }
+  svg .d-accent-text { fill: var(--svg-primary); font-size: 10px; font-family: var(--mono); font-weight: 600; letter-spacing: 0.05em; }
+  svg .d-warn-text { fill: var(--svg-warn); font-size: 10px; font-family: var(--mono); font-weight: 600; letter-spacing: 0.05em; }
+
+  /* Responsive */
+  @media (max-width: 1020px) {
+    .layout { grid-template-columns: 1fr; gap: var(--s6); padding: var(--s5) var(--s4) var(--s8); }
+    aside.sidebar {
+      position: static; max-height: none; overflow: visible;
+      padding-right: 0; padding-bottom: var(--s5);
+      border-right: none; border-bottom: 1px solid var(--border);
+    }
+    .hero { grid-template-columns: 1fr; padding: var(--s6) var(--s4) var(--s5); }
+    .hero-meta { text-align: left; }
+    .card-body { grid-template-columns: 1fr; }
+    .card-diagram { border-right: none; border-bottom: 1px solid var(--border); padding: var(--s5) var(--s4); }
+    .card-head, .card-content { padding: var(--s4) var(--s5); }
+    .masthead-inner { grid-template-columns: 1fr auto; }
+    .search-wrap { grid-column: 1 / -1; margin-left: 0; order: 3; }
+    .masthead-inner { padding: var(--s3) var(--s4); }
+    .foot-inner { padding: var(--s5) var(--s4); grid-template-columns: 1fr; }
+  }
+  @media (max-width: 540px) {
+    .card-head { grid-template-columns: 1fr; }
+    .hero h1 { font-size: clamp(1.6rem, 8vw, 2.2rem); }
+    .search-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead" role="banner">
+  <div class="masthead-inner">
+    <span class="mark"><span class="mark-square" aria-hidden="true"></span><b>ZTA Visual Glossary</b></span>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" class="search" type="search" placeholder="Search terms, acronyms, vendors…" aria-label="Search glossary terms" autocomplete="off" />
+      <span class="search-hint">/</span>
+    </div>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle colour theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="eyebrow">Reference &middot; NIST SP 800-207</span>
+    <h1>Zero Trust Architecture<span>A visual glossary for financial institutions</span></h1>
+    <p class="lede">Thirty concepts and components that make up a bank-grade Zero Trust Architecture — distilled into plain English, each paired with a diagram. Sourced from an ARB submission mapping the C4 model to NIST SP 800-207 for a multi-regional retail and commercial bank.</p>
+  </div>
+  <div class="hero-meta">
+    <div>Version <b>01</b></div>
+    <div>Terms <b id="termCountMeta">30</b></div>
+    <div>Framework <b>NIST 800-207</b></div>
+  </div>
+</section>
+
+<div class="layout">
+
+  <aside class="sidebar" aria-label="Glossary navigation">
+    <p class="side-heading">Jump to letter</p>
+    <div class="letter-bar" id="letterBar" role="group" aria-label="Alphabetical jump bar"></div>
+
+    <div class="side-section">
+      <p class="side-heading">All terms <span id="sideCount" style="color:var(--text-3)"></span></p>
+      <ul class="term-list" id="termList" role="list"></ul>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="toolbar">
+      <h2>Glossary entries</h2>
+      <span class="toolbar-meta"><b id="shownCount">30</b> / <span id="totalCount">30</span> shown</span>
+    </div>
+
+    <div class="filter-row" id="filterRow" role="group" aria-label="Filter by category">
+      <button class="filter-chip" type="button" aria-pressed="true" data-filter="all">All</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="Foundations">Foundations</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="Identity">Identity</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="Control Plane">Control Plane</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="Enforcement">Enforcement (PEP)</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="Secrets &amp; PKI">Secrets &amp; PKI</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="Observability">Observability</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="Posture">Posture</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="Data">Data</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="API &amp; Risk">API &amp; Risk</button>
+    </div>
+
+    <div class="cards" id="cards"></div>
+
+    <div class="no-results" id="noResults">
+      No terms match <code id="noResultsQuery"></code>. Try a shorter keyword, or clear filters.
+    </div>
+  </main>
+
+</div>
+
+<footer class="page-foot" role="contentinfo">
+  <div class="foot-inner">
+    <span><b id="footCount">30</b> entries &middot; Sourced from ARB submission &middot; Mapped to NIST SP&nbsp;800-207</span>
+    <span>Generated as a single-file reference &middot; <b>Light / Dark</b></span>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<script>
+const TERMS = [
+{
+  id: "authlete", name: "Authlete (FAPI 2.0 Engine)", category: "API & Risk",
+  aliases: ["FAPI", "OAuth", "CIBA", "JARM", "PAR"],
+  title: { prefix: "Spec", text: "Supporting Infra / FAPI engine" },
+  short: "A specialist OAuth 2.0 engine that implements the exact flows required by Open Banking regulators &mdash; <strong>Pushed Authorisation Requests</strong>, CIBA, JARM and FAPI 2.0. It sits behind the API gateway so the gateway focuses on enforcement while Authlete handles protocol correctness.",
+  practice: "Authlete is the reference implementation that UK OBIE tests every bank against &mdash; using it means conformance tests pass on the first run, not the tenth.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-authlete d-authlete" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-authlete">FAPI flow through Authlete</title>
+    <desc id="d-authlete">Third-party provider sends a Pushed Authorisation Request to Kong, which delegates OAuth handling to Authlete, returning a JARM-signed response.</desc>
+    <rect x="10" y="30" width="80" height="50" rx="3" class="d-box"/>
+    <text x="50" y="52" text-anchor="middle" class="d-label">TPP</text>
+    <text x="50" y="68" text-anchor="middle" class="d-sub">client</text>
+    <rect x="150" y="20" width="100" height="70" rx="3" class="d-pri"/>
+    <text x="200" y="44" text-anchor="middle" class="d-label">Kong</text>
+    <text x="200" y="60" text-anchor="middle" class="d-sub">API gateway</text>
+    <text x="200" y="76" text-anchor="middle" class="d-sub">(PEP)</text>
+    <rect x="300" y="20" width="90" height="70" rx="3" class="d-warn"/>
+    <text x="345" y="44" text-anchor="middle" class="d-label">Authlete</text>
+    <text x="345" y="60" text-anchor="middle" class="d-sub">FAPI 2.0</text>
+    <text x="345" y="76" text-anchor="middle" class="d-sub">engine</text>
+    <path d="M90 55 L148 55" class="d-line" marker-end="url(#arA1)"/>
+    <path d="M250 45 L298 45" class="d-line" marker-end="url(#arA1)"/>
+    <path d="M298 70 L250 70" class="d-line" marker-end="url(#arA1)"/>
+    <text x="115" y="48" class="d-micro">1 PAR</text>
+    <text x="267" y="36" class="d-micro">2 auth</text>
+    <text x="267" y="86" class="d-micro">3 JARM</text>
+    <rect x="40" y="140" width="320" height="80" rx="3" class="d-bg"/>
+    <text x="56" y="160" class="d-accent-text">HARDENED OAUTH</text>
+    <text x="56" y="180" class="d-sub">&middot; sender-constrained tokens (DPoP or mTLS)</text>
+    <text x="56" y="196" class="d-sub">&middot; signed request objects (JWS)</text>
+    <text x="56" y="212" class="d-sub">&middot; pushed authorisation, JARM-signed replies</text>
+    <defs><marker id="arA1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "broadcom-aam", name: "Broadcom AAM (Mainframe)", category: "Enforcement",
+  aliases: ["mainframe", "RACF", "CICS", "z/OS"],
+  title: { prefix: "NIST", text: "PEP (mainframe) &middot; Identity Gateway" },
+  short: "A mainframe authentication adapter that bridges modern <strong>OIDC and Kerberos</strong> identities into legacy RACF user IDs through constrained delegation and digital-certificate mapping. Lets the bank apply Zero Trust on z/OS without rewriting decades-old CICS transactions.",
+  practice: "A trader's OIDC token authenticates them to a modern front-end; AAM converts that identity on the wire so the underlying CICS transaction sees a legitimate RACF ID — no shared mainframe password anywhere.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-aam d-aam" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-aam">OIDC to RACF identity bridge</title>
+    <desc id="d-aam">Modern OIDC/Kerberos identity is translated by Broadcom AAM into a RACF user ID consumed by CICS transactions on z/OS.</desc>
+    <rect x="10" y="95" width="90" height="60" rx="3" class="d-box"/>
+    <text x="55" y="118" text-anchor="middle" class="d-label">OIDC / Kerberos</text>
+    <text x="55" y="136" text-anchor="middle" class="d-sub">modern id</text>
+    <rect x="140" y="85" width="120" height="80" rx="3" class="d-warn"/>
+    <text x="200" y="108" text-anchor="middle" class="d-label">Broadcom AAM</text>
+    <text x="200" y="124" text-anchor="middle" class="d-sub">constrained</text>
+    <text x="200" y="138" text-anchor="middle" class="d-sub">delegation</text>
+    <text x="200" y="156" text-anchor="middle" class="d-warn-text">BRIDGE</text>
+    <rect x="300" y="55" width="90" height="55" rx="3" class="d-pri"/>
+    <text x="345" y="78" text-anchor="middle" class="d-label">RACF</text>
+    <text x="345" y="94" text-anchor="middle" class="d-sub">z/OS id store</text>
+    <rect x="300" y="140" width="90" height="55" rx="3" class="d-box"/>
+    <text x="345" y="163" text-anchor="middle" class="d-label">CICS</text>
+    <text x="345" y="179" text-anchor="middle" class="d-sub">transaction</text>
+    <path d="M100 125 L138 125" class="d-line" marker-end="url(#arB1)"/>
+    <path d="M260 105 L298 85" class="d-line" marker-end="url(#arB1)"/>
+    <path d="M260 145 L298 165" class="d-line" marker-end="url(#arB1)"/>
+    <path d="M345 110 L345 138" class="d-line-mute" stroke-dasharray="3 3"/>
+    <text x="20" y="215" class="d-micro">IDENTITY TRAVELS END-TO-END WITHOUT SHARED CREDENTIALS</text>
+    <defs><marker id="arB1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "cdm", name: "CDM (Continuous Diagnostics &amp; Mitigation)", category: "Foundations",
+  aliases: ["posture", "vulnerability", "CISA"],
+  title: { prefix: "NIST", text: "Data Source &sect; 3.2" },
+  short: "A <strong>continuous posture feed</strong> &mdash; originally a US federal programme and now a NIST 800-207 data-source category &mdash; that reports the live state of every asset: vulnerabilities, configuration drift, exposure, compliance. Turns asset hygiene into a real-time policy input rather than a monthly report.",
+  practice: "Tanium reports that a laptop missed this week's patch at 09:14; by 09:14:30 the PE has lowered that device's trust score and sensitive apps prompt the user to update before allowing further access.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-cdm d-cdm" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-cdm">CDM signal pipeline</title>
+    <desc id="d-cdm">Endpoint and cloud posture signals are continuously collected and fed into the policy engine as live inputs.</desc>
+    <rect x="15" y="25" width="110" height="36" rx="3" class="d-box"/>
+    <text x="70" y="47" text-anchor="middle" class="d-label">Endpoints</text>
+    <rect x="15" y="75" width="110" height="36" rx="3" class="d-box"/>
+    <text x="70" y="97" text-anchor="middle" class="d-label">Cloud workloads</text>
+    <rect x="15" y="125" width="110" height="36" rx="3" class="d-box"/>
+    <text x="70" y="147" text-anchor="middle" class="d-label">Containers / IaC</text>
+    <rect x="15" y="175" width="110" height="36" rx="3" class="d-box"/>
+    <text x="70" y="197" text-anchor="middle" class="d-label">Config stores</text>
+    <rect x="165" y="80" width="120" height="100" rx="3" class="d-pri"/>
+    <text x="225" y="110" text-anchor="middle" class="d-label">CDM feed</text>
+    <text x="225" y="128" text-anchor="middle" class="d-sub">vulns &middot; drift</text>
+    <text x="225" y="144" text-anchor="middle" class="d-sub">exposure &middot; comp.</text>
+    <text x="225" y="164" text-anchor="middle" class="d-accent-text">STREAMING</text>
+    <rect x="315" y="95" width="70" height="70" rx="3" class="d-warn"/>
+    <text x="350" y="125" text-anchor="middle" class="d-label">PE</text>
+    <text x="350" y="142" text-anchor="middle" class="d-sub">decides</text>
+    <path d="M125 43 L165 100" class="d-line"/>
+    <path d="M125 93 L165 115" class="d-line"/>
+    <path d="M125 143 L165 135" class="d-line"/>
+    <path d="M125 193 L165 155" class="d-line"/>
+    <path d="M285 130 L315 130" class="d-line" marker-end="url(#arC1)"/>
+    <defs><marker id="arC1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "cyberark-pam", name: "CyberArk PAM", category: "Enforcement",
+  aliases: ["PAM", "JIT", "privileged"],
+  title: { prefix: "NIST", text: "PEP (privileged) &middot; Identity DS" },
+  short: "<strong>Privileged Access Management</strong> &mdash; vaulted credentials, just-in-time elevation and full session recording for administrators of Tier-0 systems (SWIFT, HSMs, the Payments Hub). Every privileged session is proxied, time-boxed and stored in WORM-protected evidence stores.",
+  practice: "A payments engineer needing to SSH to a SWIFT server checks out a 30-minute credential from CyberArk; the session is proxied, recorded end-to-end, and its audit trail written to immutable storage for regulator review.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-pam d-pam" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-pam">Privileged session broker</title>
+    <desc id="d-pam">An administrator requests access, the PAM approves a time-boxed credential, and proxies a recorded session to a Tier-0 system.</desc>
+    <rect x="10" y="100" width="80" height="50" rx="3" class="d-box"/>
+    <text x="50" y="122" text-anchor="middle" class="d-label">Admin</text>
+    <text x="50" y="138" text-anchor="middle" class="d-sub">request</text>
+    <rect x="130" y="60" width="140" height="130" rx="3" class="d-pri"/>
+    <text x="200" y="88" text-anchor="middle" class="d-label">CyberArk PAM</text>
+    <text x="200" y="108" text-anchor="middle" class="d-sub">&middot; vault</text>
+    <text x="200" y="124" text-anchor="middle" class="d-sub">&middot; JIT approval</text>
+    <text x="200" y="140" text-anchor="middle" class="d-sub">&middot; session proxy</text>
+    <text x="200" y="156" text-anchor="middle" class="d-sub">&middot; record</text>
+    <text x="200" y="178" text-anchor="middle" class="d-accent-text">30 MIN</text>
+    <rect x="310" y="40" width="80" height="50" rx="3" class="d-warn"/>
+    <text x="350" y="62" text-anchor="middle" class="d-label">SWIFT</text>
+    <text x="350" y="78" text-anchor="middle" class="d-sub">tier-0</text>
+    <rect x="310" y="110" width="80" height="50" rx="3" class="d-warn"/>
+    <text x="350" y="132" text-anchor="middle" class="d-label">HSM</text>
+    <text x="350" y="148" text-anchor="middle" class="d-sub">tier-0</text>
+    <rect x="310" y="180" width="80" height="40" rx="3" class="d-box"/>
+    <text x="350" y="203" text-anchor="middle" class="d-sub">WORM audit</text>
+    <path d="M90 125 L128 125" class="d-line" marker-end="url(#arD1)"/>
+    <path d="M270 100 L310 70" class="d-line" marker-end="url(#arD1)"/>
+    <path d="M270 130 L310 130" class="d-line" marker-end="url(#arD1)"/>
+    <path d="M200 190 L200 210 L310 210" class="d-line-mute"/>
+    <defs><marker id="arD1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "data-sources", name: "Data Sources", category: "Foundations",
+  aliases: ["NIST &sect;3.2", "signals"],
+  title: { prefix: "NIST", text: "&sect; 3.2 &mdash; 8 source classes" },
+  short: "The input feeds that enrich every policy decision &mdash; identity stores, threat intelligence, SIEM, PKI, CDM, device posture, data-access policy and fraud scoring. NIST 800-207 catalogues <strong>eight distinct source classes</strong>; a mature ZTA names each one explicitly rather than accepting an ad-hoc signal pool.",
+  practice: "When OPA evaluates a payment request, it reads the user's recent SIEM events, their device's Tanium compliance state and a Featurespace risk score — all before issuing permit or deny.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-ds d-ds" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-ds">Eight data source classes feeding the policy engine</title>
+    <desc id="d-ds">Eight named data sources converge as inputs into the policy engine which issues a single decision.</desc>
+    <g font-family="var(--sans)">
+    <rect x="10" y="18" width="95" height="26" rx="2" class="d-box"/>
+    <text x="57" y="35" text-anchor="middle" class="d-sub">CDM</text>
+    <rect x="10" y="50" width="95" height="26" rx="2" class="d-box"/>
+    <text x="57" y="67" text-anchor="middle" class="d-sub">Threat Intel</text>
+    <rect x="10" y="82" width="95" height="26" rx="2" class="d-box"/>
+    <text x="57" y="99" text-anchor="middle" class="d-sub">Activity / SIEM</text>
+    <rect x="10" y="114" width="95" height="26" rx="2" class="d-box"/>
+    <text x="57" y="131" text-anchor="middle" class="d-sub">Identity</text>
+    <rect x="10" y="146" width="95" height="26" rx="2" class="d-box"/>
+    <text x="57" y="163" text-anchor="middle" class="d-sub">PKI</text>
+    <rect x="10" y="178" width="95" height="26" rx="2" class="d-box"/>
+    <text x="57" y="195" text-anchor="middle" class="d-sub">Compliance</text>
+    <rect x="10" y="210" width="95" height="26" rx="2" class="d-box"/>
+    <text x="57" y="227" text-anchor="middle" class="d-sub">Data Policy</text>
+    <rect x="110" y="50" width="95" height="26" rx="2" class="d-box" opacity="0"/>
+    </g>
+    <path d="M105 31 C160 31 170 120 250 120" class="d-line-mute"/>
+    <path d="M105 63 C160 63 170 120 250 120" class="d-line-mute"/>
+    <path d="M105 95 C160 95 170 120 250 120" class="d-line-mute"/>
+    <path d="M105 127 L250 120" class="d-line-mute"/>
+    <path d="M105 159 C160 159 170 120 250 120" class="d-line-mute"/>
+    <path d="M105 191 C160 191 170 120 250 120" class="d-line-mute"/>
+    <path d="M105 223 C160 223 170 120 250 120" class="d-line-mute"/>
+    <rect x="250" y="88" width="90" height="70" rx="3" class="d-pri"/>
+    <text x="295" y="115" text-anchor="middle" class="d-label">Policy Engine</text>
+    <text x="295" y="131" text-anchor="middle" class="d-sub">(PDP)</text>
+    <text x="295" y="148" text-anchor="middle" class="d-accent-text">DECIDE</text>
+    <path d="M340 120 L388 120" class="d-line" marker-end="url(#arE1)"/>
+    <text x="343" y="112" class="d-micro">PERMIT /</text>
+    <text x="343" y="138" class="d-micro">DENY</text>
+    <defs><marker id="arE1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "fapi-2", name: "FAPI 2.0", category: "Foundations",
+  aliases: ["Financial API", "Open Banking", "OAuth"],
+  title: { prefix: "Spec", text: "OpenID Foundation" },
+  short: "The <strong>Financial-grade API</strong> security profile from the OpenID Foundation &mdash; a hardened OAuth 2.0 flavour required for Open Banking. It mandates sender-constrained tokens (DPoP or mTLS), signed request objects and stricter client authentication than ordinary OAuth.",
+  practice: "A UK Open Banking TPP initiating a payment must use Pushed Authorisation Requests, mTLS-bound tokens and JARM-signed responses — ordinary OAuth won't pass UK OBIE or Brazil Open Finance regulator conformance.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-fapi d-fapi" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-fapi">Hardening points added by FAPI 2.0</title>
+    <desc id="d-fapi">Compared to plain OAuth 2.0, FAPI 2.0 adds sender-constrained tokens, signed request objects, pushed authorisation and JARM signed responses.</desc>
+    <rect x="20" y="30" width="360" height="40" rx="3" class="d-ghost"/>
+    <text x="200" y="55" text-anchor="middle" class="d-sub">PLAIN OAUTH 2.0 &middot; bearer token &middot; form-posted request &middot; plaintext response</text>
+    <text x="20" y="95" class="d-accent-text">FAPI 2.0 HARDENS EACH STEP</text>
+    <rect x="20" y="110" width="85" height="96" rx="3" class="d-pri"/>
+    <text x="62" y="130" text-anchor="middle" class="d-label">PAR</text>
+    <text x="62" y="146" text-anchor="middle" class="d-sub">pushed</text>
+    <text x="62" y="160" text-anchor="middle" class="d-sub">auth req</text>
+    <text x="62" y="184" text-anchor="middle" class="d-micro">STEP 1</text>
+    <rect x="115" y="110" width="85" height="96" rx="3" class="d-pri"/>
+    <text x="157" y="130" text-anchor="middle" class="d-label">JWS req</text>
+    <text x="157" y="146" text-anchor="middle" class="d-sub">signed</text>
+    <text x="157" y="160" text-anchor="middle" class="d-sub">request obj</text>
+    <text x="157" y="184" text-anchor="middle" class="d-micro">STEP 2</text>
+    <rect x="210" y="110" width="85" height="96" rx="3" class="d-pri"/>
+    <text x="252" y="130" text-anchor="middle" class="d-label">DPoP / mTLS</text>
+    <text x="252" y="146" text-anchor="middle" class="d-sub">sender</text>
+    <text x="252" y="160" text-anchor="middle" class="d-sub">constrained</text>
+    <text x="252" y="184" text-anchor="middle" class="d-micro">STEP 3</text>
+    <rect x="305" y="110" width="85" height="96" rx="3" class="d-pri"/>
+    <text x="347" y="130" text-anchor="middle" class="d-label">JARM</text>
+    <text x="347" y="146" text-anchor="middle" class="d-sub">signed</text>
+    <text x="347" y="160" text-anchor="middle" class="d-sub">response</text>
+    <text x="347" y="184" text-anchor="middle" class="d-micro">STEP 4</text>
+    <path d="M20 220 L380 220" class="d-line-mute"/>
+    <text x="20" y="238" class="d-micro">REGULATED BY UK OBIE &middot; BERLIN GROUP &middot; BRAZIL OPEN FINANCE</text>
+  </svg>`
+},
+{
+  id: "featurespace", name: "Featurespace ARIC", category: "API & Risk",
+  aliases: ["fraud", "AML", "risk scoring"],
+  title: { prefix: "NIST", text: "Risk / Threat Intel DS" },
+  short: "An <strong>adaptive behavioural-analytics</strong> engine that produces per-transaction fraud and AML risk scores in real time. Scores feed the Policy Engine so the bank can step-up authentication, hold a payment or escalate to manual review instead of blanket-blocking.",
+  practice: "A sudden £20,000 transfer to a never-seen beneficiary scores 0.82; the PE responds by blocking the transfer and prompting a CIBA step-up on the customer's second device.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-feat d-feat" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-feat">Transaction risk scoring pipeline</title>
+    <desc id="d-feat">Live transaction joined with customer history and graph features flows into the behavioural model which emits a risk score consumed by the policy engine.</desc>
+    <rect x="10" y="30" width="110" height="36" rx="3" class="d-box"/>
+    <text x="65" y="52" text-anchor="middle" class="d-label">Live txn</text>
+    <rect x="10" y="80" width="110" height="36" rx="3" class="d-box"/>
+    <text x="65" y="102" text-anchor="middle" class="d-label">History</text>
+    <rect x="10" y="130" width="110" height="36" rx="3" class="d-box"/>
+    <text x="65" y="152" text-anchor="middle" class="d-label">Graph features</text>
+    <rect x="150" y="55" width="130" height="118" rx="3" class="d-pri"/>
+    <text x="215" y="85" text-anchor="middle" class="d-label">ARIC model</text>
+    <text x="215" y="101" text-anchor="middle" class="d-sub">adaptive</text>
+    <text x="215" y="117" text-anchor="middle" class="d-sub">behavioural</text>
+    <text x="215" y="140" text-anchor="middle" class="d-accent-text">0.82</text>
+    <text x="215" y="156" text-anchor="middle" class="d-micro">RISK SCORE</text>
+    <rect x="305" y="80" width="85" height="70" rx="3" class="d-warn"/>
+    <text x="347" y="105" text-anchor="middle" class="d-label">PE</text>
+    <text x="347" y="122" text-anchor="middle" class="d-sub">step-up</text>
+    <text x="347" y="138" text-anchor="middle" class="d-sub">hold / review</text>
+    <path d="M120 48 L150 90" class="d-line"/>
+    <path d="M120 98 L150 110" class="d-line"/>
+    <path d="M120 148 L150 130" class="d-line"/>
+    <path d="M280 115 L305 115" class="d-line" marker-end="url(#arF1)"/>
+    <text x="20" y="205" class="d-micro">PSD2 ART 2 &middot; 5AMLD / 6AMLD &middot; FFIEC BSA</text>
+    <defs><marker id="arF1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "forgerock-ciam", name: "ForgeRock CIAM", category: "Identity",
+  aliases: ["customer identity", "OIDC", "passkey"],
+  title: { prefix: "NIST", text: "Identity Data Source" },
+  short: "A <strong>customer-facing identity platform</strong> that handles sign-up, login, progressive profiling and risk-based authentication for retail banking users. Issues OIDC / FAPI 2.0 tokens and supports passkeys and WebAuthn for phishing-resistant logins.",
+  practice: "A customer opens the mobile app, the CIAM issues an OIDC token enriched with a live risk score; the API gateway then enforces fine-grained policy against that claim for every downstream call.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-ciam d-ciam" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-ciam">Customer login with risk-enriched token</title>
+    <desc id="d-ciam">A customer authenticates to ForgeRock CIAM which issues a signed OIDC token carrying a risk claim, consumed downstream by the PEP.</desc>
+    <rect x="10" y="95" width="80" height="60" rx="3" class="d-box"/>
+    <text x="50" y="120" text-anchor="middle" class="d-label">Customer</text>
+    <text x="50" y="138" text-anchor="middle" class="d-sub">passkey</text>
+    <rect x="125" y="55" width="150" height="140" rx="3" class="d-pri"/>
+    <text x="200" y="85" text-anchor="middle" class="d-label">ForgeRock CIAM</text>
+    <text x="200" y="104" text-anchor="middle" class="d-sub">&middot; progressive profile</text>
+    <text x="200" y="120" text-anchor="middle" class="d-sub">&middot; risk-based auth</text>
+    <text x="200" y="136" text-anchor="middle" class="d-sub">&middot; FAPI 2.0 issuer</text>
+    <text x="200" y="160" text-anchor="middle" class="d-accent-text">OIDC TOKEN</text>
+    <text x="200" y="176" text-anchor="middle" class="d-sub">risk: 0.14</text>
+    <rect x="305" y="95" width="85" height="60" rx="3" class="d-warn"/>
+    <text x="347" y="118" text-anchor="middle" class="d-label">API PEP</text>
+    <text x="347" y="135" text-anchor="middle" class="d-sub">enforces</text>
+    <path d="M90 125 L125 125" class="d-line" marker-end="url(#arG1)"/>
+    <path d="M275 125 L305 125" class="d-line" marker-end="url(#arG1)"/>
+    <text x="20" y="222" class="d-micro">PSD2 SCA &middot; OBIE &middot; DORA ART 9</text>
+    <defs><marker id="arG1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "vault-hsm", name: "HashiCorp Vault + HSM", category: "Secrets & PKI",
+  aliases: ["secrets", "HSM", "dynamic credentials", "KMS"],
+  title: { prefix: "NIST", text: "Supporting Infra / PKI DS" },
+  short: "A secrets manager that issues <strong>dynamic, short-lived credentials</strong> for databases, cloud APIs and certificates, with an HSM (hardware security module) providing tamper-resistant root keys for the most sensitive signing operations (CIAM, FAPI JWS signer, eIDAS QWAC issuance).",
+  practice: "An application asks Vault for a 15-minute Postgres credential; Vault creates it on-the-fly, the HSM signs the issuance chain — long-lived database passwords are eliminated and rotation becomes a non-event.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-vault d-vault" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-vault">Dynamic secrets backed by an HSM</title>
+    <desc id="d-vault">A workload requests a short-lived credential from Vault which is HSM-rooted and presented to a downstream resource.</desc>
+    <rect x="10" y="100" width="90" height="50" rx="3" class="d-box"/>
+    <text x="55" y="122" text-anchor="middle" class="d-label">Workload</text>
+    <text x="55" y="138" text-anchor="middle" class="d-sub">asks for secret</text>
+    <rect x="130" y="60" width="140" height="130" rx="3" class="d-pri"/>
+    <text x="200" y="90" text-anchor="middle" class="d-label">Vault</text>
+    <text x="200" y="110" text-anchor="middle" class="d-sub">&middot; dynamic secret</text>
+    <text x="200" y="126" text-anchor="middle" class="d-sub">&middot; 15-min TTL</text>
+    <text x="200" y="142" text-anchor="middle" class="d-sub">&middot; auto-rotate</text>
+    <rect x="150" y="158" width="100" height="24" rx="2" class="d-warn"/>
+    <text x="200" y="174" text-anchor="middle" class="d-micro">HSM ROOT KEY</text>
+    <rect x="300" y="40" width="90" height="40" rx="3" class="d-box"/>
+    <text x="345" y="64" text-anchor="middle" class="d-sub">Database</text>
+    <rect x="300" y="90" width="90" height="40" rx="3" class="d-box"/>
+    <text x="345" y="114" text-anchor="middle" class="d-sub">Cloud API</text>
+    <rect x="300" y="140" width="90" height="40" rx="3" class="d-box"/>
+    <text x="345" y="164" text-anchor="middle" class="d-sub">FAPI signer</text>
+    <rect x="300" y="190" width="90" height="40" rx="3" class="d-box"/>
+    <text x="345" y="214" text-anchor="middle" class="d-sub">QWAC issuer</text>
+    <path d="M100 125 L128 125" class="d-line" marker-end="url(#arH1)"/>
+    <path d="M270 100 L300 60" class="d-line"/>
+    <path d="M270 115 L300 110" class="d-line"/>
+    <path d="M270 140 L300 160" class="d-line"/>
+    <path d="M270 160 L300 210" class="d-line"/>
+    <defs><marker id="arH1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "immuta", name: "Immuta (Data-plane ABAC)", category: "Data",
+  aliases: ["ABAC", "data access", "row-level security", "masking"],
+  title: { prefix: "NIST", text: "Data Access Policy DS" },
+  short: "A <strong>data-access policy engine</strong> that enforces row- and column-level rules on Snowflake, Databricks and S3. Classification-driven policies apply dynamic masking based on the querying user's purpose rather than static table grants.",
+  practice: "A data scientist queries a customer table for modelling; Immuta masks the PAN columns automatically because her access purpose is \"analytics\" rather than \"payment processing\".",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-immuta d-immuta" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-immuta">Row and column masking at query time</title>
+    <desc id="d-immuta">A raw table is filtered and masked by Immuta before results reach the querying user, based on purpose and classification.</desc>
+    <rect x="10" y="40" width="100" height="170" rx="3" class="d-box"/>
+    <text x="60" y="60" text-anchor="middle" class="d-accent-text">RAW TABLE</text>
+    <line x1="10" y1="70" x2="110" y2="70" class="d-line-mute"/>
+    <text x="20" y="86" class="d-sub">id  name  pan</text>
+    <text x="20" y="102" class="d-sub">1   ana   4111</text>
+    <text x="20" y="118" class="d-sub">2   bo    5500</text>
+    <text x="20" y="134" class="d-sub">3   cai   3786</text>
+    <text x="20" y="150" class="d-sub">4   dev   6011</text>
+    <text x="20" y="166" class="d-sub">5   eli   3714</text>
+    <text x="20" y="182" class="d-sub">6   fan   4917</text>
+    <text x="20" y="198" class="d-sub">7   gil   5412</text>
+    <rect x="140" y="80" width="120" height="90" rx="3" class="d-pri"/>
+    <text x="200" y="108" text-anchor="middle" class="d-label">Immuta ABAC</text>
+    <text x="200" y="126" text-anchor="middle" class="d-sub">purpose: analytics</text>
+    <text x="200" y="142" text-anchor="middle" class="d-sub">classification:PCI</text>
+    <text x="200" y="158" text-anchor="middle" class="d-accent-text">MASK PAN</text>
+    <rect x="290" y="60" width="100" height="130" rx="3" class="d-warn"/>
+    <text x="340" y="80" text-anchor="middle" class="d-warn-text">SANITIZED</text>
+    <line x1="290" y1="90" x2="390" y2="90" class="d-line-mute"/>
+    <text x="298" y="106" class="d-sub">id  name  pan</text>
+    <text x="298" y="122" class="d-sub">1   ana   ****</text>
+    <text x="298" y="138" class="d-sub">2   bo    ****</text>
+    <text x="298" y="154" class="d-sub">3   cai   ****</text>
+    <text x="298" y="170" class="d-sub">&hellip;</text>
+    <path d="M110 125 L138 125" class="d-line" marker-end="url(#arI1)"/>
+    <path d="M260 125 L290 125" class="d-line" marker-end="url(#arI1)"/>
+    <defs><marker id="arI1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "istio", name: "Istio Service Mesh", category: "Enforcement",
+  aliases: ["mesh", "Envoy", "sidecar", "east-west"],
+  title: { prefix: "NIST", text: "PEP (east-west)" },
+  short: "A <strong>Kubernetes service mesh</strong> that injects Envoy sidecars next to every pod, enabling mTLS between services, per-request authorisation via OPA and structured access logs on every east-west hop. It converts internal traffic from implicit trust into explicit, audited calls.",
+  practice: "Two microservices inside the cluster cannot talk without mutual SPIFFE certificates and an OPA-approved decision — even if an attacker lands inside one pod, lateral movement is blocked.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-istio d-istio" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-istio">mTLS between sidecar-equipped pods</title>
+    <desc id="d-istio">Two pods with Envoy sidecars establish mTLS between them while each sidecar consults OPA for authorisation.</desc>
+    <rect x="20" y="60" width="140" height="130" rx="3" class="d-box"/>
+    <text x="30" y="52" class="d-accent-text">POD A</text>
+    <rect x="35" y="80" width="50" height="50" rx="3" class="d-pri"/>
+    <text x="60" y="108" text-anchor="middle" class="d-sub">app</text>
+    <rect x="100" y="80" width="50" height="50" rx="3" class="d-warn"/>
+    <text x="125" y="104" text-anchor="middle" class="d-label" font-size="10">Envoy</text>
+    <text x="125" y="118" text-anchor="middle" class="d-sub" font-size="8">sidecar</text>
+    <rect x="35" y="145" width="115" height="36" rx="2" class="d-bg"/>
+    <text x="92" y="168" text-anchor="middle" class="d-micro">SPIFFE SVID</text>
+    <rect x="240" y="60" width="140" height="130" rx="3" class="d-box"/>
+    <text x="250" y="52" class="d-accent-text">POD B</text>
+    <rect x="315" y="80" width="50" height="50" rx="3" class="d-pri"/>
+    <text x="340" y="108" text-anchor="middle" class="d-sub">app</text>
+    <rect x="250" y="80" width="50" height="50" rx="3" class="d-warn"/>
+    <text x="275" y="104" text-anchor="middle" class="d-label" font-size="10">Envoy</text>
+    <text x="275" y="118" text-anchor="middle" class="d-sub" font-size="8">sidecar</text>
+    <rect x="250" y="145" width="115" height="36" rx="2" class="d-bg"/>
+    <text x="307" y="168" text-anchor="middle" class="d-micro">SPIFFE SVID</text>
+    <path d="M150 105 L240 105" class="d-line" marker-end="url(#arJ1)"/>
+    <text x="175" y="98" class="d-accent-text">mTLS</text>
+    <rect x="155" y="205" width="90" height="34" rx="3" class="d-pri"/>
+    <text x="200" y="226" text-anchor="middle" class="d-label">OPA</text>
+    <path d="M125 130 C125 180 170 200 170 204" class="d-line-mute"/>
+    <path d="M275 130 C275 180 230 200 230 204" class="d-line-mute"/>
+    <defs><marker id="arJ1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "kong", name: "Kong + FAPI (API Gateway)", category: "Enforcement",
+  aliases: ["API gateway", "north-south", "DPoP", "rate limit"],
+  title: { prefix: "NIST", text: "Policy Enforcement Point" },
+  short: "A <strong>north-south API gateway</strong> that enforces token validation, DPoP, mTLS binding, request-object signing and rate limits at the ingress of retail, corporate and Open Banking APIs. Authlete handles the OAuth / FAPI engine behind it.",
+  practice: "A third-party provider's payment-initiation request hits Kong, which validates the JWS-signed request object, checks mTLS binding and calls OPA before forwarding to the payments backend.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-kong d-kong" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-kong">North-south API enforcement</title>
+    <desc id="d-kong">Traffic from a third-party provider enters Kong which applies multiple checks before forwarding to backend APIs.</desc>
+    <rect x="10" y="100" width="70" height="50" rx="3" class="d-box"/>
+    <text x="45" y="122" text-anchor="middle" class="d-label">TPP</text>
+    <text x="45" y="138" text-anchor="middle" class="d-sub">client</text>
+    <rect x="120" y="40" width="180" height="170" rx="3" class="d-pri"/>
+    <text x="210" y="64" text-anchor="middle" class="d-label">Kong Gateway</text>
+    <text x="210" y="80" text-anchor="middle" class="d-sub">(FAPI module)</text>
+    <line x1="135" y1="92" x2="285" y2="92" class="d-line-mute"/>
+    <text x="140" y="108" class="d-sub">&check; token &amp; DPoP</text>
+    <text x="140" y="124" class="d-sub">&check; mTLS binding</text>
+    <text x="140" y="140" class="d-sub">&check; JWS request obj</text>
+    <text x="140" y="156" class="d-sub">&check; rate limit</text>
+    <text x="140" y="172" class="d-sub">&check; bot defence</text>
+    <text x="140" y="192" class="d-accent-text">&rarr; ASK OPA</text>
+    <rect x="335" y="50" width="55" height="40" rx="3" class="d-box"/>
+    <text x="362" y="72" text-anchor="middle" class="d-sub">retail</text>
+    <rect x="335" y="100" width="55" height="40" rx="3" class="d-box"/>
+    <text x="362" y="122" text-anchor="middle" class="d-sub">corp</text>
+    <rect x="335" y="150" width="55" height="40" rx="3" class="d-warn"/>
+    <text x="362" y="172" text-anchor="middle" class="d-sub">OB / FAPI</text>
+    <path d="M80 125 L118 125" class="d-line" marker-end="url(#arK1)"/>
+    <path d="M300 125 L333 70" class="d-line"/>
+    <path d="M300 125 L333 120" class="d-line"/>
+    <path d="M300 125 L333 168" class="d-line"/>
+    <defs><marker id="arK1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "entra-id", name: "Microsoft Entra ID (Workforce)", category: "Identity",
+  aliases: ["workforce", "Azure AD", "Conditional Access", "Intune"],
+  title: { prefix: "NIST", text: "Identity Data Source" },
+  short: "Microsoft's cloud identity directory used as the <strong>authoritative workforce IdP</strong>. Combined with Conditional Access and Intune it becomes a per-application policy decision point for staff logins, factoring device compliance into every sign-in.",
+  practice: "A staff member signing into Microsoft 365 from a non-compliant laptop is blocked by Conditional Access before the session is ever established — the token never leaves Entra.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-entra d-entra" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-entra">Conditional Access policy flow</title>
+    <desc id="d-entra">A staff user attempting sign-in is evaluated against identity and device signals by Entra ID Conditional Access, which either issues a token or blocks.</desc>
+    <rect x="10" y="100" width="80" height="50" rx="3" class="d-box"/>
+    <text x="50" y="122" text-anchor="middle" class="d-label">Staff user</text>
+    <text x="50" y="138" text-anchor="middle" class="d-sub">sign-in</text>
+    <rect x="120" y="40" width="160" height="170" rx="3" class="d-pri"/>
+    <text x="200" y="64" text-anchor="middle" class="d-label">Entra ID</text>
+    <text x="200" y="82" text-anchor="middle" class="d-sub">Conditional Access</text>
+    <line x1="135" y1="95" x2="265" y2="95" class="d-line-mute"/>
+    <text x="140" y="112" class="d-sub">&middot; identity</text>
+    <text x="140" y="128" class="d-sub">&middot; Intune compliance</text>
+    <text x="140" y="144" class="d-sub">&middot; location</text>
+    <text x="140" y="160" class="d-sub">&middot; sign-in risk</text>
+    <text x="140" y="182" class="d-accent-text">PDP PER APP</text>
+    <rect x="310" y="50" width="80" height="55" rx="3" class="d-box"/>
+    <text x="350" y="75" text-anchor="middle" class="d-sub">token</text>
+    <text x="350" y="90" text-anchor="middle" class="d-label">&check; M365</text>
+    <rect x="310" y="145" width="80" height="55" rx="3" class="d-warn"/>
+    <text x="350" y="170" text-anchor="middle" class="d-sub">block</text>
+    <text x="350" y="185" text-anchor="middle" class="d-warn-text">&times; HRE</text>
+    <path d="M90 125 L118 125" class="d-line" marker-end="url(#arL1)"/>
+    <path d="M280 85 L310 78" class="d-line" marker-end="url(#arL1)"/>
+    <path d="M280 165 L310 172" class="d-line-warn" marker-end="url(#arL2)"/>
+    <defs>
+      <marker id="arL1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker>
+      <marker id="arL2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--svg-warn)"/></marker>
+    </defs>
+  </svg>`
+},
+{
+  id: "mtls", name: "mTLS (Mutual TLS)", category: "Foundations",
+  aliases: ["mutual TLS", "X.509", "certificate"],
+  title: { prefix: "Spec", text: "IETF RFC 8705" },
+  short: "An authentication scheme where <strong>both client and server present X.509 certificates</strong> and cryptographically prove they own the private keys. It replaces shared passwords and bearer tokens with strong, non-repudiable workload-to-workload identity.",
+  practice: "Every pod-to-pod call inside the service mesh presents a SPIFFE-issued certificate — an attacker with a stolen bearer token cannot replay it without also owning the matching private key.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-mtls d-mtls" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-mtls">Mutual versus one-way TLS</title>
+    <desc id="d-mtls">Regular TLS authenticates only the server; mTLS authenticates both parties with certificates.</desc>
+    <text x="20" y="32" class="d-accent-text">REGULAR TLS</text>
+    <rect x="20" y="42" width="100" height="44" rx="3" class="d-box"/>
+    <text x="70" y="66" text-anchor="middle" class="d-label">Client</text>
+    <rect x="280" y="42" width="100" height="44" rx="3" class="d-pri"/>
+    <text x="330" y="66" text-anchor="middle" class="d-label">Server</text>
+    <text x="330" y="82" text-anchor="middle" class="d-sub">has cert</text>
+    <path d="M280 56 L120 56" class="d-line" marker-end="url(#arM1)"/>
+    <text x="200" y="52" text-anchor="middle" class="d-micro">SERVER CERT</text>
+    <path d="M120 76 L275 76" class="d-line-mute" marker-end="url(#arMg)"/>
+    <text x="200" y="72" text-anchor="middle" class="d-micro">REQUEST (ANON)</text>
+    <text x="20" y="138" class="d-accent-text">MUTUAL TLS (mTLS)</text>
+    <rect x="20" y="150" width="100" height="64" rx="3" class="d-pri"/>
+    <text x="70" y="176" text-anchor="middle" class="d-label">Client</text>
+    <text x="70" y="192" text-anchor="middle" class="d-sub">has cert</text>
+    <rect x="280" y="150" width="100" height="64" rx="3" class="d-pri"/>
+    <text x="330" y="176" text-anchor="middle" class="d-label">Server</text>
+    <text x="330" y="192" text-anchor="middle" class="d-sub">has cert</text>
+    <path d="M120 170 L275 170" class="d-line" marker-end="url(#arM1)"/>
+    <text x="200" y="166" text-anchor="middle" class="d-micro">CLIENT CERT</text>
+    <path d="M275 196 L123 196" class="d-line" marker-end="url(#arM1)"/>
+    <text x="200" y="192" text-anchor="middle" class="d-micro">SERVER CERT</text>
+    <defs>
+      <marker id="arM1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker>
+      <marker id="arMg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--svg-text-2)"/></marker>
+    </defs>
+  </svg>`
+},
+{
+  id: "netskope", name: "Netskope SSE (CASB + SWG + DLP)", category: "Enforcement",
+  aliases: ["CASB", "SWG", "DLP", "SaaS"],
+  title: { prefix: "NIST", text: "PEP (SaaS) &middot; DLP DS" },
+  short: "A <strong>Security Service Edge</strong> that intercepts SaaS traffic inline, applies DLP to data in motion, and enforces per-session policy on the ~1,200 SaaS apps too numerous to front with an API gateway. Functions as CASB, Secure Web Gateway and DLP in one.",
+  practice: "A user tries to upload a spreadsheet containing card numbers to a personal Dropbox; Netskope DLP blocks the upload inline and notifies the SOC before any data leaves the tenant.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-nets d-nets" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-nets">Inline SaaS proxy with DLP</title>
+    <desc id="d-nets">User SaaS traffic flows through Netskope which applies CASB, SWG and DLP controls before allowing or blocking the session.</desc>
+    <rect x="10" y="100" width="80" height="50" rx="3" class="d-box"/>
+    <text x="50" y="122" text-anchor="middle" class="d-label">User</text>
+    <rect x="125" y="50" width="150" height="150" rx="3" class="d-pri"/>
+    <text x="200" y="75" text-anchor="middle" class="d-label">Netskope SSE</text>
+    <text x="200" y="92" text-anchor="middle" class="d-sub">inline proxy</text>
+    <line x1="140" y1="102" x2="260" y2="102" class="d-line-mute"/>
+    <rect x="140" y="112" width="120" height="22" rx="2" class="d-warn"/>
+    <text x="200" y="127" text-anchor="middle" class="d-sub">CASB</text>
+    <rect x="140" y="138" width="120" height="22" rx="2" class="d-warn"/>
+    <text x="200" y="153" text-anchor="middle" class="d-sub">SWG</text>
+    <rect x="140" y="164" width="120" height="22" rx="2" class="d-warn"/>
+    <text x="200" y="179" text-anchor="middle" class="d-sub">DLP</text>
+    <rect x="305" y="30" width="85" height="36" rx="3" class="d-box"/>
+    <text x="347" y="52" text-anchor="middle" class="d-sub">M365</text>
+    <rect x="305" y="76" width="85" height="36" rx="3" class="d-box"/>
+    <text x="347" y="98" text-anchor="middle" class="d-sub">Salesforce</text>
+    <rect x="305" y="122" width="85" height="36" rx="3" class="d-box"/>
+    <text x="347" y="144" text-anchor="middle" class="d-sub">Workday</text>
+    <rect x="305" y="168" width="85" height="36" rx="3" class="d-ghost"/>
+    <text x="347" y="190" text-anchor="middle" class="d-sub">1,200 SaaS</text>
+    <path d="M90 125 L123 125" class="d-line" marker-end="url(#arN1)"/>
+    <path d="M275 90 L305 48" class="d-line"/>
+    <path d="M275 110 L305 94" class="d-line"/>
+    <path d="M275 150 L305 140" class="d-line"/>
+    <path d="M275 170 L305 186" class="d-line"/>
+    <defs><marker id="arN1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "nist-800-207", name: "NIST SP 800-207", category: "Foundations",
+  aliases: ["Zero Trust standard", "seven tenets"],
+  title: { prefix: "Spec", text: "US NIST framework" },
+  short: "The US National Institute of Standards' foundational document defining Zero Trust. It specifies the logical building blocks &mdash; <strong>Policy Engine, Policy Administrator, Policy Enforcement Point</strong> &mdash; and seven tenets any ZT deployment must satisfy.",
+  practice: "When regulators ask \"is your architecture zero trust?\", NIST 800-207 is the canonical yardstick — banks map each control back to one of its seven tenets in their ARB submissions.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-nist d-nist" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-nist">PE/PA/PEP triad with seven tenets</title>
+    <desc id="d-nist">The three logical components of NIST 800-207 are the Policy Engine, Policy Administrator and Policy Enforcement Point, governed by seven tenets.</desc>
+    <rect x="20" y="30" width="360" height="80" rx="3" class="d-bg"/>
+    <text x="40" y="52" class="d-accent-text">NIST 800-207 CONTROL PLANE</text>
+    <rect x="40" y="60" width="140" height="42" rx="3" class="d-pri"/>
+    <text x="110" y="80" text-anchor="middle" class="d-label">Policy Engine</text>
+    <text x="110" y="95" text-anchor="middle" class="d-sub">PE / PDP</text>
+    <rect x="200" y="60" width="160" height="42" rx="3" class="d-pri"/>
+    <text x="280" y="80" text-anchor="middle" class="d-label">Policy Administrator</text>
+    <text x="280" y="95" text-anchor="middle" class="d-sub">PA</text>
+    <rect x="80" y="135" width="240" height="45" rx="3" class="d-warn"/>
+    <text x="200" y="157" text-anchor="middle" class="d-label">Policy Enforcement Point</text>
+    <text x="200" y="172" text-anchor="middle" class="d-sub">PEP &middot; data plane</text>
+    <path d="M110 102 L190 134" class="d-line-mute"/>
+    <path d="M280 102 L220 134" class="d-line-mute"/>
+    <text x="20" y="205" class="d-accent-text">7 TENETS</text>
+    <text x="20" y="222" class="d-sub">1 resources  2 secure communication  3 per-session  4 policy</text>
+    <text x="20" y="236" class="d-sub">5 integrity  6 dynamic auth  7 continuous monitoring</text>
+  </svg>`
+},
+{
+  id: "oidc", name: "OIDC (OpenID Connect)", category: "Foundations",
+  aliases: ["OpenID Connect", "identity token", "JWT"],
+  title: { prefix: "Spec", text: "OpenID Foundation" },
+  short: "An <strong>identity layer on top of OAuth 2.0</strong> that issues signed JSON Web Tokens (JWTs) carrying who the user is, when they authenticated and with what strength. PEPs consume these tokens to authenticate every request &mdash; no session cookies, no implicit network trust.",
+  practice: "A customer logs in, CIAM issues an OIDC id-token and access-token; Kong validates the JWT signature on every subsequent API call and extracts the subject, session-ID and risk claim.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-oidc d-oidc" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-oidc">OIDC token lifecycle</title>
+    <desc id="d-oidc">An identity provider issues a signed JWT which the client presents to resource servers that validate the signature.</desc>
+    <rect x="10" y="95" width="80" height="60" rx="3" class="d-box"/>
+    <text x="50" y="120" text-anchor="middle" class="d-label">User</text>
+    <text x="50" y="138" text-anchor="middle" class="d-sub">login</text>
+    <rect x="125" y="85" width="110" height="80" rx="3" class="d-pri"/>
+    <text x="180" y="110" text-anchor="middle" class="d-label">IdP</text>
+    <text x="180" y="126" text-anchor="middle" class="d-sub">issues</text>
+    <text x="180" y="142" text-anchor="middle" class="d-accent-text">JWT</text>
+    <rect x="270" y="85" width="120" height="80" rx="3" class="d-warn"/>
+    <text x="330" y="108" text-anchor="middle" class="d-label">Resource server</text>
+    <text x="330" y="124" text-anchor="middle" class="d-sub">validates</text>
+    <text x="330" y="140" text-anchor="middle" class="d-sub">signature</text>
+    <path d="M90 125 L125 125" class="d-line" marker-end="url(#arO1)"/>
+    <path d="M235 125 L270 125" class="d-line" marker-end="url(#arO1)"/>
+    <rect x="20" y="190" width="360" height="50" rx="3" class="d-bg"/>
+    <text x="35" y="210" class="d-accent-text">JWT CLAIMS</text>
+    <text x="35" y="226" class="d-sub">sub=u-42 &middot; aud=banking-api &middot; iat=1714.. &middot; amr=pwd+webauthn &middot; risk=0.14</text>
+    <defs><marker id="arO1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "okta", name: "Okta Workforce (Federation Broker)", category: "Identity",
+  aliases: ["SaaS federation", "SAML", "SSO"],
+  title: { prefix: "NIST", text: "Identity DS / PEP for SaaS" },
+  short: "A SaaS <strong>identity broker</strong> that consolidates trust relationships to hundreds of third-party applications into a single federation hub. Enforces session risk and device trust at SaaS ingress so the workforce IdP connects once, not 1,200 times.",
+  practice: "Rather than configuring SAML against Entra for each SaaS directly, the bank federates Entra to Okta once; Okta fans out to every SaaS — each integration is centralised and revocable.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-okta d-okta" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-okta">SaaS federation hub</title>
+    <desc id="d-okta">A single workforce IdP federates into Okta which fans out authentication to many SaaS tenants.</desc>
+    <rect x="10" y="100" width="100" height="50" rx="3" class="d-box"/>
+    <text x="60" y="122" text-anchor="middle" class="d-label">Entra ID</text>
+    <text x="60" y="138" text-anchor="middle" class="d-sub">workforce</text>
+    <rect x="150" y="85" width="100" height="80" rx="3" class="d-pri"/>
+    <text x="200" y="110" text-anchor="middle" class="d-label">Okta</text>
+    <text x="200" y="126" text-anchor="middle" class="d-sub">broker</text>
+    <text x="200" y="146" text-anchor="middle" class="d-accent-text">HUB</text>
+    <path d="M110 125 L150 125" class="d-line" marker-end="url(#arP1)"/>
+    <rect x="290" y="20" width="90" height="30" rx="3" class="d-box"/>
+    <text x="335" y="40" text-anchor="middle" class="d-sub">Salesforce</text>
+    <rect x="290" y="60" width="90" height="30" rx="3" class="d-box"/>
+    <text x="335" y="80" text-anchor="middle" class="d-sub">Workday</text>
+    <rect x="290" y="100" width="90" height="30" rx="3" class="d-box"/>
+    <text x="335" y="120" text-anchor="middle" class="d-sub">ServiceNow</text>
+    <rect x="290" y="140" width="90" height="30" rx="3" class="d-box"/>
+    <text x="335" y="160" text-anchor="middle" class="d-sub">Snowflake</text>
+    <rect x="290" y="180" width="90" height="30" rx="3" class="d-ghost"/>
+    <text x="335" y="200" text-anchor="middle" class="d-sub">&hellip;1,200 SaaS</text>
+    <path d="M250 110 L290 35" class="d-line-mute"/>
+    <path d="M250 120 L290 75" class="d-line-mute"/>
+    <path d="M250 130 L290 115" class="d-line-mute"/>
+    <path d="M250 140 L290 155" class="d-line-mute"/>
+    <path d="M250 150 L290 195" class="d-line-mute"/>
+    <defs><marker id="arP1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "opa", name: "Open Policy Agent (PE)", category: "Control Plane",
+  aliases: ["OPA", "Rego", "policy engine"],
+  title: { prefix: "NIST", text: "Policy Engine (PDP)" },
+  short: "A general-purpose policy engine that evaluates <strong>Rego</strong> rules at sub-millisecond latency. Runs as a sidecar next to each PEP so decisions are local, fast and auditable — every decision is logged with a unique ID so it can be replayed for audit.",
+  practice: "When Kong receives a payment API request, it calls the co-resident OPA sidecar with the request and claims; OPA returns a decision in under 2ms and emits a signed decision-log entry for Splunk.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-opa d-opa" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-opa">OPA sidecar decision flow</title>
+    <desc id="d-opa">A PEP queries OPA which evaluates Rego policy against input and returns a decision, emitting a decision log.</desc>
+    <rect x="10" y="95" width="90" height="60" rx="3" class="d-warn"/>
+    <text x="55" y="120" text-anchor="middle" class="d-label">PEP</text>
+    <text x="55" y="138" text-anchor="middle" class="d-sub">Kong/Envoy</text>
+    <rect x="140" y="30" width="160" height="170" rx="3" class="d-pri"/>
+    <text x="220" y="55" text-anchor="middle" class="d-label">OPA sidecar</text>
+    <text x="220" y="72" text-anchor="middle" class="d-sub">Rego + data</text>
+    <line x1="155" y1="82" x2="285" y2="82" class="d-line-mute"/>
+    <text x="160" y="102" class="d-sub">input: request + claims</text>
+    <text x="160" y="120" class="d-sub">data: bundles</text>
+    <text x="160" y="138" class="d-sub">policy: *.rego</text>
+    <text x="160" y="162" class="d-accent-text">DECIDE &lt; 2 ms</text>
+    <text x="160" y="180" class="d-sub">allow = true</text>
+    <rect x="325" y="45" width="65" height="50" rx="3" class="d-box"/>
+    <text x="357" y="70" text-anchor="middle" class="d-sub">permit</text>
+    <text x="357" y="85" text-anchor="middle" class="d-label">&check;</text>
+    <rect x="325" y="105" width="65" height="50" rx="3" class="d-box"/>
+    <text x="357" y="130" text-anchor="middle" class="d-sub">decision</text>
+    <text x="357" y="144" text-anchor="middle" class="d-sub">log</text>
+    <path d="M100 115 L138 75" class="d-line" marker-end="url(#arQ1)"/>
+    <path d="M138 165 L100 145" class="d-line" marker-end="url(#arQ1)"/>
+    <path d="M300 70 L325 70" class="d-line" marker-end="url(#arQ1)"/>
+    <path d="M300 130 L325 130" class="d-line" marker-end="url(#arQ1)"/>
+    <defs><marker id="arQ1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "otel", name: "OpenTelemetry + Grafana/Dynatrace", category: "Observability",
+  aliases: ["OTel", "traces", "metrics", "logs"],
+  title: { prefix: "NIST", text: "Activity Log Data Source" },
+  short: "A <strong>vendor-neutral telemetry pipeline</strong> that collects distributed traces, metrics and logs with a single instrumentation API. Keeps observability portable while Policy-Engine and PA SLOs (e.g. P99 decision latency &lt;10 ms) are monitored in Grafana or Dynatrace.",
+  practice: "An OPA decision taking 50ms triggers an OTel span with the decision-ID; the on-call engineer spots the slow span in Grafana, correlates to a misconfigured bundle and rolls back in minutes.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-otel d-otel" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-otel">Telemetry collection pipeline</title>
+    <desc id="d-otel">Services emit traces, metrics and logs to an OpenTelemetry collector which fans out to multiple backends.</desc>
+    <rect x="10" y="35" width="100" height="30" rx="3" class="d-box"/>
+    <text x="60" y="55" text-anchor="middle" class="d-sub">Service A</text>
+    <rect x="10" y="75" width="100" height="30" rx="3" class="d-box"/>
+    <text x="60" y="95" text-anchor="middle" class="d-sub">Service B</text>
+    <rect x="10" y="115" width="100" height="30" rx="3" class="d-box"/>
+    <text x="60" y="135" text-anchor="middle" class="d-sub">OPA / PEP</text>
+    <rect x="10" y="155" width="100" height="30" rx="3" class="d-box"/>
+    <text x="60" y="175" text-anchor="middle" class="d-sub">Ingress</text>
+    <rect x="150" y="70" width="110" height="110" rx="3" class="d-pri"/>
+    <text x="205" y="96" text-anchor="middle" class="d-label">OTel</text>
+    <text x="205" y="112" text-anchor="middle" class="d-label">Collector</text>
+    <text x="205" y="132" text-anchor="middle" class="d-sub">traces</text>
+    <text x="205" y="146" text-anchor="middle" class="d-sub">metrics</text>
+    <text x="205" y="160" text-anchor="middle" class="d-sub">logs</text>
+    <rect x="300" y="30" width="90" height="36" rx="3" class="d-warn"/>
+    <text x="345" y="52" text-anchor="middle" class="d-sub">Grafana</text>
+    <rect x="300" y="74" width="90" height="36" rx="3" class="d-warn"/>
+    <text x="345" y="96" text-anchor="middle" class="d-sub">Dynatrace</text>
+    <rect x="300" y="118" width="90" height="36" rx="3" class="d-warn"/>
+    <text x="345" y="140" text-anchor="middle" class="d-sub">Loki</text>
+    <rect x="300" y="162" width="90" height="36" rx="3" class="d-warn"/>
+    <text x="345" y="184" text-anchor="middle" class="d-sub">Prometheus</text>
+    <path d="M110 50 L150 110" class="d-line-mute"/>
+    <path d="M110 90 L150 120" class="d-line-mute"/>
+    <path d="M110 130 L150 135" class="d-line-mute"/>
+    <path d="M110 170 L150 150" class="d-line-mute"/>
+    <path d="M260 100 L300 48" class="d-line"/>
+    <path d="M260 115 L300 92" class="d-line"/>
+    <path d="M260 140 L300 136" class="d-line"/>
+    <path d="M260 155 L300 180" class="d-line"/>
+  </svg>`
+},
+{
+  id: "pa", name: "Policy Administrator (PA)", category: "Control Plane",
+  aliases: ["PA", "bundle publisher", "Styra"],
+  title: { prefix: "NIST", text: "Policy Administrator" },
+  short: "The automation service that <strong>compiles, signs and publishes policy bundles</strong> to the Policy Engine fleet. It enforces segregation of duties &mdash; no single engineer can push policy to production; every change is reviewed, signed (cosign, in-toto) and published to an immutable store.",
+  practice: "A four-eyes-approved PR in the policy repo triggers the PA to build, sign and publish; the OPA fleet pulls the new bundle within 60 seconds across all regions, with the bundle hash logged.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-pa d-pa" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-pa">Signed policy pipeline</title>
+    <desc id="d-pa">Policy source in Git flows through the PA which compiles and signs a bundle, publishes to an immutable store, and is pulled by the PE fleet.</desc>
+    <rect x="10" y="100" width="80" height="50" rx="3" class="d-box"/>
+    <text x="50" y="122" text-anchor="middle" class="d-label">Git repo</text>
+    <text x="50" y="138" text-anchor="middle" class="d-sub">4-eyes PR</text>
+    <rect x="110" y="80" width="100" height="90" rx="3" class="d-pri"/>
+    <text x="160" y="104" text-anchor="middle" class="d-label">PA</text>
+    <text x="160" y="120" text-anchor="middle" class="d-sub">compile</text>
+    <text x="160" y="136" text-anchor="middle" class="d-sub">sign (cosign)</text>
+    <text x="160" y="152" text-anchor="middle" class="d-sub">attest</text>
+    <rect x="230" y="80" width="90" height="90" rx="3" class="d-warn"/>
+    <text x="275" y="108" text-anchor="middle" class="d-label">S3</text>
+    <text x="275" y="124" text-anchor="middle" class="d-sub">Object Lock</text>
+    <text x="275" y="140" text-anchor="middle" class="d-warn-text">IMMUTABLE</text>
+    <text x="275" y="158" text-anchor="middle" class="d-sub">bundle.tgz</text>
+    <rect x="340" y="50" width="55" height="40" rx="3" class="d-box"/>
+    <text x="367" y="72" text-anchor="middle" class="d-sub">PE&middot;eu</text>
+    <rect x="340" y="105" width="55" height="40" rx="3" class="d-box"/>
+    <text x="367" y="127" text-anchor="middle" class="d-sub">PE&middot;us</text>
+    <rect x="340" y="160" width="55" height="40" rx="3" class="d-box"/>
+    <text x="367" y="182" text-anchor="middle" class="d-sub">PE&middot;apac</text>
+    <path d="M90 125 L108 125" class="d-line" marker-end="url(#arR1)"/>
+    <path d="M210 125 L228 125" class="d-line" marker-end="url(#arR1)"/>
+    <path d="M320 125 L340 70" class="d-line"/>
+    <path d="M320 125 L340 125" class="d-line"/>
+    <path d="M320 125 L340 180" class="d-line"/>
+    <text x="20" y="225" class="d-micro">SOX 404 CHANGE CONTROL &middot; DORA ART 8</text>
+    <defs><marker id="arR1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "pep", name: "Policy Enforcement Point (PEP)", category: "Foundations",
+  aliases: ["PEP", "enforcement"],
+  title: { prefix: "NIST", text: "&sect; 3.1 &mdash; data plane" },
+  short: "The component that <strong>actually blocks or allows traffic</strong> based on a Policy Engine decision. PEPs sit in the data path &mdash; API gateways, service-mesh sidecars, VPN brokers, database proxies &mdash; anywhere a request must be checked before reaching a resource.",
+  practice: "A Kong API gateway calls OPA for every incoming FAPI request; if OPA returns deny, Kong returns 403 before the request ever reaches the backend service.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-pep d-pep" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-pep">PEP as the gatekeeper in the data path</title>
+    <desc id="d-pep">A subject's request passes through a PEP which asks the PE for a decision, then allows or denies access to the resource.</desc>
+    <rect x="10" y="105" width="70" height="44" rx="3" class="d-box"/>
+    <text x="45" y="124" text-anchor="middle" class="d-label">Subject</text>
+    <text x="45" y="140" text-anchor="middle" class="d-sub">request</text>
+    <rect x="135" y="85" width="130" height="80" rx="3" class="d-warn"/>
+    <text x="200" y="115" text-anchor="middle" class="d-label">PEP</text>
+    <text x="200" y="133" text-anchor="middle" class="d-sub">enforce decision</text>
+    <text x="200" y="150" text-anchor="middle" class="d-warn-text">GATEKEEPER</text>
+    <rect x="320" y="105" width="70" height="44" rx="3" class="d-box"/>
+    <text x="355" y="124" text-anchor="middle" class="d-label">Resource</text>
+    <rect x="155" y="195" width="90" height="40" rx="3" class="d-pri"/>
+    <text x="200" y="216" text-anchor="middle" class="d-label">PE</text>
+    <text x="200" y="230" text-anchor="middle" class="d-sub">decides</text>
+    <path d="M80 127 L133 127" class="d-line" marker-end="url(#arS1)"/>
+    <path d="M265 127 L318 127" class="d-line" marker-end="url(#arS1)"/>
+    <path d="M180 165 L185 193" class="d-line-mute" marker-end="url(#arSg)"/>
+    <path d="M215 193 L220 165" class="d-line-mute" marker-end="url(#arSg)"/>
+    <text x="180" y="182" class="d-micro">ASK</text>
+    <text x="210" y="182" class="d-micro">PERMIT</text>
+    <defs>
+      <marker id="arS1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker>
+      <marker id="arSg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--svg-text-2)"/></marker>
+    </defs>
+  </svg>`
+},
+{
+  id: "pe", name: "Policy Engine (PE / PDP)", category: "Foundations",
+  aliases: ["PE", "PDP", "policy decision"],
+  title: { prefix: "NIST", text: "Policy Decision Point" },
+  short: "The <strong>brain of Zero Trust</strong>. The PE evaluates each access request against rules, identity claims, device posture and threat signals, then issues a permit-or-deny decision. It is the \"Policy Decision Point\" in NIST terminology.",
+  practice: "Open Policy Agent evaluating a Rego policy: given this customer, on this device, at this time of day — may they send £50,000 to a beneficiary they've never paid before?",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-pe d-pe" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-pe">Inputs combined into a single PE decision</title>
+    <desc id="d-pe">Identity, context, posture and threat signals are combined by the Policy Engine into a permit or deny decision.</desc>
+    <rect x="10" y="25" width="90" height="30" rx="3" class="d-box"/>
+    <text x="55" y="45" text-anchor="middle" class="d-sub">identity</text>
+    <rect x="10" y="75" width="90" height="30" rx="3" class="d-box"/>
+    <text x="55" y="95" text-anchor="middle" class="d-sub">context</text>
+    <rect x="10" y="125" width="90" height="30" rx="3" class="d-box"/>
+    <text x="55" y="145" text-anchor="middle" class="d-sub">device posture</text>
+    <rect x="10" y="175" width="90" height="30" rx="3" class="d-box"/>
+    <text x="55" y="195" text-anchor="middle" class="d-sub">threat signal</text>
+    <rect x="140" y="70" width="130" height="100" rx="3" class="d-pri"/>
+    <text x="205" y="96" text-anchor="middle" class="d-label">Policy Engine</text>
+    <text x="205" y="114" text-anchor="middle" class="d-sub">Rego / Cedar</text>
+    <text x="205" y="130" text-anchor="middle" class="d-sub">evaluate</text>
+    <text x="205" y="154" text-anchor="middle" class="d-accent-text">DECIDE</text>
+    <rect x="305" y="70" width="85" height="44" rx="3" class="d-box"/>
+    <text x="347" y="92" text-anchor="middle" class="d-label">PERMIT</text>
+    <text x="347" y="108" text-anchor="middle" class="d-sub">&check;</text>
+    <rect x="305" y="126" width="85" height="44" rx="3" class="d-warn"/>
+    <text x="347" y="148" text-anchor="middle" class="d-label">DENY</text>
+    <text x="347" y="164" text-anchor="middle" class="d-sub">&times;</text>
+    <path d="M100 40 L140 95" class="d-line-mute"/>
+    <path d="M100 90 L140 110" class="d-line-mute"/>
+    <path d="M100 140 L140 130" class="d-line-mute"/>
+    <path d="M100 190 L140 150" class="d-line-mute"/>
+    <path d="M270 110 L305 92" class="d-line" marker-end="url(#arT1)"/>
+    <path d="M270 130 L305 148" class="d-line-warn" marker-end="url(#arTw)"/>
+    <defs>
+      <marker id="arT1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker>
+      <marker id="arTw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--svg-warn)"/></marker>
+    </defs>
+  </svg>`
+},
+{
+  id: "splunk-snowflake", name: "Splunk ES + Snowflake Security Lake", category: "Observability",
+  aliases: ["SIEM", "security lake", "retention"],
+  title: { prefix: "NIST", text: "Activity Log / SIEM DS" },
+  short: "A <strong>two-tier detection and retention stack</strong> &mdash; Splunk Enterprise Security for real-time alerting and SOC workflow, Snowflake as a cost-efficient long-term store for years of decision logs and audit evidence. Every PEP decision is indexed by trace-ID.",
+  practice: "An analyst investigating a fraud spike can pivot in Splunk for the last 7 days of hot data, then query Snowflake for the same decision-ID span across 7 years of archived logs.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-splunk d-splunk" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-splunk">Two-tier log pipeline</title>
+    <desc id="d-splunk">Logs from PEPs, identity and posture feed both Splunk for real-time detection and Snowflake for long-term retention.</desc>
+    <rect x="10" y="35" width="100" height="30" rx="3" class="d-box"/>
+    <text x="60" y="55" text-anchor="middle" class="d-sub">PEP logs</text>
+    <rect x="10" y="75" width="100" height="30" rx="3" class="d-box"/>
+    <text x="60" y="95" text-anchor="middle" class="d-sub">Identity events</text>
+    <rect x="10" y="115" width="100" height="30" rx="3" class="d-box"/>
+    <text x="60" y="135" text-anchor="middle" class="d-sub">Posture feed</text>
+    <rect x="10" y="155" width="100" height="30" rx="3" class="d-box"/>
+    <text x="60" y="175" text-anchor="middle" class="d-sub">Decision logs</text>
+    <rect x="150" y="60" width="100" height="30" rx="3" class="d-pri"/>
+    <text x="200" y="80" text-anchor="middle" class="d-label">Fan-out</text>
+    <path d="M110 50 L150 72" class="d-line-mute"/>
+    <path d="M110 90 L150 78" class="d-line-mute"/>
+    <path d="M110 130 L150 80" class="d-line-mute"/>
+    <path d="M110 170 L150 85" class="d-line-mute"/>
+    <rect x="290" y="30" width="100" height="70" rx="3" class="d-warn"/>
+    <text x="340" y="55" text-anchor="middle" class="d-label">Splunk ES</text>
+    <text x="340" y="72" text-anchor="middle" class="d-sub">real-time</text>
+    <text x="340" y="88" text-anchor="middle" class="d-warn-text">7 DAYS HOT</text>
+    <rect x="290" y="115" width="100" height="70" rx="3" class="d-pri"/>
+    <text x="340" y="140" text-anchor="middle" class="d-label">Snowflake</text>
+    <text x="340" y="157" text-anchor="middle" class="d-sub">security lake</text>
+    <text x="340" y="173" text-anchor="middle" class="d-accent-text">7 YR RETAIN</text>
+    <path d="M250 70 L290 62" class="d-line" marker-end="url(#arU1)"/>
+    <path d="M250 80 L290 150" class="d-line" marker-end="url(#arU1)"/>
+    <text x="20" y="220" class="d-micro">SOX 404 &middot; DORA ARTS 10-11 &middot; PCI-DSS 10</text>
+    <defs><marker id="arU1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "spiffe", name: "SPIFFE / SPIRE", category: "Identity",
+  aliases: ["SVID", "workload identity", "attestation"],
+  title: { prefix: "NIST", text: "Identity Data Source (workload)" },
+  short: "An open-source framework for issuing <strong>short-lived, cryptographically verifiable identities</strong> to workloads &mdash; Kubernetes pods, VMs, serverless functions. Replaces long-lived service-account secrets with attested, rotating certificates.",
+  practice: "A Lambda function presents a 15-minute SPIFFE SVID to the database proxy; when the function scales down, the identity expires automatically — there's no long-lived key for an attacker to exfiltrate.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-spiffe d-spiffe" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-spiffe">Attestation-based workload identity</title>
+    <desc id="d-spiffe">Node and workload attestation combine to let SPIRE issue a short-lived SVID consumed by mTLS endpoints.</desc>
+    <rect x="10" y="35" width="110" height="50" rx="3" class="d-box"/>
+    <text x="65" y="57" text-anchor="middle" class="d-label">Node attest</text>
+    <text x="65" y="73" text-anchor="middle" class="d-sub">AWS id &middot; K8s</text>
+    <rect x="10" y="105" width="110" height="50" rx="3" class="d-box"/>
+    <text x="65" y="127" text-anchor="middle" class="d-label">Workload attest</text>
+    <text x="65" y="143" text-anchor="middle" class="d-sub">SA &middot; UID &middot; label</text>
+    <rect x="150" y="60" width="110" height="100" rx="3" class="d-pri"/>
+    <text x="205" y="88" text-anchor="middle" class="d-label">SPIRE</text>
+    <text x="205" y="106" text-anchor="middle" class="d-sub">server</text>
+    <text x="205" y="128" text-anchor="middle" class="d-accent-text">ISSUE SVID</text>
+    <text x="205" y="144" text-anchor="middle" class="d-sub">15-min X.509</text>
+    <rect x="290" y="60" width="100" height="40" rx="3" class="d-warn"/>
+    <text x="340" y="85" text-anchor="middle" class="d-sub">K8s pod</text>
+    <rect x="290" y="110" width="100" height="40" rx="3" class="d-warn"/>
+    <text x="340" y="135" text-anchor="middle" class="d-sub">VM</text>
+    <rect x="290" y="160" width="100" height="40" rx="3" class="d-warn"/>
+    <text x="340" y="185" text-anchor="middle" class="d-sub">&lambda; Lambda</text>
+    <path d="M120 60 L150 95" class="d-line"/>
+    <path d="M120 130 L150 125" class="d-line"/>
+    <path d="M260 90 L290 80" class="d-line" marker-end="url(#arV1)"/>
+    <path d="M260 115 L290 130" class="d-line" marker-end="url(#arV1)"/>
+    <path d="M260 145 L290 180" class="d-line" marker-end="url(#arV1)"/>
+    <text x="20" y="220" class="d-micro">NO LONG-LIVED SECRETS &middot; CRYPTO-VERIFIABLE</text>
+    <defs><marker id="arV1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "trust-algorithm", name: "Trust Algorithm", category: "Foundations",
+  aliases: ["trust score", "continuous scoring", "AuthZEN"],
+  title: { prefix: "NIST", text: "&sect; 3.3 Trust Algorithm" },
+  short: "The logic inside the PE that combines <strong>multiple signals</strong> &mdash; identity verification, device posture, behavioural analytics, time of day, transaction value &mdash; into a single trust score per request. Enables adaptive, risk-based decisions rather than static allow/deny rules.",
+  practice: "A mobile banking login scoring 0.92 in trust gets through cleanly; the same login scoring 0.41 after a location anomaly triggers a CIBA step-up challenge on a second device.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-ta d-ta" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-ta">Signals combined into a trust score</title>
+    <desc id="d-ta">Identity, device, behaviour, time and value signals are combined by the trust algorithm into a single numeric trust score.</desc>
+    <rect x="10" y="25" width="100" height="26" rx="2" class="d-box"/>
+    <text x="60" y="42" text-anchor="middle" class="d-sub">identity &check;</text>
+    <rect x="10" y="57" width="100" height="26" rx="2" class="d-box"/>
+    <text x="60" y="74" text-anchor="middle" class="d-sub">device posture</text>
+    <rect x="10" y="89" width="100" height="26" rx="2" class="d-box"/>
+    <text x="60" y="106" text-anchor="middle" class="d-sub">UEBA</text>
+    <rect x="10" y="121" width="100" height="26" rx="2" class="d-box"/>
+    <text x="60" y="138" text-anchor="middle" class="d-sub">time &middot; geo</text>
+    <rect x="10" y="153" width="100" height="26" rx="2" class="d-box"/>
+    <text x="60" y="170" text-anchor="middle" class="d-sub">txn value</text>
+    <rect x="10" y="185" width="100" height="26" rx="2" class="d-box"/>
+    <text x="60" y="202" text-anchor="middle" class="d-sub">threat intel</text>
+    <rect x="150" y="90" width="110" height="70" rx="3" class="d-pri"/>
+    <text x="205" y="115" text-anchor="middle" class="d-label">&sum; weighted</text>
+    <text x="205" y="131" text-anchor="middle" class="d-sub">criteria-based</text>
+    <text x="205" y="148" text-anchor="middle" class="d-accent-text">ALGORITHM</text>
+    <circle cx="340" cy="125" r="44" class="d-warn"/>
+    <text x="340" y="120" text-anchor="middle" class="d-label" font-size="14">0.87</text>
+    <text x="340" y="138" text-anchor="middle" class="d-sub">trust score</text>
+    <path d="M110 38 L150 100" class="d-line-mute"/>
+    <path d="M110 70 L150 110" class="d-line-mute"/>
+    <path d="M110 102 L150 120" class="d-line-mute"/>
+    <path d="M110 134 L150 130" class="d-line-mute"/>
+    <path d="M110 166 L150 140" class="d-line-mute"/>
+    <path d="M110 198 L150 150" class="d-line-mute"/>
+    <path d="M260 125 L296 125" class="d-line" marker-end="url(#arW1)"/>
+    <defs><marker id="arW1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "venafi", name: "Venafi TLS Protect + AWS Private CA", category: "Secrets & PKI",
+  aliases: ["PKI", "certificate", "TLS lifecycle"],
+  title: { prefix: "NIST", text: "PKI Data Source" },
+  short: "An <strong>enterprise certificate-lifecycle platform</strong> that discovers, issues, renews and governs TLS certificates across on-prem and cloud CAs. Keeps the long-lived enterprise PKI hygienic while SPIFFE handles short-lived workload certs.",
+  practice: "A forgotten certificate expiring over the weekend is prevented — Venafi alerts 30 days ahead, auto-rotates via ACME, and logs proof of rotation for audit.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-venafi d-venafi" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-venafi">Certificate lifecycle orchestration</title>
+    <desc id="d-venafi">Venafi orchestrates discovery, issuance, rotation and revocation of certificates across CAs and endpoints.</desc>
+    <rect x="130" y="80" width="140" height="90" rx="3" class="d-pri"/>
+    <text x="200" y="108" text-anchor="middle" class="d-label">Venafi</text>
+    <text x="200" y="124" text-anchor="middle" class="d-sub">TLS Protect</text>
+    <text x="200" y="144" text-anchor="middle" class="d-accent-text">ORCHESTRATOR</text>
+    <rect x="10" y="35" width="100" height="40" rx="3" class="d-box"/>
+    <text x="60" y="60" text-anchor="middle" class="d-sub">discover</text>
+    <rect x="10" y="175" width="100" height="40" rx="3" class="d-box"/>
+    <text x="60" y="200" text-anchor="middle" class="d-sub">revoke</text>
+    <rect x="290" y="35" width="100" height="40" rx="3" class="d-warn"/>
+    <text x="340" y="60" text-anchor="middle" class="d-sub">issue</text>
+    <rect x="290" y="85" width="100" height="40" rx="3" class="d-warn"/>
+    <text x="340" y="110" text-anchor="middle" class="d-sub">rotate</text>
+    <rect x="290" y="135" width="100" height="40" rx="3" class="d-warn"/>
+    <text x="340" y="160" text-anchor="middle" class="d-sub">govern</text>
+    <rect x="290" y="185" width="100" height="40" rx="3" class="d-box"/>
+    <text x="340" y="210" text-anchor="middle" class="d-sub">alert T-30d</text>
+    <path d="M110 55 L130 100" class="d-line" marker-end="url(#arX1)"/>
+    <path d="M110 195 L130 150" class="d-line" marker-end="url(#arX1)"/>
+    <path d="M270 110 L290 55" class="d-line"/>
+    <path d="M270 120 L290 105" class="d-line"/>
+    <path d="M270 130 L290 155" class="d-line"/>
+    <path d="M270 150 L290 205" class="d-line"/>
+    <defs><marker id="arX1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "wiz-tanium", name: "Wiz (CNAPP) + Tanium (Endpoint)", category: "Posture",
+  aliases: ["CNAPP", "endpoint", "posture"],
+  title: { prefix: "NIST", text: "CDM Data Source" },
+  short: "Two continuous-posture tools that feed the CDM data source &mdash; <strong>Wiz scans cloud workloads and IaC</strong> for misconfigurations and vulnerabilities, <strong>Tanium covers endpoints</strong> with sub-second telemetry. Their signals enrich every policy decision.",
+  practice: "Tanium reports a laptop has just disabled disk encryption; within seconds the PE lowers that device's trust score and the SaaS gateway forces re-authentication.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-wiz d-wiz" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-wiz">Cloud and endpoint posture convergence</title>
+    <desc id="d-wiz">Wiz scans cloud and IaC while Tanium watches endpoints; both feed a unified CDM signal to the policy engine.</desc>
+    <rect x="10" y="30" width="140" height="80" rx="3" class="d-box"/>
+    <text x="25" y="50" class="d-accent-text">CLOUD &middot; IaC</text>
+    <rect x="25" y="60" width="110" height="22" rx="2" class="d-ghost"/>
+    <text x="80" y="75" text-anchor="middle" class="d-sub">Wiz CNAPP</text>
+    <text x="25" y="96" class="d-sub">misconfigs &middot; vulns</text>
+    <rect x="10" y="140" width="140" height="80" rx="3" class="d-box"/>
+    <text x="25" y="160" class="d-accent-text">ENDPOINTS</text>
+    <rect x="25" y="170" width="110" height="22" rx="2" class="d-ghost"/>
+    <text x="80" y="185" text-anchor="middle" class="d-sub">Tanium</text>
+    <text x="25" y="206" class="d-sub">EDR &middot; inventory</text>
+    <rect x="190" y="85" width="110" height="80" rx="3" class="d-pri"/>
+    <text x="245" y="115" text-anchor="middle" class="d-label">CDM feed</text>
+    <text x="245" y="131" text-anchor="middle" class="d-sub">normalised</text>
+    <text x="245" y="150" text-anchor="middle" class="d-accent-text">CONTINUOUS</text>
+    <rect x="330" y="95" width="60" height="60" rx="3" class="d-warn"/>
+    <text x="360" y="123" text-anchor="middle" class="d-label">PE</text>
+    <text x="360" y="140" text-anchor="middle" class="d-sub">decide</text>
+    <path d="M150 70 L190 110" class="d-line" marker-end="url(#arY1)"/>
+    <path d="M150 180 L190 140" class="d-line" marker-end="url(#arY1)"/>
+    <path d="M300 125 L330 125" class="d-line" marker-end="url(#arY1)"/>
+    <defs><marker id="arY1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "zta", name: "Zero Trust Architecture", category: "Foundations",
+  aliases: ["ZTA", "zero trust"],
+  title: { prefix: "Concept", text: "Security model" },
+  short: "A security model where <strong>no user, device or workload is trusted by default</strong> &mdash; every request is authenticated, authorised and continuously evaluated against identity, context and risk. Replaces the traditional \"castle and moat\" perimeter where being inside the network implied trust.",
+  practice: "When an employee opens a SaaS app, the system checks their identity, their laptop's patch level, their location and the resource's sensitivity — every time, not just at login.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-zta d-zta" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-zta">Perimeter trust versus zero trust</title>
+    <desc id="d-zta">The perimeter model trusts anything inside a wall; the zero trust model verifies every hop.</desc>
+    <text x="20" y="28" class="d-accent-text">PERIMETER TRUST</text>
+    <rect x="20" y="40" width="160" height="90" rx="3" class="d-ghost"/>
+    <text x="100" y="60" text-anchor="middle" class="d-sub">firewall</text>
+    <circle cx="50" cy="90" r="8" class="d-pri"/>
+    <circle cx="80" cy="105" r="8" class="d-pri"/>
+    <circle cx="110" cy="85" r="8" class="d-pri"/>
+    <circle cx="140" cy="100" r="8" class="d-pri"/>
+    <circle cx="70" cy="120" r="8" class="d-pri"/>
+    <text x="100" y="148" text-anchor="middle" class="d-sub">implicit trust inside</text>
+    <text x="220" y="28" class="d-accent-text">ZERO TRUST</text>
+    <rect x="220" y="40" width="160" height="90" rx="3" class="d-box"/>
+    <circle cx="250" cy="90" r="8" class="d-pri"/>
+    <circle cx="280" cy="105" r="8" class="d-pri"/>
+    <circle cx="310" cy="85" r="8" class="d-pri"/>
+    <circle cx="340" cy="100" r="8" class="d-pri"/>
+    <circle cx="270" cy="120" r="8" class="d-pri"/>
+    <path d="M250 90 L280 105" class="d-line-warn"/>
+    <path d="M280 105 L310 85" class="d-line-warn"/>
+    <path d="M310 85 L340 100" class="d-line-warn"/>
+    <path d="M270 120 L310 85" class="d-line-warn"/>
+    <text x="300" y="148" text-anchor="middle" class="d-sub">verify every hop</text>
+    <rect x="20" y="170" width="360" height="60" rx="3" class="d-bg"/>
+    <text x="35" y="190" class="d-accent-text">EVERY REQUEST</text>
+    <text x="35" y="208" class="d-sub">authenticate &middot; authorise &middot; encrypt &middot; log &middot; score &middot; re-evaluate</text>
+    <text x="35" y="222" class="d-sub">regardless of source network</text>
+  </svg>`
+},
+{
+  id: "zscaler-zpa", name: "Zscaler Private Access (ZTNA)", category: "Enforcement",
+  aliases: ["ZTNA", "VPN replacement"],
+  title: { prefix: "NIST", text: "PEP (user-to-app)" },
+  short: "A <strong>Zero Trust Network Access</strong> service that replaces traditional VPN. Each authenticated user gets a dedicated tunnel to one application &mdash; not the whole network &mdash; so even a compromised laptop cannot pivot laterally to other apps.",
+  practice: "A remote developer needing internal Jira gets a dark-tunnel to Jira only; she never receives a layer-3 route into the data centre, so a compromise of her laptop cannot scan other apps.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-zpa d-zpa" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-zpa">Per-app tunnel versus whole-network VPN</title>
+    <desc id="d-zpa">ZPA brokers a per-app tunnel; other internal apps remain invisible to the user even when connected.</desc>
+    <rect x="10" y="100" width="80" height="50" rx="3" class="d-box"/>
+    <text x="50" y="122" text-anchor="middle" class="d-label">Remote user</text>
+    <text x="50" y="138" text-anchor="middle" class="d-sub">home / cafe</text>
+    <rect x="130" y="85" width="120" height="80" rx="3" class="d-pri"/>
+    <text x="190" y="110" text-anchor="middle" class="d-label">Zscaler ZPA</text>
+    <text x="190" y="126" text-anchor="middle" class="d-sub">broker</text>
+    <text x="190" y="146" text-anchor="middle" class="d-accent-text">APP-ONLY</text>
+    <rect x="290" y="35" width="100" height="40" rx="3" class="d-warn"/>
+    <text x="340" y="60" text-anchor="middle" class="d-sub">Jira</text>
+    <rect x="290" y="85" width="100" height="40" rx="3" class="d-ghost"/>
+    <text x="340" y="110" text-anchor="middle" class="d-sub">HR</text>
+    <rect x="290" y="135" width="100" height="40" rx="3" class="d-ghost"/>
+    <text x="340" y="160" text-anchor="middle" class="d-sub">Payments</text>
+    <rect x="290" y="185" width="100" height="40" rx="3" class="d-ghost"/>
+    <text x="340" y="210" text-anchor="middle" class="d-sub">Wiki</text>
+    <path d="M90 125 L128 125" class="d-line" marker-end="url(#arZ1)"/>
+    <path d="M250 115 L290 55" class="d-line" marker-end="url(#arZ1)"/>
+    <text x="260" y="80" class="d-micro">TUNNEL</text>
+    <path d="M250 130 L290 105" class="d-line-mute" stroke-dasharray="3 3"/>
+    <path d="M250 140 L290 155" class="d-line-mute" stroke-dasharray="3 3"/>
+    <path d="M250 150 L290 205" class="d-line-mute" stroke-dasharray="3 3"/>
+    <text x="260" y="190" class="d-micro">INVISIBLE</text>
+    <defs><marker id="arZ1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+}
+];
+
+/* Sort terms alphabetically by display name */
+TERMS.sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
+
+const cardsRoot = document.getElementById("cards");
+const termListRoot = document.getElementById("termList");
+const letterBar = document.getElementById("letterBar");
+const searchInput = document.getElementById("search");
+const shownCountEl = document.getElementById("shownCount");
+const totalCountEl = document.getElementById("totalCount");
+const sideCountEl = document.getElementById("sideCount");
+const footCountEl = document.getElementById("footCount");
+const termCountMetaEl = document.getElementById("termCountMeta");
+const noResultsEl = document.getElementById("noResults");
+const noResultsQueryEl = document.getElementById("noResultsQuery");
+const toTopBtn = document.getElementById("toTop");
+const filterRow = document.getElementById("filterRow");
+
+totalCountEl.textContent = TERMS.length;
+shownCountEl.textContent = TERMS.length;
+sideCountEl.textContent = "(" + TERMS.length + ")";
+footCountEl.textContent = TERMS.length;
+termCountMetaEl.textContent = TERMS.length;
+
+/* Render cards */
+const cardFrag = document.createDocumentFragment();
+TERMS.forEach((t, i) => {
+  const card = document.createElement("article");
+  card.className = "card";
+  card.id = t.id;
+  card.dataset.name = t.name.toLowerCase();
+  card.dataset.category = t.category;
+  card.dataset.search = (t.name + " " + (t.aliases || []).join(" ") + " " + t.short + " " + t.practice + " " + t.category).toLowerCase();
+  const idxStr = String(i + 1).padStart(2, "0");
+  card.innerHTML = `
+    <div class="card-head">
+      <h2 class="card-title"><span class="idx">${idxStr}</span>${t.name}</h2>
+      <div class="card-tags">
+        <span class="chip chip-category">${t.category}</span>
+        <span class="chip">${t.title.prefix} &middot; ${t.title.text}</span>
+        ${t.clarified ? '<span class="chip chip-clar">Clarified</span>' : ''}
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-diagram">${t.svg}</div>
+      <div class="card-content">
+        <p>${t.short}</p>
+        <div class="in-practice">
+          <span class="label">In practice</span>
+          <p>${t.practice}</p>
+        </div>
+      </div>
+    </div>`;
+  cardFrag.appendChild(card);
+});
+cardsRoot.appendChild(cardFrag);
+
+/* Render sidebar term list */
+const listFrag = document.createDocumentFragment();
+TERMS.forEach((t, i) => {
+  const li = document.createElement("li");
+  li.dataset.id = t.id;
+  li.dataset.search = (t.name + " " + (t.aliases || []).join(" ")).toLowerCase();
+  li.dataset.category = t.category;
+  const a = document.createElement("a");
+  a.href = "#" + t.id;
+  a.className = "term-link";
+  a.dataset.idx = String(i + 1).padStart(2, "0");
+  a.textContent = t.name;
+  li.appendChild(a);
+  listFrag.appendChild(li);
+});
+termListRoot.appendChild(listFrag);
+
+/* Letter jump bar */
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const presentLetters = new Set(TERMS.map(t => t.name.trim().charAt(0).toUpperCase()));
+const letterFrag = document.createDocumentFragment();
+letters.forEach(L => {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "letter-chip";
+  btn.textContent = L;
+  const has = presentLetters.has(L);
+  btn.dataset.has = has ? "true" : "false";
+  if (!has) { btn.disabled = true; btn.setAttribute("aria-disabled", "true"); }
+  else {
+    btn.addEventListener("click", () => {
+      const first = TERMS.find(t => t.name.trim().toUpperCase().startsWith(L));
+      if (first) {
+        const el = document.getElementById(first.id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+  letterFrag.appendChild(btn);
+});
+letterBar.appendChild(letterFrag);
+
+/* Filter + search state */
+let activeFilter = "all";
+let activeQuery = "";
+
+function applyFilters() {
+  const q = activeQuery.trim().toLowerCase();
+  let visible = 0;
+  const visibleIds = new Set();
+  TERMS.forEach(t => {
+    const card = document.getElementById(t.id);
+    const matchesFilter = activeFilter === "all" || t.category === activeFilter;
+    const matchesQuery = !q || card.dataset.search.includes(q);
+    const show = matchesFilter && matchesQuery;
+    card.classList.toggle("hidden", !show);
+    if (show) { visible++; visibleIds.add(t.id); }
+  });
+  termListRoot.querySelectorAll("li").forEach(li => {
+    li.classList.toggle("hidden", !visibleIds.has(li.dataset.id));
+  });
+  shownCountEl.textContent = visible;
+  if (visible === 0 && q) {
+    noResultsQueryEl.textContent = q;
+    noResultsEl.classList.add("active");
+  } else {
+    noResultsEl.classList.remove("active");
+  }
+}
+
+searchInput.addEventListener("input", (e) => {
+  activeQuery = e.target.value;
+  applyFilters();
+});
+
+/* Focus search on "/" */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "/" && document.activeElement !== searchInput) {
+    e.preventDefault();
+    searchInput.focus();
+    searchInput.select();
+  }
+  if (e.key === "Escape" && document.activeElement === searchInput) {
+    searchInput.value = ""; activeQuery = ""; applyFilters();
+    searchInput.blur();
+  }
+});
+
+/* Category filter chips */
+filterRow.addEventListener("click", (e) => {
+  const btn = e.target.closest(".filter-chip");
+  if (!btn) return;
+  filterRow.querySelectorAll(".filter-chip").forEach(b => b.setAttribute("aria-pressed", "false"));
+  btn.setAttribute("aria-pressed", "true");
+  activeFilter = btn.dataset.filter;
+  applyFilters();
+});
+
+/* Active-term highlight in sidebar via IntersectionObserver */
+const linkByHash = {};
+termListRoot.querySelectorAll(".term-link").forEach(a => {
+  linkByHash[a.getAttribute("href")] = a;
+});
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const link = linkByHash["#" + entry.target.id];
+      if (!link) return;
+      termListRoot.querySelectorAll(".term-link.active").forEach(a => a.classList.remove("active"));
+      link.classList.add("active");
+      const rect = link.getBoundingClientRect();
+      const asideRect = document.querySelector("aside.sidebar").getBoundingClientRect();
+      if (rect.top < asideRect.top || rect.bottom > asideRect.bottom) {
+        link.scrollIntoView({ block: "nearest" });
+      }
+    }
+  });
+}, { rootMargin: "-40% 0px -55% 0px", threshold: 0 });
+document.querySelectorAll(".card").forEach(c => obs.observe(c));
+
+/* Back to top */
+const onScroll = () => {
+  toTopBtn.classList.toggle("visible", window.scrollY > 600);
+};
+window.addEventListener("scroll", onScroll, { passive: true });
+toTopBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* Theme toggle with prefers-color-scheme on first load */
+const themeToggle = document.getElementById("themeToggle");
+const storedTheme = localStorage.getItem("zta-theme");
+const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+const initialTheme = storedTheme || (systemDark ? "dark" : "light");
+document.documentElement.setAttribute("data-theme", initialTheme);
+
+themeToggle.addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("data-theme") || "light";
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("zta-theme", next);
+});
+
+/* If user lands with a hash, scroll smoothly */
+if (location.hash) {
+  const el = document.querySelector(location.hash);
+  if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
+}
+</script>
+</body>
+</html>
