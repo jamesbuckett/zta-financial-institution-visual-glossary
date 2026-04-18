@@ -458,11 +458,11 @@
   <div>
     <span class="eyebrow">Reference &middot; NIST SP 800-207</span>
     <h1>Zero Trust Architecture<span>A visual glossary for financial institutions</span></h1>
-    <p class="lede">Thirty concepts and components that make up a bank-grade Zero Trust Architecture — distilled into plain English, each paired with a diagram. Sourced from an ARB submission mapping the C4 model to NIST SP 800-207 for a multi-regional retail and commercial bank.</p>
+    <p class="lede">Thirty-one concepts and components that make up a bank-grade Zero Trust Architecture — distilled into plain English, each paired with a diagram. Sourced from an ARB submission mapping the C4 model to NIST SP 800-207 for a multi-regional retail and commercial bank.</p>
   </div>
   <div class="hero-meta">
     <div>Version <b>01</b></div>
-    <div>Terms <b id="termCountMeta">30</b></div>
+    <div>Terms <b id="termCountMeta">31</b></div>
     <div>Framework <b>NIST 800-207</b></div>
   </div>
 </section>
@@ -482,7 +482,7 @@
   <main id="main">
     <div class="toolbar">
       <h2>Glossary entries</h2>
-      <span class="toolbar-meta"><b id="shownCount">30</b> / <span id="totalCount">30</span> shown</span>
+      <span class="toolbar-meta"><b id="shownCount">31</b> / <span id="totalCount">31</span> shown</span>
     </div>
 
     <div class="filter-row" id="filterRow" role="group" aria-label="Filter by category">
@@ -509,7 +509,7 @@
 
 <footer class="page-foot" role="contentinfo">
   <div class="foot-inner">
-    <span><b id="footCount">30</b> entries &middot; Sourced from ARB submission &middot; Mapped to NIST SP&nbsp;800-207</span>
+    <span><b id="footCount">31</b> entries &middot; Sourced from ARB submission &middot; Mapped to NIST SP&nbsp;800-207</span>
     <span>Generated as a single-file reference &middot; <b>Light / Dark</b></span>
   </div>
 </footer>
@@ -1167,6 +1167,36 @@ const TERMS = [
     <path d="M300 70 L325 70" class="d-line" marker-end="url(#arQ1)"/>
     <path d="M300 130 L325 130" class="d-line" marker-end="url(#arQ1)"/>
     <defs><marker id="arQ1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "authzen", name: "OpenID AuthZEN (Authorization API)", category: "Control Plane",
+  aliases: ["Authorization API", "access evaluation", "externalized authorization", "PEP-PDP"],
+  title: { prefix: "Spec", text: "OpenID Foundation &middot; PEP&harr;PDP API" },
+  short: "A neutral <strong>OpenID Foundation API</strong> that lets any PEP ask any PDP the same question &mdash; <em>can this subject do this action on this resource?</em> &mdash; over a single JSON call to <strong>/access/v1/evaluation</strong>. Turns the PEP&harr;PDP conversation into a plug-and-play contract so the bank's policy engines become interchangeable without rewriting every gateway integration.",
+  practice: "Kong sits in front of the payments API and calls AuthZEN on whichever decision engine the control-plane points it at &mdash; swapping OPA for ForgeRock months later is a config change, not a six-month migration.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-authzen d-authzen" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-authzen">AuthZEN authorization API between PEP and PDP</title>
+    <desc id="d-authzen">A PEP such as Kong or Envoy calls the AuthZEN Access Evaluation endpoint with subject, action, resource and context; any AuthZEN-compatible PDP (OPA, ForgeRock, Cedar, OpenFGA) returns a permit or deny decision.</desc>
+    <rect x="10" y="95" width="90" height="60" rx="3" class="d-warn"/>
+    <text x="55" y="118" text-anchor="middle" class="d-label">PEP</text>
+    <text x="55" y="138" text-anchor="middle" class="d-sub">Kong / Envoy</text>
+    <rect x="295" y="40" width="100" height="135" rx="3" class="d-pri"/>
+    <text x="345" y="60" text-anchor="middle" class="d-label">PDPs</text>
+    <text x="345" y="76" text-anchor="middle" class="d-sub">interchangeable</text>
+    <line x1="305" y1="86" x2="385" y2="86" class="d-line-mute"/>
+    <text x="345" y="106" text-anchor="middle" class="d-sub">OPA</text>
+    <text x="345" y="124" text-anchor="middle" class="d-sub">ForgeRock</text>
+    <text x="345" y="142" text-anchor="middle" class="d-sub">Cedar</text>
+    <text x="345" y="160" text-anchor="middle" class="d-sub">OpenFGA</text>
+    <path d="M100 110 L293 110" class="d-line" marker-end="url(#arZ1)"/>
+    <text x="197" y="100" text-anchor="middle" class="d-sub">POST /access/v1/evaluation</text>
+    <path d="M293 140 L102 140" class="d-line" marker-end="url(#arZ1)"/>
+    <text x="197" y="158" text-anchor="middle" class="d-sub">{ "decision": true }</text>
+    <rect x="20" y="185" width="360" height="50" rx="3" class="d-bg"/>
+    <text x="30" y="204" class="d-accent-text">AUTHZEN CONTRACT</text>
+    <text x="30" y="222" class="d-sub">{ subject, action, resource, context } &rarr; { decision }</text>
+    <defs><marker id="arZ1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
   </svg>`
 },
 {
