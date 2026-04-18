@@ -217,6 +217,30 @@
   .byline strong { color: var(--text); font-weight: 600; }
   .byline a { color: var(--text-2); border-bottom: 1px solid var(--border); }
   .byline a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .byline-social {
+    display: inline-flex; gap: var(--s2);
+    margin-inline-start: var(--s3);
+    vertical-align: -4px;
+  }
+  .byline-social a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    color: var(--text-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface);
+    transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+  }
+  .byline-social a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--surface);
+  }
+  .byline-social a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .byline-social svg { width: 15px; height: 15px; }
 
   /* Orientation strip */
   .orientation {
@@ -551,7 +575,7 @@
     margin: var(--s5) 0 !important;
   }
   .about-links a {
-    display: inline-flex; align-items: center;
+    display: inline-flex; align-items: center; gap: var(--s2);
     padding: var(--s2) var(--s4);
     border: 1px solid var(--border);
     background: var(--surface);
@@ -561,6 +585,7 @@
   .about-links a:hover {
     border-color: var(--accent); color: var(--accent);
   }
+  .about-links svg { width: 16px; height: 16px; }
   .cite-box {
     margin-top: var(--s6);
     padding: var(--s4);
@@ -694,10 +719,19 @@
     <h1>Zero Trust Architecture <span>A visual glossary for financial institutions</span></h1>
     <p class="lede">73 Zero Trust terms that actually turn up in a multi-regional bank&apos;s architecture &mdash; each one explained in plain English and paired with a diagram. Grounded in NIST SP 800-207, drawn from real Architecture Review Board submissions.</p>
     <p class="byline">
-      By <strong>James Buckett</strong> &middot; Enterprise Security Architect &middot;
-      <a href="mailto:james.buckett@gmail.com" rel="author">james.buckett@gmail.com</a> &middot;
-      <a href="https://www.linkedin.com/in/jamesbuckett/" rel="author">LinkedIn</a> &middot;
-      <a href="https://github.com/jamesbuckett">GitHub</a>
+      By <strong>James Buckett</strong> &middot; Product Manager &middot;
+      <a href="mailto:james.buckett@gmail.com" rel="author">james.buckett@gmail.com</a>
+      <span class="byline-social">
+        <a href="https://www.linkedin.com/in/jamesbuckett" rel="author me" aria-label="LinkedIn profile" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://github.com/jamesbuckett" rel="me" aria-label="GitHub profile" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        </a>
+        <a href="https://twitter.com/jamesbuckett" rel="me" aria-label="Twitter profile (@jamesbuckett)" title="Twitter @jamesbuckett">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+        </a>
+      </span>
     </p>
   </div>
   <div class="hero-meta">
@@ -778,9 +812,22 @@
       If you spot something wrong, something missing, or a term that could be explained better, I&rsquo;d like to hear about it. This page has no tracking, no analytics, and no external dependencies beyond the fonts your browser already has.
     </p>
     <p class="about-links">
-      <a href="mailto:james.buckett@gmail.com" rel="author">Email</a>
-      <a href="https://www.linkedin.com/in/jamesbuckett/" rel="author">LinkedIn</a>
-      <a href="https://github.com/jamesbuckett">GitHub</a>
+      <a href="mailto:james.buckett@gmail.com" rel="author">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email
+      </a>
+      <a href="https://www.linkedin.com/in/jamesbuckett" rel="author me">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/jamesbuckett" rel="me">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        GitHub
+      </a>
+      <a href="https://twitter.com/jamesbuckett" rel="me">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+        Twitter
+      </a>
     </p>
     <div class="cite-box" aria-label="Suggested citation">
       <span class="cite-label">Cite as</span>
