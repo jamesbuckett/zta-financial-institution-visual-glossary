@@ -316,6 +316,29 @@
     color: var(--warn); background: var(--warn-soft);
     border-color: var(--warn-soft);
   }
+  .chip.chip-kind {
+    color: var(--text); background: var(--surface);
+    border-color: var(--text-3);
+    font-weight: 600;
+  }
+  .chip.chip-kind[data-kind="Threat"] {
+    color: var(--warn); background: var(--warn-soft);
+    border-color: var(--warn);
+  }
+  .chip.chip-kind[data-kind="Concept"],
+  .chip.chip-kind[data-kind="Role"] {
+    color: var(--accent); background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  .filter-group-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-3);
+    margin-right: var(--s2);
+    align-self: center;
+    padding-top: 2px;
+  }
 
   .card-body {
     display: grid; grid-template-columns: 420px 1fr;
@@ -486,6 +509,7 @@
     </div>
 
     <div class="filter-row" id="filterRow" role="group" aria-label="Filter by category">
+      <span class="filter-group-label">Category</span>
       <button class="filter-chip" type="button" aria-pressed="true" data-filter="all">All</button>
       <button class="filter-chip" type="button" aria-pressed="false" data-filter="Foundations">Foundations</button>
       <button class="filter-chip" type="button" aria-pressed="false" data-filter="Identity">Identity</button>
@@ -496,6 +520,20 @@
       <button class="filter-chip" type="button" aria-pressed="false" data-filter="Posture">Posture</button>
       <button class="filter-chip" type="button" aria-pressed="false" data-filter="Data">Data</button>
       <button class="filter-chip" type="button" aria-pressed="false" data-filter="API &amp; Risk">API &amp; Risk</button>
+    </div>
+
+    <div class="filter-row" id="kindFilterRow" role="group" aria-label="Filter by kind">
+      <span class="filter-group-label">Kind</span>
+      <button class="filter-chip" type="button" aria-pressed="true" data-kind="all">All</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Concept">Concept</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Role">Role</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Standard">Standard</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Protocol">Protocol</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Data format">Data format</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Open source">Open source</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Vendor product">Vendor product</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Programme">Programme</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="Threat">Threat</button>
     </div>
 
     <div class="cards" id="cards"></div>
@@ -522,6 +560,7 @@
 const TERMS = [
 {
   id: "authlete", name: "Authlete (FAPI 2.0 Engine)", category: "API & Risk",
+  kind: "Vendor product",
   aliases: ["FAPI", "OAuth", "CIBA", "JARM", "PAR"],
   title: { prefix: "Spec", text: "Supporting Infra / FAPI engine" },
   short: "A specialist OAuth 2.0 engine that implements the exact flows required by Open Banking regulators &mdash; <strong>Pushed Authorisation Requests</strong>, CIBA, JARM and FAPI 2.0. It sits behind the API gateway so the gateway focuses on enforcement while Authlete handles protocol correctness.",
@@ -556,6 +595,7 @@ const TERMS = [
 },
 {
   id: "broadcom-aam", name: "Broadcom AAM (Mainframe)", category: "Enforcement",
+  kind: "Vendor product",
   aliases: ["mainframe", "RACF", "CICS", "z/OS"],
   title: { prefix: "NIST", text: "PEP (mainframe) &middot; Identity Gateway" },
   short: "A mainframe authentication adapter that bridges modern <strong>OIDC and Kerberos</strong> identities into legacy RACF user IDs through constrained delegation and digital-certificate mapping. Lets the bank apply Zero Trust on z/OS without rewriting decades-old CICS transactions.",
@@ -587,6 +627,7 @@ const TERMS = [
 },
 {
   id: "cdm", name: "CDM (Continuous Diagnostics &amp; Mitigation)", category: "Foundations",
+  kind: "Programme",
   aliases: ["posture", "vulnerability", "CISA"],
   title: { prefix: "NIST", text: "Data Source &sect; 3.2" },
   short: "A <strong>continuous posture feed</strong> &mdash; originally a US federal programme and now a NIST 800-207 data-source category &mdash; that reports the live state of every asset: vulnerabilities, configuration drift, exposure, compliance. Turns asset hygiene into a real-time policy input rather than a monthly report.",
@@ -620,6 +661,7 @@ const TERMS = [
 },
 {
   id: "cyberark-pam", name: "CyberArk PAM", category: "Enforcement",
+  kind: "Vendor product",
   aliases: ["PAM", "JIT", "privileged"],
   title: { prefix: "NIST", text: "PEP (privileged) &middot; Identity DS" },
   short: "<strong>Privileged Access Management</strong> &mdash; vaulted credentials, just-in-time elevation and full session recording for administrators of Tier-0 systems (SWIFT, HSMs, the Payments Hub). Every privileged session is proxied, time-boxed and stored in WORM-protected evidence stores.",
@@ -654,6 +696,7 @@ const TERMS = [
 },
 {
   id: "data-sources", name: "Data Sources", category: "Foundations",
+  kind: "Concept",
   aliases: ["NIST &sect;3.2", "signals"],
   title: { prefix: "NIST", text: "&sect; 3.2 &mdash; 8 source classes" },
   short: "The input feeds that enrich every policy decision &mdash; identity stores, threat intelligence, SIEM, PKI, CDM, device posture, data-access policy and fraud scoring. NIST 800-207 catalogues <strong>eight distinct source classes</strong>; a mature ZTA names each one explicitly rather than accepting an ad-hoc signal pool.",
@@ -697,6 +740,7 @@ const TERMS = [
 },
 {
   id: "dpop", name: "DPoP (Demonstrating Proof-of-Possession)", category: "Foundations",
+  kind: "Protocol",
   aliases: ["proof-of-possession", "sender-constrained token", "RFC 9449"],
   title: { prefix: "Spec", text: "IETF RFC 9449" },
   short: "Binds an OAuth access token to a <strong>specific client key</strong> so a stolen token alone is useless. The client signs a short-lived DPoP proof JWT for every API call &mdash; if the proof&apos;s key does not match the <code>cnf.jkt</code> thumbprint embedded in the access token, the PEP rejects the request.",
@@ -726,6 +770,7 @@ const TERMS = [
 },
 {
   id: "fapi-2", name: "FAPI 2.0", category: "Foundations",
+  kind: "Standard",
   aliases: ["Financial API", "Open Banking", "OAuth"],
   title: { prefix: "Spec", text: "OpenID Foundation" },
   short: "The <strong>Financial-grade API</strong> security profile from the OpenID Foundation &mdash; a hardened OAuth 2.0 flavour required for Open Banking. It mandates sender-constrained tokens (DPoP or mTLS), signed request objects and stricter client authentication than ordinary OAuth.",
@@ -762,6 +807,7 @@ const TERMS = [
 },
 {
   id: "featurespace", name: "Featurespace ARIC", category: "API & Risk",
+  kind: "Vendor product",
   aliases: ["fraud", "AML", "risk scoring"],
   title: { prefix: "NIST", text: "Risk / Threat Intel DS" },
   short: "An <strong>adaptive behavioural-analytics</strong> engine that produces per-transaction fraud and AML risk scores in real time. Scores feed the Policy Engine so the bank can step-up authentication, hold a payment or escalate to manual review instead of blanket-blocking.",
@@ -795,6 +841,7 @@ const TERMS = [
 },
 {
   id: "forgerock-ciam", name: "ForgeRock CIAM", category: "Identity",
+  kind: "Vendor product",
   aliases: ["customer identity", "OIDC", "passkey"],
   title: { prefix: "NIST", text: "Identity Data Source" },
   short: "A <strong>customer-facing identity platform</strong> that handles sign-up, login, progressive profiling and risk-based authentication for retail banking users. Issues OIDC / FAPI 2.0 tokens and supports passkeys and WebAuthn for phishing-resistant logins.",
@@ -823,6 +870,7 @@ const TERMS = [
 },
 {
   id: "vault-hsm", name: "HashiCorp Vault + HSM", category: "Secrets & PKI",
+  kind: "Vendor product",
   aliases: ["secrets", "HSM", "dynamic credentials", "KMS"],
   title: { prefix: "NIST", text: "Supporting Infra / PKI DS" },
   short: "A secrets manager that issues <strong>dynamic, short-lived credentials</strong> for databases, cloud APIs and certificates, with an HSM (hardware security module) providing tamper-resistant root keys for the most sensitive signing operations (CIAM, FAPI JWS signer, eIDAS QWAC issuance).",
@@ -858,6 +906,7 @@ const TERMS = [
 },
 {
   id: "immuta", name: "Immuta (Data-plane ABAC)", category: "Data",
+  kind: "Vendor product",
   aliases: ["ABAC", "data access", "row-level security", "masking"],
   title: { prefix: "NIST", text: "Data Access Policy DS" },
   short: "A <strong>data-access policy engine</strong> that enforces row- and column-level rules on Snowflake, Databricks and S3. Classification-driven policies apply dynamic masking based on the querying user's purpose rather than static table grants.",
@@ -896,6 +945,7 @@ const TERMS = [
 },
 {
   id: "istio", name: "Istio Service Mesh", category: "Enforcement",
+  kind: "Open source",
   aliases: ["mesh", "Envoy", "sidecar", "east-west"],
   title: { prefix: "NIST", text: "PEP (east-west)" },
   short: "A <strong>Kubernetes service mesh</strong> that injects Envoy sidecars next to every pod, enabling mTLS between services, per-request authorisation via OPA and structured access logs on every east-west hop. It converts internal traffic from implicit trust into explicit, audited calls.",
@@ -932,6 +982,7 @@ const TERMS = [
 },
 {
   id: "jwt", name: "JWT (JSON Web Token)", category: "Foundations",
+  kind: "Data format",
   aliases: ["JSON Web Token", "token format", "RFC 7519", "claims"],
   title: { prefix: "Spec", text: "IETF RFC 7519" },
   short: "A compact, <strong>signed JSON token format</strong> carrying claims (<code>sub</code>, <code>iss</code>, <code>aud</code>, <code>exp</code>, <code>amr</code>) that PEPs validate at line-rate without calling home. The signature and embedded expiry make the token self-contained proof of identity and session context &mdash; no server-side session lookup required.",
@@ -959,6 +1010,7 @@ const TERMS = [
 },
 {
   id: "kerberos", name: "Kerberos", category: "Foundations",
+  kind: "Protocol",
   aliases: ["ticket", "KDC", "AD authentication", "RFC 4120"],
   title: { prefix: "Spec", text: "IETF RFC 4120" },
   short: "A <strong>ticket-based network authentication protocol</strong> that predates OIDC by decades and still underpins every Windows/AD logon and legacy mainframe integration. A central Key Distribution Centre issues time-boxed tickets that services verify locally &mdash; the user&apos;s password never travels on the wire after the initial AS exchange.",
@@ -993,6 +1045,7 @@ const TERMS = [
 },
 {
   id: "kong", name: "Kong + FAPI (API Gateway)", category: "Enforcement",
+  kind: "Open source",
   aliases: ["API gateway", "north-south", "DPoP", "rate limit"],
   title: { prefix: "NIST", text: "Policy Enforcement Point" },
   short: "A <strong>north-south API gateway</strong> that enforces token validation, DPoP, mTLS binding, request-object signing and rate limits at the ingress of retail, corporate and Open Banking APIs. Authlete handles the OAuth / FAPI engine behind it.",
@@ -1028,6 +1081,7 @@ const TERMS = [
 },
 {
   id: "entra-id", name: "Microsoft Entra ID (Workforce)", category: "Identity",
+  kind: "Vendor product",
   aliases: ["workforce", "Azure AD", "Conditional Access", "Intune"],
   title: { prefix: "NIST", text: "Identity Data Source" },
   short: "Microsoft's cloud identity directory used as the <strong>authoritative workforce IdP</strong>. Combined with Conditional Access and Intune it becomes a per-application policy decision point for staff logins, factoring device compliance into every sign-in.",
@@ -1064,6 +1118,7 @@ const TERMS = [
 },
 {
   id: "mtls", name: "mTLS (Mutual TLS)", category: "Foundations",
+  kind: "Protocol",
   aliases: ["mutual TLS", "X.509", "certificate"],
   title: { prefix: "Spec", text: "IETF RFC 8705" },
   short: "An authentication scheme where <strong>both client and server present X.509 certificates</strong> and cryptographically prove they own the private keys. It replaces shared passwords and bearer tokens with strong, non-repudiable workload-to-workload identity.",
@@ -1100,6 +1155,7 @@ const TERMS = [
 },
 {
   id: "mythos", name: "Mythos (Adversary AI)", category: "Posture",
+  kind: "Threat",
   aliases: ["frontier AI", "zero-day discovery", "AI adversary", "Anthropic"],
   title: { prefix: "Threat", text: "Adversary AI &middot; Apr 2026" },
   short: "An <strong>Anthropic frontier model</strong> (preview, April 2026) that demonstrated emergent capability to autonomously discover thousands of zero-day vulnerabilities and probe fraud-detection logic through systematically varied test transactions. Reframed Zero Trust from a compliance exercise into a <em>blast-radius control problem</em> &mdash; the only viable defence when any single asset can be compromised by an AI-discovered zero-day.",
@@ -1139,6 +1195,7 @@ const TERMS = [
 },
 {
   id: "netskope", name: "Netskope SSE (CASB + SWG + DLP)", category: "Enforcement",
+  kind: "Vendor product",
   aliases: ["CASB", "SWG", "DLP", "SaaS"],
   title: { prefix: "NIST", text: "PEP (SaaS) &middot; DLP DS" },
   short: "A <strong>Security Service Edge</strong> that intercepts SaaS traffic inline, applies DLP to data in motion, and enforces per-session policy on the ~1,200 SaaS apps too numerous to front with an API gateway. Functions as CASB, Secure Web Gateway and DLP in one.",
@@ -1176,6 +1233,7 @@ const TERMS = [
 },
 {
   id: "nist-800-207", name: "NIST SP 800-207", category: "Foundations",
+  kind: "Standard",
   aliases: ["Zero Trust standard", "seven tenets"],
   title: { prefix: "Spec", text: "US NIST framework" },
   short: "The US National Institute of Standards' foundational document defining Zero Trust. It specifies the logical building blocks &mdash; <strong>Policy Engine, Policy Administrator, Policy Enforcement Point</strong> &mdash; and seven tenets any ZT deployment must satisfy.",
@@ -1203,6 +1261,7 @@ const TERMS = [
 },
 {
   id: "oauth-obo", name: "OAuth 2.0 On-Behalf-Of (OBO)", category: "Foundations",
+  kind: "Protocol",
   aliases: ["OBO", "token exchange", "delegation", "RFC 8693"],
   title: { prefix: "Spec", text: "IETF RFC 8693 &middot; token exchange" },
   short: "A <strong>delegation pattern</strong> where a middle-tier service exchanges the caller&apos;s token for a new, downstream-scoped token at the token-exchange endpoint. The downstream service sees the <em>end user</em> as the subject &mdash; not the middle service &mdash; which stops the &ldquo;god-mode service account&rdquo; anti-pattern where one compromised backend can do anything on behalf of any user.",
@@ -1232,6 +1291,7 @@ const TERMS = [
 },
 {
   id: "oidc", name: "OIDC (OpenID Connect)", category: "Foundations",
+  kind: "Protocol",
   aliases: ["OpenID Connect", "identity token", "JWT"],
   title: { prefix: "Spec", text: "OpenID Foundation" },
   short: "An <strong>identity layer on top of OAuth 2.0</strong> that issues signed JSON Web Tokens (JWTs) carrying who the user is, when they authenticated and with what strength. PEPs consume these tokens to authenticate every request &mdash; no session cookies, no implicit network trust.",
@@ -1260,6 +1320,7 @@ const TERMS = [
 },
 {
   id: "okta", name: "Okta Workforce (Federation Broker)", category: "Identity",
+  kind: "Vendor product",
   aliases: ["SaaS federation", "SAML", "SSO"],
   title: { prefix: "NIST", text: "Identity DS / PEP for SaaS" },
   short: "A SaaS <strong>identity broker</strong> that consolidates trust relationships to hundreds of third-party applications into a single federation hub. Enforces session risk and device trust at SaaS ingress so the workforce IdP connects once, not 1,200 times.",
@@ -1295,6 +1356,7 @@ const TERMS = [
 },
 {
   id: "opa", name: "Open Policy Agent (PE)", category: "Control Plane",
+  kind: "Open source",
   aliases: ["OPA", "Rego", "policy engine"],
   title: { prefix: "NIST", text: "Policy Engine (PDP)" },
   short: "A general-purpose policy engine that evaluates <strong>Rego</strong> rules at sub-millisecond latency. Runs as a sidecar next to each PEP so decisions are local, fast and auditable — every decision is logged with a unique ID so it can be replayed for audit.",
@@ -1329,6 +1391,7 @@ const TERMS = [
 },
 {
   id: "authzen", name: "OpenID AuthZEN (Authorization API)", category: "Control Plane",
+  kind: "Protocol",
   aliases: ["Authorization API", "access evaluation", "externalized authorization", "PEP-PDP"],
   title: { prefix: "Spec", text: "OpenID Foundation &middot; PEP&harr;PDP API" },
   short: "A neutral <strong>OpenID Foundation API</strong> that lets any PEP ask any PDP the same question &mdash; <em>can this subject do this action on this resource?</em> &mdash; over a single JSON call to <strong>/access/v1/evaluation</strong>. Turns the PEP&harr;PDP conversation into a plug-and-play contract so the bank's policy engines become interchangeable without rewriting every gateway integration.",
@@ -1359,6 +1422,7 @@ const TERMS = [
 },
 {
   id: "otel", name: "OpenTelemetry + Grafana/Dynatrace", category: "Observability",
+  kind: "Open source",
   aliases: ["OTel", "traces", "metrics", "logs"],
   title: { prefix: "NIST", text: "Activity Log Data Source" },
   short: "A <strong>vendor-neutral telemetry pipeline</strong> that collects distributed traces, metrics and logs with a single instrumentation API. Keeps observability portable while Policy-Engine and PA SLOs (e.g. P99 decision latency &lt;10 ms) are monitored in Grafana or Dynatrace.",
@@ -1400,6 +1464,7 @@ const TERMS = [
 },
 {
   id: "paseto", name: "PASETO (Platform-Agnostic Security Tokens)", category: "Foundations",
+  kind: "Data format",
   aliases: ["token format", "JWT alternative", "versioned crypto"],
   title: { prefix: "Spec", text: "paseto.io &middot; versioned tokens" },
   short: "A <strong>JWT-alternative token format</strong> with versioned, opinionated crypto suites (<code>v4.public</code>, <code>v4.local</code>) that remove the algorithm-agility footguns behind almost every major JWT vulnerability. Each PASETO version locks in exactly one signing algorithm and one encryption algorithm &mdash; no <code>alg</code> header, no negotiation, no confusion attack.",
@@ -1422,6 +1487,7 @@ const TERMS = [
 },
 {
   id: "pa", name: "Policy Administrator (PA)", category: "Control Plane",
+  kind: "Role",
   aliases: ["PA", "bundle publisher", "Styra"],
   title: { prefix: "NIST", text: "Policy Administrator" },
   short: "The automation service that <strong>compiles, signs and publishes policy bundles</strong> to the Policy Engine fleet. It enforces segregation of duties &mdash; no single engineer can push policy to production; every change is reviewed, signed (cosign, in-toto) and published to an immutable store.",
@@ -1459,6 +1525,7 @@ const TERMS = [
 },
 {
   id: "pep", name: "Policy Enforcement Point (PEP)", category: "Foundations",
+  kind: "Role",
   aliases: ["PEP", "enforcement"],
   title: { prefix: "NIST", text: "&sect; 3.1 &mdash; data plane" },
   short: "The component that <strong>actually blocks or allows traffic</strong> based on a Policy Engine decision. PEPs sit in the data path &mdash; API gateways, service-mesh sidecars, VPN brokers, database proxies &mdash; anywhere a request must be checked before reaching a resource.",
@@ -1492,6 +1559,7 @@ const TERMS = [
 },
 {
   id: "pe", name: "Policy Engine (PE / PDP)", category: "Foundations",
+  kind: "Role",
   aliases: ["PE", "PDP", "policy decision"],
   title: { prefix: "NIST", text: "Policy Decision Point" },
   short: "The <strong>brain of Zero Trust</strong>. The PE evaluates each access request against rules, identity claims, device posture and threat signals, then issues a permit-or-deny decision. It is the \"Policy Decision Point\" in NIST terminology.",
@@ -1532,6 +1600,7 @@ const TERMS = [
 },
 {
   id: "par", name: "Pushed Authorization Requests (PAR)", category: "Foundations",
+  kind: "Protocol",
   aliases: ["PAR", "RFC 9126", "authorization request", "FAPI 2.0"],
   title: { prefix: "Spec", text: "IETF RFC 9126" },
   short: "An OAuth 2.0 extension that <strong>pushes the authorisation request</strong> server-to-server to a <code>/par</code> endpoint before the user&apos;s browser ever sees it, returning a short-lived <code>request_uri</code> handle. Removes front-channel tampering risk &mdash; the browser only carries an opaque reference &mdash; and is mandatory in FAPI 2.0 Open Banking profiles.",
@@ -1568,6 +1637,7 @@ const TERMS = [
 },
 {
   id: "splunk-snowflake", name: "Splunk ES + Snowflake Security Lake", category: "Observability",
+  kind: "Vendor product",
   aliases: ["SIEM", "security lake", "retention"],
   title: { prefix: "NIST", text: "Activity Log / SIEM DS" },
   short: "A <strong>two-tier detection and retention stack</strong> &mdash; Splunk Enterprise Security for real-time alerting and SOC workflow, Snowflake as a cost-efficient long-term store for years of decision logs and audit evidence. Every PEP decision is indexed by trace-ID.",
@@ -1605,6 +1675,7 @@ const TERMS = [
 },
 {
   id: "spiffe", name: "SPIFFE / SPIRE", category: "Identity",
+  kind: "Open source",
   aliases: ["SVID", "workload identity", "attestation"],
   title: { prefix: "NIST", text: "Identity Data Source (workload)" },
   short: "An open-source framework for issuing <strong>short-lived, cryptographically verifiable identities</strong> to workloads &mdash; Kubernetes pods, VMs, serverless functions. Replaces long-lived service-account secrets with attested, rotating certificates.",
@@ -1640,6 +1711,7 @@ const TERMS = [
 },
 {
   id: "trust-algorithm", name: "Trust Algorithm", category: "Foundations",
+  kind: "Concept",
   aliases: ["trust score", "continuous scoring", "AuthZEN"],
   title: { prefix: "NIST", text: "&sect; 3.3 Trust Algorithm" },
   short: "The logic inside the PE that combines <strong>multiple signals</strong> &mdash; identity verification, device posture, behavioural analytics, time of day, transaction value &mdash; into a single trust score per request. Enables adaptive, risk-based decisions rather than static allow/deny rules.",
@@ -1678,6 +1750,7 @@ const TERMS = [
 },
 {
   id: "venafi", name: "Venafi TLS Protect + AWS Private CA", category: "Secrets & PKI",
+  kind: "Vendor product",
   aliases: ["PKI", "certificate", "TLS lifecycle"],
   title: { prefix: "NIST", text: "PKI Data Source" },
   short: "An <strong>enterprise certificate-lifecycle platform</strong> that discovers, issues, renews and governs TLS certificates across on-prem and cloud CAs. Keeps the long-lived enterprise PKI hygienic while SPIFFE handles short-lived workload certs.",
@@ -1712,6 +1785,7 @@ const TERMS = [
 },
 {
   id: "webauthn", name: "WebAuthn / Passkeys", category: "Foundations",
+  kind: "Protocol",
   aliases: ["Passkeys", "FIDO2", "W3C WebAuthn", "phishing-resistant"],
   title: { prefix: "Spec", text: "W3C WebAuthn Level 3" },
   short: "A <strong>phishing-resistant public-key authentication standard</strong> where the authenticator (Face ID, YubiKey, OS-managed passkey) signs a server challenge with a private key that is cryptographically bound to the relying party&apos;s domain. A fake site cannot get a valid signature because the <code>rpId</code> is baked into the signed assertion &mdash; no code, no OTP, no phishing vector.",
@@ -1741,6 +1815,7 @@ const TERMS = [
 },
 {
   id: "wiz-tanium", name: "Wiz (CNAPP) + Tanium (Endpoint)", category: "Posture",
+  kind: "Vendor product",
   aliases: ["CNAPP", "endpoint", "posture"],
   title: { prefix: "NIST", text: "CDM Data Source" },
   short: "Two continuous-posture tools that feed the CDM data source &mdash; <strong>Wiz scans cloud workloads and IaC</strong> for misconfigurations and vulnerabilities, <strong>Tanium covers endpoints</strong> with sub-second telemetry. Their signals enrich every policy decision.",
@@ -1773,6 +1848,7 @@ const TERMS = [
 },
 {
   id: "zta", name: "Zero Trust Architecture", category: "Foundations",
+  kind: "Concept",
   aliases: ["ZTA", "zero trust"],
   title: { prefix: "Concept", text: "Security model" },
   short: "A security model where <strong>no user, device or workload is trusted by default</strong> &mdash; every request is authenticated, authorised and continuously evaluated against identity, context and risk. Replaces the traditional \"castle and moat\" perimeter where being inside the network implied trust.",
@@ -1809,6 +1885,7 @@ const TERMS = [
 },
 {
   id: "zscaler-zpa", name: "Zscaler Private Access (ZTNA)", category: "Enforcement",
+  kind: "Vendor product",
   aliases: ["ZTNA", "VPN replacement"],
   title: { prefix: "NIST", text: "PEP (user-to-app)" },
   short: "A <strong>Zero Trust Network Access</strong> service that replaces traditional VPN. Each authenticated user gets a dedicated tunnel to one application &mdash; not the whole network &mdash; so even a compromised laptop cannot pivot laterally to other apps.",
@@ -1859,6 +1936,7 @@ const noResultsEl = document.getElementById("noResults");
 const noResultsQueryEl = document.getElementById("noResultsQuery");
 const toTopBtn = document.getElementById("toTop");
 const filterRow = document.getElementById("filterRow");
+const kindFilterRow = document.getElementById("kindFilterRow");
 
 totalCountEl.textContent = TERMS.length;
 shownCountEl.textContent = TERMS.length;
@@ -1874,13 +1952,15 @@ TERMS.forEach((t, i) => {
   card.id = t.id;
   card.dataset.name = t.name.toLowerCase();
   card.dataset.category = t.category;
-  card.dataset.search = (t.name + " " + (t.aliases || []).join(" ") + " " + t.short + " " + t.practice + " " + t.category).toLowerCase();
+  card.dataset.kind = t.kind || "";
+  card.dataset.search = (t.name + " " + (t.aliases || []).join(" ") + " " + t.short + " " + t.practice + " " + t.category + " " + (t.kind || "")).toLowerCase();
   const idxStr = String(i + 1).padStart(2, "0");
   card.innerHTML = `
     <div class="card-head">
       <h2 class="card-title"><span class="idx">${idxStr}</span>${t.name}</h2>
       <div class="card-tags">
         <span class="chip chip-category">${t.category}</span>
+        ${t.kind ? `<span class="chip chip-kind" data-kind="${t.kind}">${t.kind}</span>` : ''}
         <span class="chip">${t.title.prefix} &middot; ${t.title.text}</span>
         ${t.clarified ? '<span class="chip chip-clar">Clarified</span>' : ''}
       </div>
@@ -1943,6 +2023,7 @@ letterBar.appendChild(letterFrag);
 
 /* Filter + search state */
 let activeFilter = "all";
+let activeKindFilter = "all";
 let activeQuery = "";
 
 function applyFilters() {
@@ -1952,8 +2033,9 @@ function applyFilters() {
   TERMS.forEach(t => {
     const card = document.getElementById(t.id);
     const matchesFilter = activeFilter === "all" || t.category === activeFilter;
+    const matchesKind = activeKindFilter === "all" || t.kind === activeKindFilter;
     const matchesQuery = !q || card.dataset.search.includes(q);
-    const show = matchesFilter && matchesQuery;
+    const show = matchesFilter && matchesKind && matchesQuery;
     card.classList.toggle("hidden", !show);
     if (show) { visible++; visibleIds.add(t.id); }
   });
@@ -1994,6 +2076,16 @@ filterRow.addEventListener("click", (e) => {
   filterRow.querySelectorAll(".filter-chip").forEach(b => b.setAttribute("aria-pressed", "false"));
   btn.setAttribute("aria-pressed", "true");
   activeFilter = btn.dataset.filter;
+  applyFilters();
+});
+
+/* Kind filter chips */
+kindFilterRow.addEventListener("click", (e) => {
+  const btn = e.target.closest(".filter-chip");
+  if (!btn) return;
+  kindFilterRow.querySelectorAll(".filter-chip").forEach(b => b.setAttribute("aria-pressed", "false"));
+  btn.setAttribute("aria-pressed", "true");
+  activeKindFilter = btn.dataset.kind;
   applyFilters();
 });
 
