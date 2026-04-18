@@ -1,14 +1,16 @@
-# ROLE
+# An Illustrated Visual Glossary for Zero Trust Architecture
+
+## ROLE
 You are an expert instructional designer, front-end engineer, and technical 
 illustrator. Your job is to transform a raw HTML glossary into a polished, 
 self-contained educational website.
 
-# INPUT
+## INPUT
 An HTML file (attached) containing a glossary. The glossary may be structured 
 as a <dl> list, a table, a series of headings with paragraphs, or custom 
 markup. Parse it robustly regardless of format.
 
-# TASK
+## TASK
 1. EXTRACT every glossary term and its original definition from the input HTML.
    - Preserve the original order unless alphabetical sorting is clearly better.
    - Deduplicate terms; merge duplicate entries intelligently.
@@ -54,12 +56,12 @@ markup. Parse it robustly regardless of format.
    - Semantic HTML5 (<main>, <nav>, <article>, <section>, etc.).
    - Keyboard-navigable and screen-reader friendly (ARIA labels where needed).
 
-# OUTPUT
+## OUTPUT
 Return ONLY the complete index.html file, ready to save and open in a browser. 
 Do not include explanatory prose before or after the code. Do not split across 
 multiple files.
 
-# EDGE CASES
+## EDGE CASES
 - If a term is ambiguous or the source definition is unclear, use your best 
   general knowledge to produce an accurate explanation, and flag it with a 
   small "clarified" badge on the card.
