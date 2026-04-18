@@ -458,11 +458,11 @@
   <div>
     <span class="eyebrow">Reference &middot; NIST SP 800-207</span>
     <h1>Zero Trust Architecture<span>A visual glossary for financial institutions</span></h1>
-    <p class="lede">Thirty-one concepts and components that make up a bank-grade Zero Trust Architecture — distilled into plain English, each paired with a diagram. Sourced from an ARB submission mapping the C4 model to NIST SP 800-207 for a multi-regional retail and commercial bank.</p>
+    <p class="lede">Thirty-nine concepts and components that make up a bank-grade Zero Trust Architecture — distilled into plain English, each paired with a diagram. Sourced from an ARB submission mapping the C4 model to NIST SP 800-207 for a multi-regional retail and commercial bank.</p>
   </div>
   <div class="hero-meta">
     <div>Version <b>01</b></div>
-    <div>Terms <b id="termCountMeta">31</b></div>
+    <div>Terms <b id="termCountMeta">39</b></div>
     <div>Framework <b>NIST 800-207</b></div>
   </div>
 </section>
@@ -482,7 +482,7 @@
   <main id="main">
     <div class="toolbar">
       <h2>Glossary entries</h2>
-      <span class="toolbar-meta"><b id="shownCount">31</b> / <span id="totalCount">31</span> shown</span>
+      <span class="toolbar-meta"><b id="shownCount">39</b> / <span id="totalCount">39</span> shown</span>
     </div>
 
     <div class="filter-row" id="filterRow" role="group" aria-label="Filter by category">
@@ -509,7 +509,7 @@
 
 <footer class="page-foot" role="contentinfo">
   <div class="foot-inner">
-    <span><b id="footCount">31</b> entries &middot; Sourced from ARB submission &middot; Mapped to NIST SP&nbsp;800-207</span>
+    <span><b id="footCount">39</b> entries &middot; Sourced from ARB submission &middot; Mapped to NIST SP&nbsp;800-207</span>
     <span>Generated as a single-file reference &middot; <b>Light / Dark</b></span>
   </div>
 </footer>
@@ -693,6 +693,35 @@ const TERMS = [
     <text x="343" y="112" class="d-micro">PERMIT /</text>
     <text x="343" y="138" class="d-micro">DENY</text>
     <defs><marker id="arE1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "dpop", name: "DPoP (Demonstrating Proof-of-Possession)", category: "Foundations",
+  aliases: ["proof-of-possession", "sender-constrained token", "RFC 9449"],
+  title: { prefix: "Spec", text: "IETF RFC 9449" },
+  short: "Binds an OAuth access token to a <strong>specific client key</strong> so a stolen token alone is useless. The client signs a short-lived DPoP proof JWT for every API call &mdash; if the proof&apos;s key does not match the <code>cnf.jkt</code> thumbprint embedded in the access token, the PEP rejects the request.",
+  practice: "A TPP&apos;s access token leaks through a log-aggregator bug; without the matching private key the attacker cannot mint a fresh DPoP proof, so Kong rejects every replayed call at the edge before it ever reaches the payments API.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-dpop d-dpop" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-dpop">DPoP sender-constrained token flow</title>
+    <desc id="d-dpop">A client holds a private key; the issued access token embeds a thumbprint of the public key; each API call carries a fresh signed DPoP proof that the PEP verifies against the token.</desc>
+    <rect x="10" y="85" width="95" height="80" rx="3" class="d-box"/>
+    <text x="57" y="108" text-anchor="middle" class="d-label">Client</text>
+    <text x="57" y="126" text-anchor="middle" class="d-sub">private key</text>
+    <text x="57" y="144" text-anchor="middle" class="d-accent-text">kid: abc</text>
+    <rect x="150" y="85" width="110" height="80" rx="3" class="d-pri"/>
+    <text x="205" y="108" text-anchor="middle" class="d-label">Access token</text>
+    <text x="205" y="126" text-anchor="middle" class="d-sub">+ cnf.jkt</text>
+    <text x="205" y="144" text-anchor="middle" class="d-sub">thumbprint</text>
+    <rect x="305" y="85" width="90" height="80" rx="3" class="d-warn"/>
+    <text x="350" y="108" text-anchor="middle" class="d-label">PEP</text>
+    <text x="350" y="126" text-anchor="middle" class="d-sub">verify</text>
+    <text x="350" y="144" text-anchor="middle" class="d-sub">DPoP proof</text>
+    <path d="M105 125 L148 125" class="d-line" marker-end="url(#arD1)"/>
+    <path d="M260 125 L303 125" class="d-line" marker-end="url(#arD1)"/>
+    <rect x="20" y="185" width="360" height="50" rx="3" class="d-bg"/>
+    <text x="30" y="204" class="d-accent-text">STOLEN TOKEN ALONE IS USELESS</text>
+    <text x="30" y="222" class="d-sub">attacker lacks the private key &mdash; cannot mint a fresh DPoP proof</text>
+    <defs><marker id="arD1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
   </svg>`
 },
 {
@@ -902,6 +931,67 @@ const TERMS = [
   </svg>`
 },
 {
+  id: "jwt", name: "JWT (JSON Web Token)", category: "Foundations",
+  aliases: ["JSON Web Token", "token format", "RFC 7519", "claims"],
+  title: { prefix: "Spec", text: "IETF RFC 7519" },
+  short: "A compact, <strong>signed JSON token format</strong> carrying claims (<code>sub</code>, <code>iss</code>, <code>aud</code>, <code>exp</code>, <code>amr</code>) that PEPs validate at line-rate without calling home. The signature and embedded expiry make the token self-contained proof of identity and session context &mdash; no server-side session lookup required.",
+  practice: "Every call to the payments service carries a JWT; Kong validates the signature and expiry in under a millisecond, extracts the subject and risk claims and forwards them to OPA so the authorisation decision is made on fresh, attested facts.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-jwt d-jwt" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-jwt">JWT three-part structure</title>
+    <desc id="d-jwt">A JWT is a dot-separated header, payload and signature triple; a PEP validates the signature and claims at line rate without a session lookup.</desc>
+    <rect x="15" y="55" width="110" height="55" rx="3" class="d-box"/>
+    <text x="70" y="78" text-anchor="middle" class="d-label">Header</text>
+    <text x="70" y="96" text-anchor="middle" class="d-sub">alg, kid</text>
+    <rect x="145" y="55" width="110" height="55" rx="3" class="d-pri"/>
+    <text x="200" y="78" text-anchor="middle" class="d-label">Payload</text>
+    <text x="200" y="96" text-anchor="middle" class="d-sub">claims</text>
+    <rect x="275" y="55" width="110" height="55" rx="3" class="d-warn"/>
+    <text x="330" y="78" text-anchor="middle" class="d-label">Signature</text>
+    <text x="330" y="96" text-anchor="middle" class="d-sub">RS256 / ES256</text>
+    <text x="200" y="130" text-anchor="middle" class="d-micro">header . payload . signature</text>
+    <rect x="20" y="145" width="360" height="40" rx="3" class="d-bg"/>
+    <text x="30" y="163" class="d-accent-text">PAYLOAD CLAIMS</text>
+    <text x="30" y="179" class="d-sub">sub=u-42 &middot; aud=payments &middot; iss=ciam &middot; exp=1714.. &middot; amr=webauthn</text>
+    <rect x="20" y="195" width="360" height="40" rx="3" class="d-bg"/>
+    <text x="30" y="213" class="d-accent-text">VALIDATION &lt; 1 MS</text>
+    <text x="30" y="229" class="d-sub">verify signature &middot; check exp &middot; extract subject &mdash; no round-trip</text>
+  </svg>`
+},
+{
+  id: "kerberos", name: "Kerberos", category: "Foundations",
+  aliases: ["ticket", "KDC", "AD authentication", "RFC 4120"],
+  title: { prefix: "Spec", text: "IETF RFC 4120" },
+  short: "A <strong>ticket-based network authentication protocol</strong> that predates OIDC by decades and still underpins every Windows/AD logon and legacy mainframe integration. A central Key Distribution Centre issues time-boxed tickets that services verify locally &mdash; the user&apos;s password never travels on the wire after the initial AS exchange.",
+  practice: "A branch teller signs in to their workstation once; Kerberos tickets let them reach every internal service without re-typing credentials, while the OIDC bridge (Broadcom AAM) translates those tickets for the bank&apos;s modern Zero Trust PEPs.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-kerberos d-kerberos" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-kerberos">Kerberos ticket exchange</title>
+    <desc id="d-kerberos">A client authenticates to the KDC, receives a ticket-granting ticket, exchanges it for a service ticket, and presents that ticket to the target service &mdash; never transmitting the password after the initial exchange.</desc>
+    <rect x="10" y="90" width="85" height="70" rx="3" class="d-box"/>
+    <text x="52" y="115" text-anchor="middle" class="d-label">Client</text>
+    <text x="52" y="133" text-anchor="middle" class="d-sub">workstation</text>
+    <rect x="150" y="40" width="110" height="165" rx="3" class="d-pri"/>
+    <text x="205" y="62" text-anchor="middle" class="d-label">KDC</text>
+    <line x1="160" y1="72" x2="250" y2="72" class="d-line-mute"/>
+    <text x="205" y="94" text-anchor="middle" class="d-sub">AS</text>
+    <text x="205" y="111" text-anchor="middle" class="d-accent-text">TGT</text>
+    <line x1="160" y1="125" x2="250" y2="125" class="d-line-mute"/>
+    <text x="205" y="147" text-anchor="middle" class="d-sub">TGS</text>
+    <text x="205" y="164" text-anchor="middle" class="d-accent-text">SERVICE TKT</text>
+    <rect x="315" y="90" width="80" height="70" rx="3" class="d-warn"/>
+    <text x="355" y="115" text-anchor="middle" class="d-label">Service</text>
+    <text x="355" y="133" text-anchor="middle" class="d-sub">e.g. CICS</text>
+    <path d="M95 110 L148 92" class="d-line" marker-end="url(#arK1)"/>
+    <text x="100" y="88" class="d-micro">1 AS-REQ</text>
+    <path d="M148 130 L95 148" class="d-line" marker-end="url(#arK1)"/>
+    <text x="100" y="175" class="d-micro">2 TGT returned</text>
+    <path d="M260 165 L313 135" class="d-line" marker-end="url(#arK1)"/>
+    <text x="270" y="190" class="d-micro">3 SERVICE TKT</text>
+    <rect x="20" y="215" width="360" height="25" rx="3" class="d-bg"/>
+    <text x="200" y="232" text-anchor="middle" class="d-accent-text">PASSWORD NEVER TRAVERSES THE WIRE</text>
+    <defs><marker id="arK1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
   id: "kong", name: "Kong + FAPI (API Gateway)", category: "Enforcement",
   aliases: ["API gateway", "north-south", "DPoP", "rate limit"],
   title: { prefix: "NIST", text: "Policy Enforcement Point" },
@@ -1009,6 +1099,45 @@ const TERMS = [
   </svg>`
 },
 {
+  id: "mythos", name: "Mythos (Adversary AI)", category: "Posture",
+  aliases: ["frontier AI", "zero-day discovery", "AI adversary", "Anthropic"],
+  title: { prefix: "Threat", text: "Adversary AI &middot; Apr 2026" },
+  short: "An <strong>Anthropic frontier model</strong> (preview, April 2026) that demonstrated emergent capability to autonomously discover thousands of zero-day vulnerabilities and probe fraud-detection logic through systematically varied test transactions. Reframed Zero Trust from a compliance exercise into a <em>blast-radius control problem</em> &mdash; the only viable defence when any single asset can be compromised by an AI-discovered zero-day.",
+  practice: "Treasury and the Fed convened an emergency meeting with US bank CEOs on 13 April 2026; the board response at this bank was to fast-track every PEP, PDP and micro-segment rollout in this glossary so that one compromised service cannot reach the payment rails.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-mythos d-mythos" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-mythos">Mythos adversary AI contained by Zero Trust</title>
+    <desc id="d-mythos">A frontier AI model launches parallel probes &mdash; fuzzing APIs, synthesising test transactions, chaining zero-days &mdash; while Zero Trust enforcement points contain the blast radius.</desc>
+    <rect x="10" y="85" width="90" height="80" rx="3" class="d-warn"/>
+    <text x="55" y="108" text-anchor="middle" class="d-label">Mythos</text>
+    <text x="55" y="126" text-anchor="middle" class="d-sub">frontier AI</text>
+    <text x="55" y="144" text-anchor="middle" class="d-warn-text">ADVERSARY</text>
+    <rect x="140" y="30" width="120" height="40" rx="3" class="d-box"/>
+    <text x="200" y="54" text-anchor="middle" class="d-sub">fuzz APIs</text>
+    <rect x="140" y="90" width="120" height="40" rx="3" class="d-box"/>
+    <text x="200" y="114" text-anchor="middle" class="d-sub">synth test tx</text>
+    <rect x="140" y="150" width="120" height="40" rx="3" class="d-box"/>
+    <text x="200" y="174" text-anchor="middle" class="d-sub">chain 0-days</text>
+    <path d="M100 115 L138 50" class="d-line" marker-end="url(#arMY)"/>
+    <path d="M100 125 L138 110" class="d-line" marker-end="url(#arMY)"/>
+    <path d="M100 135 L138 170" class="d-line" marker-end="url(#arMY)"/>
+    <rect x="295" y="30" width="100" height="160" rx="3" class="d-pri"/>
+    <text x="345" y="52" text-anchor="middle" class="d-label">ZTA</text>
+    <text x="345" y="68" text-anchor="middle" class="d-sub">containment</text>
+    <line x1="305" y1="78" x2="385" y2="78" class="d-line-mute"/>
+    <text x="345" y="98" text-anchor="middle" class="d-accent-text">PEP</text>
+    <text x="345" y="118" text-anchor="middle" class="d-accent-text">PDP</text>
+    <text x="345" y="138" text-anchor="middle" class="d-accent-text">mTLS</text>
+    <text x="345" y="158" text-anchor="middle" class="d-accent-text">SEGMENT</text>
+    <text x="345" y="178" text-anchor="middle" class="d-accent-text">DPoP</text>
+    <path d="M260 50 L293 50" class="d-line" marker-end="url(#arMY)"/>
+    <path d="M260 110 L293 110" class="d-line" marker-end="url(#arMY)"/>
+    <path d="M260 170 L293 170" class="d-line" marker-end="url(#arMY)"/>
+    <rect x="20" y="210" width="360" height="30" rx="3" class="d-bg"/>
+    <text x="200" y="229" text-anchor="middle" class="d-accent-text">ZTA = BLAST-RADIUS CONTROL WHEN THE ADVERSARY IS AN AI</text>
+    <defs><marker id="arMY" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
   id: "netskope", name: "Netskope SSE (CASB + SWG + DLP)", category: "Enforcement",
   aliases: ["CASB", "SWG", "DLP", "SaaS"],
   title: { prefix: "NIST", text: "PEP (SaaS) &middot; DLP DS" },
@@ -1070,6 +1199,35 @@ const TERMS = [
     <text x="20" y="205" class="d-accent-text">7 TENETS</text>
     <text x="20" y="222" class="d-sub">1 resources  2 secure communication  3 per-session  4 policy</text>
     <text x="20" y="236" class="d-sub">5 integrity  6 dynamic auth  7 continuous monitoring</text>
+  </svg>`
+},
+{
+  id: "oauth-obo", name: "OAuth 2.0 On-Behalf-Of (OBO)", category: "Foundations",
+  aliases: ["OBO", "token exchange", "delegation", "RFC 8693"],
+  title: { prefix: "Spec", text: "IETF RFC 8693 &middot; token exchange" },
+  short: "A <strong>delegation pattern</strong> where a middle-tier service exchanges the caller&apos;s token for a new, downstream-scoped token at the token-exchange endpoint. The downstream service sees the <em>end user</em> as the subject &mdash; not the middle service &mdash; which stops the &ldquo;god-mode service account&rdquo; anti-pattern where one compromised backend can do anything on behalf of any user.",
+  practice: "The retail mobile backend calls the payments service on a customer&apos;s behalf; OBO mints a fresh, narrowly-scoped token carrying the customer&apos;s <code>sub</code> claim so the payments Policy Engine decides based on the real user, not the backend&apos;s service identity.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-obo d-obo" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-obo">OAuth 2.0 On-Behalf-Of token exchange</title>
+    <desc id="d-obo">A middle-tier service exchanges the caller&apos;s access token for a downstream-scoped token via the token-exchange endpoint, so the downstream service sees the end user rather than the middle-tier&apos;s own identity.</desc>
+    <rect x="10" y="95" width="80" height="60" rx="3" class="d-box"/>
+    <text x="50" y="118" text-anchor="middle" class="d-label">User</text>
+    <text x="50" y="138" text-anchor="middle" class="d-sub">mobile app</text>
+    <rect x="125" y="85" width="115" height="80" rx="3" class="d-pri"/>
+    <text x="182" y="108" text-anchor="middle" class="d-label">Mid-tier</text>
+    <text x="182" y="126" text-anchor="middle" class="d-sub">retail backend</text>
+    <text x="182" y="144" text-anchor="middle" class="d-accent-text">token exchange</text>
+    <rect x="270" y="95" width="120" height="60" rx="3" class="d-warn"/>
+    <text x="330" y="118" text-anchor="middle" class="d-label">Payments svc</text>
+    <text x="330" y="138" text-anchor="middle" class="d-sub">sees USER sub</text>
+    <path d="M90 125 L125 125" class="d-line" marker-end="url(#arOB)"/>
+    <text x="93" y="117" class="d-micro">user token</text>
+    <path d="M240 125 L268 125" class="d-line" marker-end="url(#arOB)"/>
+    <text x="243" y="117" class="d-micro">OBO token</text>
+    <rect x="20" y="185" width="360" height="50" rx="3" class="d-bg"/>
+    <text x="30" y="204" class="d-accent-text">DOWNSTREAM SUBJECT = END USER</text>
+    <text x="30" y="222" class="d-sub">no god-mode service account; every hop carries the real actor</text>
+    <defs><marker id="arOB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
   </svg>`
 },
 {
@@ -1241,6 +1399,28 @@ const TERMS = [
   </svg>`
 },
 {
+  id: "paseto", name: "PASETO (Platform-Agnostic Security Tokens)", category: "Foundations",
+  aliases: ["token format", "JWT alternative", "versioned crypto"],
+  title: { prefix: "Spec", text: "paseto.io &middot; versioned tokens" },
+  short: "A <strong>JWT-alternative token format</strong> with versioned, opinionated crypto suites (<code>v4.public</code>, <code>v4.local</code>) that remove the algorithm-agility footguns behind almost every major JWT vulnerability. Each PASETO version locks in exactly one signing algorithm and one encryption algorithm &mdash; no <code>alg</code> header, no negotiation, no confusion attack.",
+  practice: "Internal service-to-service tokens at the bank are minted as PASETO v4 rather than JWT, so a bug in one verifier library cannot be tricked into accepting <code>alg:none</code> or HMAC-with-the-public-key &mdash; the algorithm is fixed by the version string itself.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-paseto d-paseto" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-paseto">PASETO versioned suite vs JWT algorithm agility</title>
+    <desc id="d-paseto">PASETO locks the crypto suite into the version header so there is no algorithm negotiation, whereas JWT&apos;s alg header has been a long-documented attack surface.</desc>
+    <rect x="15" y="40" width="370" height="55" rx="3" class="d-warn"/>
+    <text x="30" y="62" class="d-accent-text">JWT</text>
+    <text x="30" y="80" class="d-sub">alg header negotiated at runtime</text>
+    <text x="370" y="80" text-anchor="end" class="d-warn-text">HISTORY OF BUGS</text>
+    <rect x="15" y="110" width="370" height="55" rx="3" class="d-pri"/>
+    <text x="30" y="132" class="d-accent-text">PASETO v4.public</text>
+    <text x="30" y="150" class="d-sub">Ed25519 locked by version &mdash; no alg header to tamper with</text>
+    <rect x="15" y="180" width="370" height="40" rx="3" class="d-bg"/>
+    <text x="30" y="199" class="d-accent-text">LAYOUT</text>
+    <text x="30" y="214" class="d-sub">v4.public . base64(payload) . base64(sig)</text>
+    <text x="200" y="240" text-anchor="middle" class="d-accent-text">ONE VERSION &rarr; ONE SUITE &rarr; NO NEGOTIATION</text>
+  </svg>`
+},
+{
   id: "pa", name: "Policy Administrator (PA)", category: "Control Plane",
   aliases: ["PA", "bundle publisher", "Styra"],
   title: { prefix: "NIST", text: "Policy Administrator" },
@@ -1348,6 +1528,42 @@ const TERMS = [
       <marker id="arT1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker>
       <marker id="arTw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--svg-warn)"/></marker>
     </defs>
+  </svg>`
+},
+{
+  id: "par", name: "Pushed Authorization Requests (PAR)", category: "Foundations",
+  aliases: ["PAR", "RFC 9126", "authorization request", "FAPI 2.0"],
+  title: { prefix: "Spec", text: "IETF RFC 9126" },
+  short: "An OAuth 2.0 extension that <strong>pushes the authorisation request</strong> server-to-server to a <code>/par</code> endpoint before the user&apos;s browser ever sees it, returning a short-lived <code>request_uri</code> handle. Removes front-channel tampering risk &mdash; the browser only carries an opaque reference &mdash; and is mandatory in FAPI 2.0 Open Banking profiles.",
+  practice: "When a TPP initiates a Variable Recurring Payment, it first POSTs a signed request object to Kong/Authlete&apos;s <code>/par</code>; the customer&apos;s browser is then redirected with only <code>request_uri=urn:ietf:params:oauth:request_uri:abc123</code> &mdash; scope, amount and creditor never appear on the front channel.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-par d-par" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-par">Pushed Authorization Request flow</title>
+    <desc id="d-par">A client pushes the authorisation request to the /par endpoint server-to-server, receives a request_uri handle, and then redirects the user&apos;s browser with only that opaque handle &mdash; no sensitive parameters on the front channel.</desc>
+    <rect x="10" y="25" width="90" height="55" rx="3" class="d-box"/>
+    <text x="55" y="48" text-anchor="middle" class="d-label">TPP</text>
+    <text x="55" y="66" text-anchor="middle" class="d-sub">client</text>
+    <rect x="155" y="25" width="100" height="55" rx="3" class="d-pri"/>
+    <text x="205" y="48" text-anchor="middle" class="d-label">/par</text>
+    <text x="205" y="66" text-anchor="middle" class="d-sub">back channel</text>
+    <rect x="300" y="25" width="90" height="55" rx="3" class="d-box"/>
+    <text x="345" y="48" text-anchor="middle" class="d-sub">request_uri</text>
+    <text x="345" y="64" text-anchor="middle" class="d-accent-text">urn:...:abc</text>
+    <path d="M100 52 L153 52" class="d-line" marker-end="url(#arPR)"/>
+    <text x="103" y="20" class="d-micro">1 signed req</text>
+    <path d="M255 52 L298 52" class="d-line" marker-end="url(#arPR)"/>
+    <text x="258" y="20" class="d-micro">2 handle</text>
+    <rect x="10" y="120" width="90" height="55" rx="3" class="d-box"/>
+    <text x="55" y="143" text-anchor="middle" class="d-label">Browser</text>
+    <text x="55" y="160" text-anchor="middle" class="d-sub">redirect</text>
+    <rect x="155" y="120" width="100" height="55" rx="3" class="d-warn"/>
+    <text x="205" y="143" text-anchor="middle" class="d-label">/authorize</text>
+    <text x="205" y="160" text-anchor="middle" class="d-sub">handle only</text>
+    <path d="M100 147 L153 147" class="d-line" marker-end="url(#arPR)"/>
+    <text x="103" y="115" class="d-micro">3 redirect</text>
+    <rect x="20" y="190" width="360" height="50" rx="3" class="d-bg"/>
+    <text x="30" y="209" class="d-accent-text">FRONT CHANNEL CARRIES ONLY A HANDLE</text>
+    <text x="30" y="226" class="d-sub">scope, amount, creditor not visible &mdash; mandatory in FAPI 2.0</text>
+    <defs><marker id="arPR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
   </svg>`
 },
 {
@@ -1492,6 +1708,35 @@ const TERMS = [
     <path d="M270 130 L290 155" class="d-line"/>
     <path d="M270 150 L290 205" class="d-line"/>
     <defs><marker id="arX1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "webauthn", name: "WebAuthn / Passkeys", category: "Foundations",
+  aliases: ["Passkeys", "FIDO2", "W3C WebAuthn", "phishing-resistant"],
+  title: { prefix: "Spec", text: "W3C WebAuthn Level 3" },
+  short: "A <strong>phishing-resistant public-key authentication standard</strong> where the authenticator (Face ID, YubiKey, OS-managed passkey) signs a server challenge with a private key that is cryptographically bound to the relying party&apos;s domain. A fake site cannot get a valid signature because the <code>rpId</code> is baked into the signed assertion &mdash; no code, no OTP, no phishing vector.",
+  practice: "A wealth customer signs in to the private-banking portal with a device-bound passkey; even if they paste the URL into a lookalike site the passkey refuses to sign because the RP ID does not match, and the attacker gets nothing reusable.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-webauthn d-webauthn" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-webauthn">WebAuthn domain-scoped assertion</title>
+    <desc id="d-webauthn">The authenticator signs a server challenge with a private key bound to the relying party&apos;s domain; a phishing site cannot obtain a valid signature because the RP ID will not match.</desc>
+    <rect x="10" y="85" width="90" height="80" rx="3" class="d-box"/>
+    <text x="55" y="108" text-anchor="middle" class="d-label">User</text>
+    <text x="55" y="126" text-anchor="middle" class="d-sub">passkey</text>
+    <text x="55" y="144" text-anchor="middle" class="d-accent-text">device-bound</text>
+    <rect x="140" y="85" width="120" height="80" rx="3" class="d-pri"/>
+    <text x="200" y="108" text-anchor="middle" class="d-label">Authenticator</text>
+    <text x="200" y="126" text-anchor="middle" class="d-sub">signs challenge</text>
+    <text x="200" y="144" text-anchor="middle" class="d-sub">with RP-scoped key</text>
+    <rect x="300" y="85" width="90" height="80" rx="3" class="d-warn"/>
+    <text x="345" y="108" text-anchor="middle" class="d-label">Bank RP</text>
+    <text x="345" y="126" text-anchor="middle" class="d-sub">verifies sig</text>
+    <text x="345" y="144" text-anchor="middle" class="d-sub">checks origin</text>
+    <path d="M100 125 L138 125" class="d-line" marker-end="url(#arWA)"/>
+    <path d="M260 125 L298 125" class="d-line" marker-end="url(#arWA)"/>
+    <rect x="20" y="185" width="360" height="50" rx="3" class="d-bg"/>
+    <text x="30" y="204" class="d-accent-text">PHISHING-RESISTANT BY CONSTRUCTION</text>
+    <text x="30" y="222" class="d-sub">RP ID baked into signature &mdash; fake site gets a useless key</text>
+    <defs><marker id="arWA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
   </svg>`
 },
 {
