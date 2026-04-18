@@ -1,4 +1,4 @@
-# An Illustrated Visual Glossary for Zero Trust Architecture
+# A Visual Glossary for Zero Trust Architecture Terms
 
 ## ROLE
 You are an expert instructional designer, front-end engineer, and technical 
