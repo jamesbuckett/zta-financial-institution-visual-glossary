@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Zero Trust Architecture Glossary for Banks (NIST 800-207)</title>
-<meta name="description" content="73 Zero Trust Architecture terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a one-line definition and a diagram. Mapped to NIST SP 800-207." />
+<meta name="description" content="74 Zero Trust Architecture terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a one-line definition and a diagram. Mapped to NIST SP 800-207." />
 <meta name="author" content="James Buckett" />
 <meta name="color-scheme" content="light dark" />
 <meta name="theme-color" content="#F7F7F5" media="(prefers-color-scheme: light)" />
@@ -16,7 +16,7 @@
 <!-- Open Graph (LinkedIn, Slack, Facebook, iMessage, Discord) -->
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Zero Trust Architecture Glossary for Banks" />
-<meta property="og:description" content="73 ZTA terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a diagram. Mapped to NIST SP 800-207." />
+<meta property="og:description" content="74 ZTA terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a diagram. Mapped to NIST SP 800-207." />
 <meta property="og:url" content="https://example.com/zta-glossary/" />
 <meta property="og:site_name" content="James Buckett" />
 <meta property="og:locale" content="en_US" />
@@ -717,7 +717,7 @@
   <div>
     <span class="eyebrow">Reference &middot; NIST SP 800-207</span>
     <h1>Zero Trust Architecture <span>A visual glossary for financial institutions</span></h1>
-    <p class="lede">73 Zero Trust terms that actually turn up in a multi-regional bank&apos;s architecture &mdash; each one explained in plain English and paired with a diagram. Grounded in NIST SP 800-207, drawn from real Architecture Review Board submissions.</p>
+    <p class="lede">74 Zero Trust terms that actually turn up in a multi-regional bank&apos;s architecture &mdash; each one explained in plain English and paired with a diagram. Grounded in NIST SP 800-207, drawn from real Architecture Review Board submissions.</p>
     <p class="byline">
       By <strong>James Buckett</strong> &middot; Product Manager &middot;
       <a href="mailto:james.buckett@gmail.com" rel="author">james.buckett@gmail.com</a>
@@ -736,7 +736,7 @@
   </div>
   <div class="hero-meta">
     <div>Updated <b>Apr 2026</b></div>
-    <div>Terms <b id="termCountMeta">73</b></div>
+    <div>Terms <b id="termCountMeta">74</b></div>
     <div>Framework <b>NIST 800-207</b></div>
   </div>
 </section>
@@ -762,7 +762,7 @@
   <main id="main">
     <div class="toolbar">
       <h2>Glossary entries</h2>
-      <span class="toolbar-meta"><b id="shownCount">73</b> / <span id="totalCount">73</span> shown</span>
+      <span class="toolbar-meta"><b id="shownCount">74</b> / <span id="totalCount">74</span> shown</span>
     </div>
 
     <div class="filter-row" id="filterRow" role="group" aria-label="Filter by category">
@@ -796,7 +796,7 @@
     <div class="cards" id="cards"></div>
 
     <div class="no-results" id="noResults">
-      Nothing matches <code id="noResultsQuery"></code> &mdash; yet. Try a shorter keyword, or clear the filters to see all <b id="noResultsTotal">73</b> terms.
+      Nothing matches <code id="noResultsQuery"></code> &mdash; yet. Try a shorter keyword, or clear the filters to see all <b id="noResultsTotal">74</b> terms.
     </div>
   </main>
 
@@ -806,7 +806,7 @@
   <div class="about-inner">
     <h2 id="about-heading">About this glossary</h2>
     <p>
-      I&rsquo;m <strong>James Buckett</strong>, an Enterprise Security Architect working on Zero Trust Architecture programs for multi-regional banks. I built this glossary while preparing a 2025 Architecture Review Board submission &mdash; 73 terms I kept having to re-explain from first principles, now each one paired with a diagram and a concrete operational example.
+      I&rsquo;m <strong>James Buckett</strong>, an Enterprise Security Architect working on Zero Trust Architecture programs for multi-regional banks. I built this glossary while preparing a 2025 Architecture Review Board submission &mdash; 74 terms I kept having to re-explain from first principles, now each one paired with a diagram and a concrete operational example.
     </p>
     <p>
       If you spot something wrong, something missing, or a term that could be explained better, I&rsquo;d like to hear about it. This page has no tracking, no analytics, and no external dependencies beyond the fonts your browser already has.
@@ -841,7 +841,7 @@
   <div class="foot-inner">
     <span>
       Written by <strong>James Buckett</strong> (Enterprise Security Architect) &middot;
-      <b id="footCount">73</b> entries &middot;
+      <b id="footCount">74</b> entries &middot;
       Drawn from a 2025 ARB submission &middot;
       Mapped to NIST SP&nbsp;800-207 &middot;
       Updated April 2026
@@ -3085,6 +3085,50 @@ const TERMS = [
   </svg>`
 },
 {
+  id: "siem", name: "SIEM (Security Information &amp; Event Management)", category: "Observability",
+  kind: "Concept",
+  aliases: ["Security Information and Event Management", "log correlation", "event correlation", "SOC platform"],
+  title: { prefix: "NIST", text: "Activity Log / SIEM DS" },
+  short: "The platform that <strong>ingests, normalizes and correlates</strong> security-relevant events from every tier &mdash; endpoints, identity, network, applications, cloud &mdash; into a single timeline that detection rules, analysts and the Trust Algorithm can query. NIST 800-207 names the <em>Activity Log / SIEM</em> feed as one of the eight data source classes every PE must consume.",
+  practice: "When an insider attempts data exfiltration, the DLP event from the endpoint, the VPN login from a new geography and the anomalous S3 read from CloudTrail land in the SIEM within seconds &mdash; a correlation rule stitches them into the single alert a SOC analyst (and a SOAR playbook) can act on.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-siem d-siem" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-siem">SIEM correlation pipeline</title>
+    <desc id="d-siem">Five event streams converge into a SIEM which normalizes to a common schema, correlates via rules and UEBA, and emits a single incident alert plus an audit-grade archive.</desc>
+    <rect x="10" y="20" width="90" height="24" rx="2" class="d-box"/>
+    <text x="55" y="36" text-anchor="middle" class="d-sub">Endpoint</text>
+    <rect x="10" y="48" width="90" height="24" rx="2" class="d-box"/>
+    <text x="55" y="64" text-anchor="middle" class="d-sub">Identity</text>
+    <rect x="10" y="76" width="90" height="24" rx="2" class="d-box"/>
+    <text x="55" y="92" text-anchor="middle" class="d-sub">Network</text>
+    <rect x="10" y="104" width="90" height="24" rx="2" class="d-box"/>
+    <text x="55" y="120" text-anchor="middle" class="d-sub">Applications</text>
+    <rect x="10" y="132" width="90" height="24" rx="2" class="d-box"/>
+    <text x="55" y="148" text-anchor="middle" class="d-sub">Cloud / CSPM</text>
+    <rect x="135" y="45" width="95" height="40" rx="3" class="d-pri"/>
+    <text x="182" y="63" text-anchor="middle" class="d-label">Normalize</text>
+    <text x="182" y="78" text-anchor="middle" class="d-sub">OCSF / CIM</text>
+    <rect x="135" y="100" width="95" height="40" rx="3" class="d-pri"/>
+    <text x="182" y="118" text-anchor="middle" class="d-label">Correlate</text>
+    <text x="182" y="133" text-anchor="middle" class="d-sub">rules + UEBA</text>
+    <rect x="265" y="55" width="115" height="75" rx="3" class="d-warn"/>
+    <text x="322" y="78" text-anchor="middle" class="d-label">Alert</text>
+    <text x="322" y="95" text-anchor="middle" class="d-sub">single incident</text>
+    <text x="322" y="114" text-anchor="middle" class="d-accent-text">&rarr; SOC / SOAR</text>
+    <path d="M100 32 L135 60" class="d-line-mute"/>
+    <path d="M100 60 L135 65" class="d-line-mute"/>
+    <path d="M100 88 L135 70" class="d-line-mute"/>
+    <path d="M100 116 L135 115" class="d-line-mute"/>
+    <path d="M100 144 L135 125" class="d-line-mute"/>
+    <path d="M230 65 L265 80" class="d-line" marker-end="url(#arSI)"/>
+    <path d="M230 120 L265 108" class="d-line" marker-end="url(#arSI)"/>
+    <rect x="20" y="170" width="360" height="60" rx="3" class="d-bg"/>
+    <text x="30" y="189" class="d-accent-text">ACTIVITY LOG / SIEM DATA SOURCE</text>
+    <text x="30" y="206" class="d-sub">audit-grade retention &middot; SOX 404 &middot; DORA Arts. 10-11 &middot; PCI-DSS r10</text>
+    <text x="30" y="221" class="d-sub">one timeline, many signals &mdash; feeds Trust Algorithm</text>
+    <defs><marker id="arSI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
   id: "edr-xdr", name: "EDR / XDR (Endpoint / Extended Detection &amp; Response)", category: "Posture",
   kind: "Concept",
   aliases: ["endpoint detection","CrowdStrike","SentinelOne","Defender XDR"],
@@ -3630,7 +3674,7 @@ if (citeCopyBtn && citeTextEl) {
   });
 }
 
-/* JSON-LD: Person + DefinedTermSet + 73 DefinedTerm entries.
+/* JSON-LD: Person + DefinedTermSet + 74 DefinedTerm entries.
    Emitted at runtime from TERMS so the structured data stays in sync with the glossary
    (no duplicate source of truth to maintain). */
 (function emitJsonLd() {
@@ -3683,10 +3727,10 @@ if (citeCopyBtn && citeTextEl) {
         "@type": "DefinedTermSet",
         "@id": setId,
         "name": "Zero Trust Architecture Glossary for Banks",
-        "description": "A visual glossary of 73 Zero Trust Architecture terms for bank architects, mapped to NIST SP 800-207 and drawn from a 2025 Architecture Review Board submission.",
+        "description": "A visual glossary of 74 Zero Trust Architecture terms for bank architects, mapped to NIST SP 800-207 and drawn from a 2025 Architecture Review Board submission.",
         "url": canonical,
         "inLanguage": "en-US",
-        "dateModified": "2026-04-19",
+        "dateModified": "2026-04-20",
         "author": { "@id": authorId },
         "numberOfItems": TERMS.length,
         "hasDefinedTerm": definedTerms
