@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Zero Trust Architecture Glossary for Banks (NIST 800-207)</title>
-<meta name="description" content="74 Zero Trust Architecture terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a one-line definition and a diagram. Mapped to NIST SP 800-207." />
+<meta name="description" content="75 Zero Trust Architecture terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a one-line definition and a diagram. Mapped to NIST SP 800-207." />
 <meta name="author" content="James Buckett" />
 <meta name="color-scheme" content="light dark" />
 <meta name="theme-color" content="#F7F7F5" media="(prefers-color-scheme: light)" />
@@ -16,7 +16,7 @@
 <!-- Open Graph (LinkedIn, Slack, Facebook, iMessage, Discord) -->
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Zero Trust Architecture Glossary for Banks" />
-<meta property="og:description" content="74 ZTA terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a diagram. Mapped to NIST SP 800-207." />
+<meta property="og:description" content="75 ZTA terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a diagram. Mapped to NIST SP 800-207." />
 <meta property="og:url" content="https://example.com/zta-glossary/" />
 <meta property="og:site_name" content="James Buckett" />
 <meta property="og:locale" content="en_US" />
@@ -717,7 +717,7 @@
   <div>
     <span class="eyebrow">Reference &middot; NIST SP 800-207</span>
     <h1>Zero Trust Architecture <span>A visual glossary for financial institutions</span></h1>
-    <p class="lede">74 Zero Trust terms that actually turn up in a multi-regional bank&apos;s architecture &mdash; each one explained in plain English and paired with a diagram. Grounded in NIST SP 800-207, drawn from real Architecture Review Board submissions.</p>
+    <p class="lede">75 Zero Trust terms that actually turn up in a multi-regional bank&apos;s architecture &mdash; each one explained in plain English and paired with a diagram. Grounded in NIST SP 800-207, drawn from real Architecture Review Board submissions.</p>
     <p class="byline">
       By <strong>James Buckett</strong> &middot; Product Manager &middot;
       <a href="mailto:james.buckett@gmail.com" rel="author">james.buckett@gmail.com</a>
@@ -736,7 +736,7 @@
   </div>
   <div class="hero-meta">
     <div>Updated <b>Apr 2026</b></div>
-    <div>Terms <b id="termCountMeta">74</b></div>
+    <div>Terms <b id="termCountMeta">75</b></div>
     <div>Framework <b>NIST 800-207</b></div>
   </div>
 </section>
@@ -762,7 +762,7 @@
   <main id="main">
     <div class="toolbar">
       <h2>Glossary entries</h2>
-      <span class="toolbar-meta"><b id="shownCount">74</b> / <span id="totalCount">74</span> shown</span>
+      <span class="toolbar-meta"><b id="shownCount">75</b> / <span id="totalCount">75</span> shown</span>
     </div>
 
     <div class="filter-row" id="filterRow" role="group" aria-label="Filter by category">
@@ -796,7 +796,7 @@
     <div class="cards" id="cards"></div>
 
     <div class="no-results" id="noResults">
-      Nothing matches <code id="noResultsQuery"></code> &mdash; yet. Try a shorter keyword, or clear the filters to see all <b id="noResultsTotal">74</b> terms.
+      Nothing matches <code id="noResultsQuery"></code> &mdash; yet. Try a shorter keyword, or clear the filters to see all <b id="noResultsTotal">75</b> terms.
     </div>
   </main>
 
@@ -806,7 +806,7 @@
   <div class="about-inner">
     <h2 id="about-heading">About this glossary</h2>
     <p>
-      I&rsquo;m <strong>James Buckett</strong>, an Enterprise Security Architect working on Zero Trust Architecture programs for multi-regional banks. I built this glossary while preparing a 2025 Architecture Review Board submission &mdash; 74 terms I kept having to re-explain from first principles, now each one paired with a diagram and a concrete operational example.
+      I&rsquo;m <strong>James Buckett</strong>, an Enterprise Security Architect working on Zero Trust Architecture programs for multi-regional banks. I built this glossary while preparing a 2025 Architecture Review Board submission &mdash; 75 terms I kept having to re-explain from first principles, now each one paired with a diagram and a concrete operational example.
     </p>
     <p>
       If you spot something wrong, something missing, or a term that could be explained better, I&rsquo;d like to hear about it. This page has no tracking, no analytics, and no external dependencies beyond the fonts your browser already has.
@@ -841,7 +841,7 @@
   <div class="foot-inner">
     <span>
       Written by <strong>James Buckett</strong> (Enterprise Security Architect) &middot;
-      <b id="footCount">74</b> entries &middot;
+      <b id="footCount">75</b> entries &middot;
       Drawn from a 2025 ARB submission &middot;
       Mapped to NIST SP&nbsp;800-207 &middot;
       Updated April 2026
@@ -1412,6 +1412,47 @@ const TERMS = [
       <marker id="arL1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker>
       <marker id="arL2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--svg-warn)"/></marker>
     </defs>
+  </svg>`
+},
+{
+  id: "idp", name: "Identity Provider (IdP)", category: "Identity",
+  kind: "Concept",
+  aliases: ["IdP", "identity provider", "authentication authority", "token issuer"],
+  title: { prefix: "NIST", text: "Identity Data Source" },
+  short: "The <strong>authoritative system</strong> that authenticates a subject &mdash; human, workload or device &mdash; and issues the signed token or assertion every downstream PEP will trust. In a ZTA, the IdP is the first Identity Data Source feeding the Trust Algorithm, and the component whose compromise turns every subsequent <em>permit</em> into a lie &mdash; which is why a mature estate separates workforce, customer and workload IdPs rather than pooling all trust in one tenant.",
+  practice: "A developer signs in once to the workforce IdP and walks away with a SAML assertion for Salesforce, an OIDC ID token for Snowflake and a SCIM provisioning push for Jira &mdash; three protocols, one source of truth, one place to revoke when they leave.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-idp d-idp" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-idp">Identity Provider as ZTA hub</title>
+    <desc id="d-idp">Three subject classes authenticate to the IdP, which issues SAML, OIDC and OAuth tokens to downstream relying parties and also emits identity signals into the policy engine.</desc>
+    <rect x="10" y="25" width="90" height="30" rx="3" class="d-box"/>
+    <text x="55" y="44" text-anchor="middle" class="d-sub">User</text>
+    <rect x="10" y="65" width="90" height="30" rx="3" class="d-box"/>
+    <text x="55" y="84" text-anchor="middle" class="d-sub">Workload</text>
+    <rect x="10" y="105" width="90" height="30" rx="3" class="d-box"/>
+    <text x="55" y="124" text-anchor="middle" class="d-sub">Device</text>
+    <rect x="140" y="40" width="120" height="105" rx="3" class="d-pri"/>
+    <text x="200" y="66" text-anchor="middle" class="d-label">IdP</text>
+    <text x="200" y="84" text-anchor="middle" class="d-sub">authenticate</text>
+    <text x="200" y="100" text-anchor="middle" class="d-sub">sign token</text>
+    <text x="200" y="120" text-anchor="middle" class="d-accent-text">TRUST ROOT</text>
+    <text x="200" y="136" text-anchor="middle" class="d-sub">revoke here</text>
+    <rect x="300" y="25" width="90" height="32" rx="3" class="d-warn"/>
+    <text x="345" y="46" text-anchor="middle" class="d-sub">SAML &rarr; SP</text>
+    <rect x="300" y="67" width="90" height="32" rx="3" class="d-warn"/>
+    <text x="345" y="88" text-anchor="middle" class="d-sub">OIDC &rarr; app</text>
+    <rect x="300" y="109" width="90" height="32" rx="3" class="d-warn"/>
+    <text x="345" y="130" text-anchor="middle" class="d-sub">OAuth &rarr; API</text>
+    <path d="M100 40 L140 72" class="d-line-mute"/>
+    <path d="M100 80 L140 90" class="d-line-mute"/>
+    <path d="M100 120 L140 108" class="d-line-mute"/>
+    <path d="M260 70 L300 42" class="d-line" marker-end="url(#arID)"/>
+    <path d="M260 90 L300 84" class="d-line" marker-end="url(#arID)"/>
+    <path d="M260 110 L300 125" class="d-line" marker-end="url(#arID)"/>
+    <rect x="20" y="170" width="360" height="60" rx="3" class="d-bg"/>
+    <text x="30" y="189" class="d-accent-text">IDENTITY DATA SOURCE &rarr; TRUST ALGORITHM</text>
+    <text x="30" y="206" class="d-sub">MFA state &middot; group &middot; risk score &middot; session age</text>
+    <text x="30" y="221" class="d-sub">separate tenants: workforce &middot; customer &middot; workload</text>
+    <defs><marker id="arID" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
   </svg>`
 },
 {
@@ -3674,7 +3715,7 @@ if (citeCopyBtn && citeTextEl) {
   });
 }
 
-/* JSON-LD: Person + DefinedTermSet + 74 DefinedTerm entries.
+/* JSON-LD: Person + DefinedTermSet + 75 DefinedTerm entries.
    Emitted at runtime from TERMS so the structured data stays in sync with the glossary
    (no duplicate source of truth to maintain). */
 (function emitJsonLd() {
@@ -3727,7 +3768,7 @@ if (citeCopyBtn && citeTextEl) {
         "@type": "DefinedTermSet",
         "@id": setId,
         "name": "Zero Trust Architecture Glossary for Banks",
-        "description": "A visual glossary of 74 Zero Trust Architecture terms for bank architects, mapped to NIST SP 800-207 and drawn from a 2025 Architecture Review Board submission.",
+        "description": "A visual glossary of 75 Zero Trust Architecture terms for bank architects, mapped to NIST SP 800-207 and drawn from a 2025 Architecture Review Board submission.",
         "url": canonical,
         "inLanguage": "en-US",
         "dateModified": "2026-04-20",
