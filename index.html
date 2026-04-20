@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Zero Trust Architecture Glossary for Banks (NIST 800-207)</title>
-<meta name="description" content="76 Zero Trust Architecture terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a one-line definition and a diagram. Mapped to NIST SP 800-207." />
+<meta name="description" content="77 Zero Trust Architecture terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a one-line definition and a diagram. Mapped to NIST SP 800-207." />
 <meta name="author" content="James Buckett" />
 <meta name="color-scheme" content="light dark" />
 <meta name="theme-color" content="#F7F7F5" media="(prefers-color-scheme: light)" />
@@ -16,7 +16,7 @@
 <!-- Open Graph (LinkedIn, Slack, Facebook, iMessage, Discord) -->
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Zero Trust Architecture Glossary for Banks" />
-<meta property="og:description" content="76 ZTA terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a diagram. Mapped to NIST SP 800-207." />
+<meta property="og:description" content="77 ZTA terms for bank architects — FAPI, PAR, mTLS, PEP/PDP — each with a diagram. Mapped to NIST SP 800-207." />
 <meta property="og:url" content="https://example.com/zta-glossary/" />
 <meta property="og:site_name" content="James Buckett" />
 <meta property="og:locale" content="en_US" />
@@ -717,7 +717,7 @@
   <div>
     <span class="eyebrow">Reference &middot; NIST SP 800-207</span>
     <h1>Zero Trust Architecture <span>A visual glossary for financial institutions</span></h1>
-    <p class="lede">76 Zero Trust terms that actually turn up in a multi-regional bank&apos;s architecture &mdash; each one explained in plain English and paired with a diagram. Grounded in NIST SP 800-207, drawn from real Architecture Review Board submissions.</p>
+    <p class="lede">77 Zero Trust terms that actually turn up in a multi-regional bank&apos;s architecture &mdash; each one explained in plain English and paired with a diagram. Grounded in NIST SP 800-207, drawn from real Architecture Review Board submissions.</p>
     <p class="byline">
       By <strong>James Buckett</strong> &middot; Product Manager &middot;
       <a href="mailto:james.buckett@gmail.com" rel="author">james.buckett@gmail.com</a>
@@ -736,7 +736,7 @@
   </div>
   <div class="hero-meta">
     <div>Updated <b>Apr 2026</b></div>
-    <div>Terms <b id="termCountMeta">76</b></div>
+    <div>Terms <b id="termCountMeta">77</b></div>
     <div>Framework <b>NIST 800-207</b></div>
   </div>
 </section>
@@ -762,7 +762,7 @@
   <main id="main">
     <div class="toolbar">
       <h2>Glossary entries</h2>
-      <span class="toolbar-meta"><b id="shownCount">76</b> / <span id="totalCount">76</span> shown</span>
+      <span class="toolbar-meta"><b id="shownCount">77</b> / <span id="totalCount">77</span> shown</span>
     </div>
 
     <div class="filter-row" id="filterRow" role="group" aria-label="Filter by category">
@@ -796,7 +796,7 @@
     <div class="cards" id="cards"></div>
 
     <div class="no-results" id="noResults">
-      Nothing matches <code id="noResultsQuery"></code> &mdash; yet. Try a shorter keyword, or clear the filters to see all <b id="noResultsTotal">76</b> terms.
+      Nothing matches <code id="noResultsQuery"></code> &mdash; yet. Try a shorter keyword, or clear the filters to see all <b id="noResultsTotal">77</b> terms.
     </div>
   </main>
 
@@ -806,7 +806,7 @@
   <div class="about-inner">
     <h2 id="about-heading">About this glossary</h2>
     <p>
-      I&rsquo;m <strong>James Buckett</strong>, an Enterprise Security Architect working on Zero Trust Architecture programs for multi-regional banks. I built this glossary while preparing a 2025 Architecture Review Board submission &mdash; 76 terms I kept having to re-explain from first principles, now each one paired with a diagram and a concrete operational example.
+      I&rsquo;m <strong>James Buckett</strong>, an Enterprise Security Architect working on Zero Trust Architecture programs for multi-regional banks. I built this glossary while preparing a 2025 Architecture Review Board submission &mdash; 77 terms I kept having to re-explain from first principles, now each one paired with a diagram and a concrete operational example.
     </p>
     <p>
       If you spot something wrong, something missing, or a term that could be explained better, I&rsquo;d like to hear about it. This page has no tracking, no analytics, and no external dependencies beyond the fonts your browser already has.
@@ -841,7 +841,7 @@
   <div class="foot-inner">
     <span>
       Written by <strong>James Buckett</strong> (Enterprise Security Architect) &middot;
-      <b id="footCount">76</b> entries &middot;
+      <b id="footCount">77</b> entries &middot;
       Drawn from a 2025 ARB submission &middot;
       Mapped to NIST SP&nbsp;800-207 &middot;
       Updated April 2026
@@ -2188,6 +2188,43 @@ const TERMS = [
     <text x="30" y="206" class="d-sub">certified levels L1 / L2 / L3 &middot; attestation proves provenance</text>
     <text x="30" y="221" class="d-sub">no shared secrets &middot; no OTP to phish</text>
     <defs><marker id="arF2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
+  </svg>`
+},
+{
+  id: "ctap2", name: "CTAP2 (Client to Authenticator Protocol)", category: "Foundations",
+  kind: "Protocol",
+  aliases: ["CTAP", "Client to Authenticator Protocol", "hmac-secret", "user verification", "user presence"],
+  title: { prefix: "Spec", text: "FIDO Alliance CTAP 2.x" },
+  short: "The <strong>authenticator-side half of FIDO2</strong> &mdash; the CBOR-encoded protocol that lets an external security key or a platform authenticator talk to the browser or OS over USB HID, NFC or BLE. CTAP2 is what carries the user-presence tap, the user-verification PIN or biometric, and the <code>hmac-secret</code> extension that encrypts data at rest to a resident credential.",
+  practice: "A treasury trader taps a YubiKey 5 NFC to the back of their phone to approve a wire; CTAP2 over NFC ferries the challenge to the key, the key verifies user presence, signs with the RP-scoped private key, and returns the assertion that WebAuthn then delivers to the bank.",
+  svg: `<svg viewBox="0 0 400 250" role="img" aria-labelledby="t-ctap2 d-ctap2" xmlns="http://www.w3.org/2000/svg">
+    <title id="t-ctap2">CTAP2 transports between authenticator and client</title>
+    <desc id="d-ctap2">An external or platform authenticator speaks CBOR-over-CTAP2 to the client across USB HID, NFC or BLE, with user presence and user verification checked on the authenticator; the client then speaks WebAuthn to the relying party.</desc>
+    <rect x="10" y="80" width="100" height="90" rx="3" class="d-box"/>
+    <text x="60" y="104" text-anchor="middle" class="d-label">Authenticator</text>
+    <text x="60" y="122" text-anchor="middle" class="d-sub">UP tap</text>
+    <text x="60" y="138" text-anchor="middle" class="d-sub">UV PIN / bio</text>
+    <text x="60" y="156" text-anchor="middle" class="d-accent-text">signs on-device</text>
+    <rect x="160" y="50" width="80" height="22" rx="2" class="d-ghost"/>
+    <text x="200" y="65" text-anchor="middle" class="d-sub">USB HID</text>
+    <rect x="160" y="114" width="80" height="22" rx="2" class="d-ghost"/>
+    <text x="200" y="129" text-anchor="middle" class="d-sub">NFC</text>
+    <rect x="160" y="178" width="80" height="22" rx="2" class="d-ghost"/>
+    <text x="200" y="193" text-anchor="middle" class="d-sub">BLE</text>
+    <path d="M110 100 L160 62" class="d-line-mute"/>
+    <path d="M110 125 L160 125" class="d-line-mute"/>
+    <path d="M110 150 L160 188" class="d-line-mute"/>
+    <rect x="290" y="80" width="100" height="90" rx="3" class="d-pri"/>
+    <text x="340" y="104" text-anchor="middle" class="d-label">Client</text>
+    <text x="340" y="122" text-anchor="middle" class="d-sub">browser / OS</text>
+    <text x="340" y="140" text-anchor="middle" class="d-accent-text">&rarr; WebAuthn RP</text>
+    <path d="M240 62 L290 110" class="d-line" marker-end="url(#arCT)"/>
+    <path d="M240 125 L290 125" class="d-line" marker-end="url(#arCT)"/>
+    <path d="M240 188 L290 140" class="d-line" marker-end="url(#arCT)"/>
+    <text x="200" y="90" text-anchor="middle" class="d-accent-text">CTAP2 (CBOR)</text>
+    <rect x="20" y="210" width="360" height="30" rx="3" class="d-bg"/>
+    <text x="200" y="229" text-anchor="middle" class="d-accent-text">UP &middot; UV &middot; HMAC-SECRET &middot; RESIDENT CREDS</text>
+    <defs><marker id="arCT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="d-accent"/></marker></defs>
   </svg>`
 },
 {
@@ -3753,7 +3790,7 @@ if (citeCopyBtn && citeTextEl) {
   });
 }
 
-/* JSON-LD: Person + DefinedTermSet + 76 DefinedTerm entries.
+/* JSON-LD: Person + DefinedTermSet + 77 DefinedTerm entries.
    Emitted at runtime from TERMS so the structured data stays in sync with the glossary
    (no duplicate source of truth to maintain). */
 (function emitJsonLd() {
@@ -3806,7 +3843,7 @@ if (citeCopyBtn && citeTextEl) {
         "@type": "DefinedTermSet",
         "@id": setId,
         "name": "Zero Trust Architecture Glossary for Banks",
-        "description": "A visual glossary of 76 Zero Trust Architecture terms for bank architects, mapped to NIST SP 800-207 and drawn from a 2025 Architecture Review Board submission.",
+        "description": "A visual glossary of 77 Zero Trust Architecture terms for bank architects, mapped to NIST SP 800-207 and drawn from a 2025 Architecture Review Board submission.",
         "url": canonical,
         "inLanguage": "en-US",
         "dateModified": "2026-04-20",
