@@ -37,6 +37,11 @@
 <!-- JSON-LD structured data is emitted at runtime into this element from the TERMS array -->
 <script type="application/ld+json" id="ldjson"></script>
 
+<!-- Ubuntu and Ubuntu Mono webfonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" />
+
 <style>
   :root {
     --bg: #F7F7F5;
@@ -61,8 +66,8 @@
     --svg-text: #0A0A0A;
     --svg-text-2: #4B5563;
     --svg-border: #D6D9DE;
-    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-    --sans: -apple-system, BlinkMacSystemFont, "Inter", "Geist", "Segoe UI", Roboto, sans-serif;
+    --mono: "Ubuntu Mono", ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: "Ubuntu", -apple-system, BlinkMacSystemFont, "Inter", "Geist", "Segoe UI", Roboto, sans-serif;
     --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px;
     --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
     --max: 1280px;
